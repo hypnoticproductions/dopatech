@@ -281,17 +281,18 @@
         <div class="space-y-16">
             <h2 class="text-3xl font-black tracking-tighter border-l-8 border-orange-500 pl-6 uppercase">The Lookbook</h2>
             <div id="carousel" class="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl group">
-                <img id="carousel-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                <img id="carousel-img" src="Generated Image September 06, 2025 - 9_13AM.jpeg" class="clothing-image w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                 <div class="absolute bottom-12 inset-x-12 flex justify-between items-end">
                     <div>
                         <p class="text-xs font-mono text-orange-400 uppercase tracking-[0.4em] mb-2">Visual Artifact</p>
-                        <h4 class="text-5xl font-black uppercase tracking-tighter text-white">The Archetype Flow</h4>
+                        <h4 class="text-5xl font-black uppercase tracking-tighter text-white" id="carousel-caption">DOPAMINE Hoodie Collection</h4>
                     </div>
                     <div class="flex gap-4">
                         <button onclick="changeSlide(0)" class="carousel-dot h-1 w-16 bg-orange-500 rounded-full"></button>
                         <button onclick="changeSlide(1)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
                         <button onclick="changeSlide(2)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
+                        <button onclick="changeSlide(3)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
                     </div>
                 </div>
             </div>
@@ -404,12 +405,28 @@
 
         // Carousel Management
         const slides = [
-            "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1200",
-            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=1200",
-            "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=1200"
+            "Generated Image September 06, 2025 - 9_13AM.jpeg",
+            "Generated Image September 06, 2025 - 8_46AM.jpeg",
+            "ChatGPT Image Jun 9, 2025, 06_54_26 PM.png",
+            "image.png"
         ];
+        
+        // Carousel Captions
+        const captions = [
+            "DOPAMINE Hoodie Collection",
+            "Dopamine Energy Tee",
+            "DOPAMINE Paint Splatter Series",
+            "Fall Collection 2025"
+        ];
+        
         function changeSlide(index) {
             document.getElementById('carousel-img').src = slides[index];
+            
+            // Update caption
+            if (document.getElementById('carousel-caption')) {
+                document.getElementById('carousel-caption').textContent = captions[index];
+            }
+            
             document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
                 if (i === index) {
                     dot.classList.add('w-16', 'bg-orange-500');
