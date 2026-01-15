@@ -106,6 +106,7 @@
         <div class="hidden md:flex items-center gap-8">
             <button onclick="switchTab('home')" class="nav-link text-xs font-mono uppercase tracking-widest text-white border-b border-white" data-tab="home">Central</button>
             <button onclick="switchTab('music')" class="nav-link text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-white" data-tab="music">Music</button>
+            <button onclick="switchTab('advanced')" class="nav-link text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-white" data-tab="advanced">Advanced Services</button>
             <button onclick="switchTab('clothing')" class="nav-link text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-white" data-tab="clothing">Clothing</button>
             <a href="https://website-kappa-three-68.vercel.app" target="_blank" class="text-xs font-mono uppercase tracking-widest text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group">
                 Research <i data-lucide="external-link" class="w-3 h-3 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
@@ -239,7 +240,249 @@
         </div>
     </div>
 
-    <!-- CLOTHING VIEW -->
+    <!-- ADVANCED ARTIST SERVICES VIEW -->
+    <div id="advanced" class="tab-content pt-32 pb-20 px-6 max-w-7xl mx-auto relative z-10">
+        <button onclick="switchTab('home')" class="flex items-center gap-2 text-gray-500 hover:text-white transition-all hover:gap-4 mb-12 text-xs font-mono uppercase tracking-[0.3em]">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Return to Hub
+        </button>
+
+        <div class="text-center mb-20 space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-full text-purple-400 text-[10px] font-mono uppercase tracking-[0.4em]">
+                <i data-lucide="cpu" class="w-3 h-3 animate-pulse"></i> Next-Gen Artist Solutions
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-none uppercase">THE AI-POWERED<br/><span class="text-purple-500 italic">ARTIST</span></h1>
+            <p class="text-gray-400 max-w-3xl mx-auto text-xl leading-relaxed font-light">
+                A new music industry blueprint. Fusing deep analysis, lyric optimization, and AI prompt engineering for hit potential with complete artist ownership and transparency.
+            </p>
+        </div>
+
+        <!-- Section 1: The Creative Engine -->
+        <div class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="zap" class="w-8 h-8 text-purple-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-purple-500/70">Section 01</p>
+                    <h2 class="text-4xl font-black tracking-tighter uppercase">The Creative Engine:<br/><span class="text-purple-500">AI-Powered Production</span></h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+                <!-- Phase 1: Song Creation -->
+                <div class="tilt-card-wrapper" data-intensity="15">
+                    <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                                <i data-lucide="music" class="w-6 h-6 text-purple-400"></i>
+                            </div>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-purple-400">Phase 1</span>
+                        </div>
+                        <h3 class="text-3xl font-black uppercase tracking-tighter mb-4">AI-Optimized Song Creation</h3>
+                        <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">Fusing deep analysis, lyric optimization, and AI prompt engineering for hit potential.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+                                <i data-lucide="search" class="w-5 h-5 text-purple-400"></i>
+                                <span class="text-sm font-medium uppercase tracking-wide">Deep Analysis</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+                                <i data-lucide="pen-tool" class="w-5 h-5 text-purple-400"></i>
+                                <span class="text-sm font-medium uppercase tracking-wide">Lyric Optimization</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+                                <i data-lucide="terminal" class="w-5 h-5 text-purple-400"></i>
+                                <span class="text-sm font-medium uppercase tracking-wide">AI Prompt Engineering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Music Videos -->
+                <div class="tilt-card-wrapper" data-intensity="15">
+                    <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                                <i data-lucide="video" class="w-6 h-6 text-purple-400"></i>
+                            </div>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-purple-400">Phase 2</span>
+                        </div>
+                        <h3 class="text-3xl font-black uppercase tracking-tighter mb-4">Precision-Engineered AI Music Videos</h3>
+                        <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">Merging live artist imagery with AI video engines for cinematic, market-ready visuals.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+                                <i data-lucide="user" class="w-5 h-5 text-purple-400"></i>
+                                <span class="text-sm font-medium uppercase tracking-wide">Live Artist Imagery</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+                                <i data-lucide="cpu" class="w-5 h-5 text-purple-400"></i>
+                                <span class="text-sm font-medium uppercase tracking-wide">AI Video Engines</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+                                <i data-lucide="film" class="w-5 h-5 text-purple-400"></i>
+                                <span class="text-sm font-medium uppercase tracking-wide">Cinematic Visuals</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Structure -->
+            <div class="bg-gradient-to-br from-purple-900/30 to-black border border-purple-500/20 rounded-[2.5rem] p-10">
+                <h3 class="text-3xl font-black uppercase tracking-tighter mb-8 text-center">Tiered Production Pricing</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <h4 class="text-xl font-bold uppercase tracking-widest text-purple-400 border-b border-purple-500/30 pb-4">Song Creation</h4>
+                        <div class="flex justify-between items-center p-6 bg-white/5 rounded-2xl">
+                            <div>
+                                <p class="text-lg font-bold uppercase">Entry Package</p>
+                                <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Analyst Tier</p>
+                            </div>
+                            <p class="text-3xl font-black text-purple-400">$100 – $175</p>
+                        </div>
+                        <div class="flex justify-between items-center p-6 bg-purple-600/20 border border-purple-500/40 rounded-2xl">
+                            <div>
+                                <p class="text-lg font-bold uppercase">Premium Package</p>
+                                <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Vor'thalis Premium</p>
+                            </div>
+                            <p class="text-3xl font-black text-purple-400">$1,200+</p>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="text-xl font-bold uppercase tracking-widest text-purple-400 border-b border-purple-500/30 pb-4">Video Production</h4>
+                        <div class="flex justify-between items-center p-6 bg-white/5 rounded-2xl">
+                            <div>
+                                <p class="text-lg font-bold uppercase">Entry Package</p>
+                                <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Video Strategy</p>
+                            </div>
+                            <p class="text-3xl font-black text-purple-400">$800 – $1,500</p>
+                        </div>
+                        <div class="flex justify-between items-center p-6 bg-purple-600/20 border border-purple-500/40 rounded-2xl">
+                            <div>
+                                <p class="text-lg font-bold uppercase">Premium Package</p>
+                                <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Vor'thalis Visual Premium</p>
+                            </div>
+                            <p class="text-3xl font-black text-purple-400">$8,000+</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: The Business Framework -->
+        <div class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-16 h-16 bg-cyan-600/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="scale" class="w-8 h-8 text-cyan-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-500/70">Section 02</p>
+                    <h2 class="text-4xl font-black tracking-tighter uppercase">The Business Framework:<br/><span class="text-cyan-500">A Transparent Artist Deal</span></h2>
+                </div>
+            </div>
+
+            <!-- Ownership Model -->
+            <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 mb-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center">
+                        <i data-lucide="lock" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter">Foundation: The Two-Master Split</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 bg-cyan-600/10 border border-cyan-500/30 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="cd" class="w-6 h-6 text-cyan-400"></i>
+                            <h4 class="text-lg font-bold uppercase">Artist Studio Master</h4>
+                        </div>
+                        <p class="text-gray-400">The artist owns their studio master. Complete artistic control and ownership retention.</p>
+                    </div>
+                    <div class="p-8 bg-white/5 border border-white/10 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="cpu" class="w-6 h-6 text-gray-400"></i>
+                            <h4 class="text-lg font-bold uppercase">Label AI-Generated Master</h4>
+                        </div>
+                        <p class="text-gray-400">The label owns the AI-generated master. Enabling next-gen production capabilities.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The 5 Doors -->
+            <div class="bg-gradient-to-br from-cyan-900/20 to-black border border-cyan-500/20 rounded-[2.5rem] p-10 mb-10">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center">
+                        <i data-lucide="door-open" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter">The 5 'DOORS': A Step-by-Step Partnership</h3>
+                </div>
+                <p class="text-gray-400 text-xl font-light leading-relaxed mb-8">Artists sign five distinct agreements for voice, image, music, merch, and NFTs.</p>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all cursor-default">
+                            <i data-lucide="mic" class="w-10 h-10 text-cyan-400 mx-auto mb-4"></i>
+                            <h4 class="text-sm font-bold uppercase tracking-wide">Voice Agreement</h4>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all cursor-default">
+                            <i data-lucide="camera" class="w-10 h-10 text-cyan-400 mx-auto mb-4"></i>
+                            <h4 class="text-sm font-bold uppercase tracking-wide">Image Agreement</h4>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all cursor-default">
+                            <i data-lucide="music" class="w-10 h-10 text-cyan-400 mx-auto mb-4"></i>
+                            <h4 class="text-sm font-bold uppercase tracking-wide">Music Agreement</h4>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all cursor-default">
+                            <i data-lucide="shirt" class="w-10 h-10 text-cyan-400 mx-auto mb-4"></i>
+                            <h4 class="text-sm font-bold uppercase tracking-wide">Merch Agreement</h4>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all cursor-default">
+                            <i data-lucide="box" class="w-10 h-10 text-cyan-400 mx-auto mb-4"></i>
+                            <h4 class="text-sm font-bold uppercase tracking-wide">NFTs Agreement</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Cross-Collateralization -->
+            <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-green-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter">The Payoff: No Cross-Collateralization</h3>
+                </div>
+                <p class="text-gray-400 text-xl font-light leading-relaxed mb-8">Each income stream is separate, meaning a t-shirt sale doesn't pay an album advance. True revenue transparency.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 bg-white/5 border border-white/10 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-4 right-4 w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
+                            <i data-lucide="x" class="w-4 h-4 text-red-400"></i>
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="shopping-bag" class="w-8 h-8 text-green-400"></i>
+                            <h4 class="text-lg font-bold uppercase">T-Shirt Sale</h4>
+                        </div>
+                        <p class="text-gray-400">Revenue flows directly to <span class="text-white font-bold">Your Income</span>. No deductions, no offsets.</p>
+                    </div>
+                    <div class="p-8 bg-white/5 border border-white/10 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-4 right-4 w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
+                            <i data-lucide="x" class="w-4 h-4 text-red-400"></i>
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <i data-lucide="disc" class="w-8 h-8 text-purple-400"></i>
+                            <h4 class="text-lg font-bold uppercase">Album Advance</h4>
+                        </div>
+                        <p class="text-gray-400">Revenue tracked separately in the <span class="text-white font-bold">Album Advance</span> jar. Distinct streams, clear accounting.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="clothing" class="tab-content pt-32 pb-20 px-6 max-w-7xl mx-auto relative z-10">
         <button onclick="switchTab('home')" class="flex items-center gap-2 text-gray-500 hover:text-white transition-all hover:gap-4 mb-12 text-xs font-mono uppercase tracking-[0.3em]">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Return to Hub
@@ -394,6 +637,7 @@
             const colors = {
                 home: 'rgba(6, 182, 212, 0.1)',
                 music: 'rgba(168, 85, 247, 0.1)',
+                advanced: 'rgba(168, 85, 247, 0.15)',
                 clothing: 'rgba(249, 115, 22, 0.1)'
             };
             glowCursor.style.background = `radial-gradient(circle, ${colors[tabId]} 0%, transparent 70%)`;
