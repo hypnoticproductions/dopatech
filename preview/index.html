@@ -280,19 +280,19 @@
 
         <div class="space-y-16">
             <h2 class="text-3xl font-black tracking-tighter border-l-8 border-orange-500 pl-6 uppercase">The Lookbook</h2>
-            <div id="carousel" class="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl group">
-                <img id="carousel-img" src="Generated Image September 06, 2025 - 9_13AM.jpeg" class="clothing-image w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-12 inset-x-12 flex justify-between items-end">
-                    <div>
-                        <p class="text-xs font-mono text-orange-400 uppercase tracking-[0.4em] mb-2">Visual Artifact</p>
-                        <h4 class="text-5xl font-black uppercase tracking-tighter text-white" id="carousel-caption">DOPAMINE Hoodie Collection</h4>
-                    </div>
-                    <div class="flex gap-4">
-                        <button onclick="changeSlide(0)" class="carousel-dot h-1 w-16 bg-orange-500 rounded-full"></button>
-                        <button onclick="changeSlide(1)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
-                        <button onclick="changeSlide(2)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
-                        <button onclick="changeSlide(3)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
+            <div id="carousel" class="relative rounded-[3rem] overflow-hidden shadow-2xl group" style="min-height: 80vh;">
+                <img id="carousel-img" src="Generated Image September 06, 2025 - 9_13AM.jpeg" class="clothing-image w-full h-auto object-contain transition-all duration-1000 group-hover:scale-105" style="max-height: 70vh;">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60"></div>
+                <div class="absolute bottom-8 inset-x-8 flex flex-col items-center">
+                    <p class="text-xs font-mono text-orange-400 uppercase tracking-[0.4em] mb-2">Visual Artifact</p>
+                    <h4 class="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white text-center" id="carousel-caption">DOPAMINE Hoodie Collection</h4>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="changeSlide(0)" class="carousel-dot h-1 w-12 bg-orange-500 rounded-full transition-all"></button>
+                        <button onclick="changeSlide(1)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(2)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(3)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(4)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(5)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
                     </div>
                 </div>
             </div>
@@ -406,7 +406,9 @@
         // Carousel Management
         const slides = [
             "Generated Image September 06, 2025 - 9_13AM.jpeg",
+            "Generated Image September 06, 2025 - 9_15AM.jpeg",
             "Generated Image September 06, 2025 - 8_46AM.jpeg",
+            "Generated Image September 06, 2025 - 9_29AM.jpeg",
             "ChatGPT Image Jun 9, 2025, 06_54_26 PM.png",
             "image.png"
         ];
@@ -414,9 +416,11 @@
         // Carousel Captions
         const captions = [
             "DOPAMINE Hoodie Collection",
+            "DOPAMINE Activewear",
             "Dopamine Energy Tee",
-            "DOPAMINE Paint Splatter Series",
-            "Fall Collection 2025"
+            "DOPAMINE White Collection",
+            "DOPAMINE Paint Splatter",
+            "Fall Lookbook 2025"
         ];
         
         function changeSlide(index) {
@@ -429,11 +433,11 @@
             
             document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
                 if (i === index) {
-                    dot.classList.add('w-16', 'bg-orange-500');
-                    dot.classList.remove('w-6', 'bg-white/10');
+                    dot.classList.add('w-12', 'bg-orange-500');
+                    dot.classList.remove('w-4', 'bg-white/20');
                 } else {
-                    dot.classList.remove('w-16', 'bg-orange-500');
-                    dot.classList.add('w-6', 'bg-white/10');
+                    dot.classList.remove('w-12', 'bg-orange-500');
+                    dot.classList.add('w-4', 'bg-white/20');
                 }
             });
         }
