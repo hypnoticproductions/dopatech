@@ -87,7 +87,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-
+        
         /* Voice Agent Panel Animation */
         #voice-agent-panel.visible {
             opacity: 1 !important;
@@ -143,7 +143,7 @@
                         <i data-lucide="cpu" class="w-12 h-12 text-cyan-400 mb-6 transition-transform duration-700 group-hover:rotate-90"></i>
                         <h3 class="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-500/80 mb-2">Node: 01</h3>
                         <h2 class="text-4xl font-bold mb-4 tracking-tighter">DEV NE-Thing</h2>
-                        <p class="text-gray-400 text-sm mb-8 leading-relaxed">Computational frameworks and music analysis research.</p>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed">Computational frameworks, app development, research and analysis.</p>
                         <div class="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-cyan-400">
                             Launch Environment <i data-lucide="zap" class="w-3 h-3 animate-pulse"></i>
                         </div>
@@ -243,9 +243,415 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- CLOTHING VIEW -->
+        <!-- AI Assisted Artist Section -->
+        <div class="mt-20">
+            <div class="bg-gradient-to-r from-cyan-900/30 via-purple-900/20 to-cyan-900/30 border border-cyan-500/20 rounded-[3rem] p-12 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/5 via-transparent to-purple-600/10"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-cyan-400 text-[10px] font-mono uppercase tracking-[0.4em] mb-6">
+                        <i data-lucide="user" class="w-3 h-3 animate-pulse"></i> Digital Persona
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-6">AI Assisted<br/><span class="text-cyan-400 italic">Artist</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed mb-8">
+                        Meet Shawn Parks — the dynamic AI-driven artist persona engineered by producer Rashad Corbin. A fusion of Caribbean heritage and computational music frameworks.
+                    </p>
+                    <a href="shawn-parks.html" target="_blank" class="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-cyan-600 to-purple-600 text-white font-black rounded-full transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]">
+                        <span class="uppercase tracking-tighter">Meet Shawn Parks</span>
+                        <i data-lucide="external-link" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Artist Services CTA -->
+        <div class="mt-20">
+            <div class="bg-gradient-to-r from-purple-900/30 to-cyan-900/30 border border-purple-500/20 rounded-[3rem] p-12 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-cyan-600/10"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-purple-400 text-[10px] font-mono uppercase tracking-[0.4em] mb-6">
+                        <i data-lucide="zap" class="w-3 h-3 animate-pulse"></i> Music Services
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-6">Advanced<br/><span class="text-purple-400 italic">Artist Services</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed mb-8">
+                        Full-spectrum production, transparent business frameworks, and financial protections designed for the modern artist. Click below to explore the complete service suite.
+                    </p>
+                    <button onclick="scrollToAdvanced()" class="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-black rounded-full transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)]">
+                        <span class="uppercase tracking-tighter">Explore Services</span>
+                        <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Artist Services Content -->
+        <div id="advanced-services" class="mt-32 pt-20 border-t border-white/10">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-16 h-16 bg-cyan-600/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="door-open" class="w-8 h-8 text-cyan-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-500/70">Part of Music Services</p>
+                    <h2 class="text-4xl font-black tracking-tighter uppercase">The Five<br/><span class="text-cyan-500">DOORS</span></h2>
+                </div>
+            </div>
+            <p class="text-gray-400 text-xl font-light leading-relaxed mb-10 max-w-4xl">
+                Present the business relationship as a sequence of agreements that unlock specific benefits and revenue streams. Each door is a distinct choice—total clarity from the first vocal take to the bank.
+            </p>
+
+            <!-- Door 1 -->
+            <div class="bg-gradient-to-r from-purple-900/20 to-transparent border border-purple-500/20 rounded-[2rem] p-8 mb-6 hover:bg-purple-900/30 transition-all">
+                <div class="flex flex-col lg:flex-row gap-6 items-start">
+                    <div class="flex items-center gap-4 min-w-[200px]">
+                        <div class="w-16 h-16 bg-purple-600/30 rounded-2xl flex items-center justify-center text-3xl font-black text-purple-400">1</div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase tracking-tighter">Song Likeness<br/>License</h3>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-purple-400">Immediate Value</p>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-300 text-lg mb-4">Gives the label permission to use your voice in AI systems. <span class="text-purple-400 font-bold">Crucially, signing this immediately grants you a 50% share of songwriting publishing on any AI-generated track</span>—above industry norms.</p>
+                    </div>
+                    <div class="bg-purple-600/20 border border-purple-500/40 px-6 py-4 rounded-xl">
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Publishing Share</p>
+                        <p class="text-2xl font-black text-purple-400">50%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Door 2 -->
+            <div class="bg-gradient-to-r from-cyan-900/20 to-transparent border border-cyan-500/20 rounded-[2rem] p-8 mb-6 hover:bg-cyan-900/30 transition-all">
+                <div class="flex flex-col lg:flex-row gap-6 items-start">
+                    <div class="flex items-center gap-4 min-w-[200px]">
+                        <div class="w-16 h-16 bg-cyan-600/30 rounded-2xl flex items-center justify-center text-3xl font-black text-cyan-400">2</div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase tracking-tighter">Name, Image &<br/>Likeness (NIL)</h3>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-400">Visual Marketing</p>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-300 text-lg mb-4">The "key to all visual marketing." Allows the label to put your face on cover art and ads. <span class="text-cyan-400 font-bold">Brand deals involving your image are split 50/50.</span></p>
+                    </div>
+                    <div class="bg-cyan-600/20 border border-cyan-500/40 px-6 py-4 rounded-xl">
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Brand Deal Split</p>
+                        <p class="text-2xl font-black text-cyan-400">50/50</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Door 3 -->
+            <div class="bg-gradient-to-r from-green-900/20 to-transparent border border-green-500/20 rounded-[2rem] p-8 mb-6 hover:bg-green-900/30 transition-all">
+                <div class="flex flex-col lg:flex-row gap-6 items-start">
+                    <div class="flex items-center gap-4 min-w-[200px]">
+                        <div class="w-16 h-16 bg-green-600/30 rounded-2xl flex items-center justify-center text-3xl font-black text-green-400">3</div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase tracking-tighter">Artist-Owned<br/>DAW Masters</h3>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-green-400">Traditional Recording</p>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-300 text-lg mb-4">For music you record in a traditional studio. <span class="text-green-400 font-bold">These tracks are 100% owned by you.</span> The label provides worldwide distribution and marketing for a 50/50 split on digital streaming revenue.</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-green-600/20 border border-green-500/40 px-6 py-3 rounded-xl">
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Ownership</p>
+                            <p class="text-xl font-black text-green-400">100% Artist</p>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 px-6 py-3 rounded-xl">
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Streaming Split</p>
+                            <p class="text-xl font-black text-white">50/50</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Door 4 -->
+            <div class="bg-gradient-to-r from-orange-900/20 to-transparent border border-orange-500/20 rounded-[2rem] p-8 mb-6 hover:bg-orange-900/30 transition-all">
+                <div class="flex flex-col lg:flex-row gap-6 items-start">
+                    <div class="flex items-center gap-4 min-w-[200px]">
+                        <div class="w-16 h-16 bg-orange-600/30 rounded-2xl flex items-center justify-center text-3xl font-black text-orange-400">4</div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase tracking-tighter">Merchandising</h3>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-orange-400">Revenue Buckets</p>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-300 text-lg mb-4">Revenue is divided into two distinct "buckets" depending on branding:</p>
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div class="bg-orange-600/10 border border-orange-500/30 rounded-xl p-4">
+                                <p class="text-sm font-bold uppercase text-orange-400 mb-2">Artist-Branded</p>
+                                <p class="text-xs text-gray-400 mb-2">Your name, lyrics, or likeness</p>
+                                <p class="text-2xl font-black text-orange-400">70% to Artist</p>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                                <p class="text-sm font-bold uppercase text-gray-400 mb-2">Label-Branded</p>
+                                <p class="text-xs text-gray-400 mb-2">General label merchandise</p>
+                                <p class="text-2xl font-black text-white">30% to Artist</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Door 5 -->
+            <div class="bg-gradient-to-r from-pink-900/20 to-transparent border border-pink-500/20 rounded-[2rem] p-8 hover:bg-pink-900/30 transition-all">
+                <div class="flex flex-col lg:flex-row gap-6 items-start">
+                    <div class="flex items-center gap-4 min-w-[200px]">
+                        <div class="w-16 h-16 bg-pink-600/30 rounded-2xl flex items-center justify-center text-3xl font-black text-pink-400">5</div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase tracking-tighter">Video Master<br/>NFTs</h3>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-pink-400">Sync Licensing</p>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-300 text-lg mb-4">Turns music videos into verifiable certificates of ownership, <span class="text-pink-400 font-bold">facilitating sync licensing for film and TV.</span></p>
+                    </div>
+                    <div class="bg-pink-600/20 border border-pink-500/40 px-6 py-4 rounded-xl">
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1">Sync Fee Split</p>
+                        <p class="text-2xl font-black text-pink-400">60/40 Label</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Full-Spectrum Production Services -->
+        <div class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-16 h-16 bg-purple-600/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="zap" class="w-8 h-8 text-purple-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-purple-500/70">Production Services</p>
+                    <h2 class="text-4xl font-black tracking-tighter uppercase">Full-Spectrum<br/><span class="text-purple-500">Creative Framework</span></h2>
+                </div>
+            </div>
+            <p class="text-gray-400 text-xl font-light leading-relaxed mb-12 max-w-4xl">
+                A complete production process that engineers market-ready hits for global charts using AI-powered tools and precision methodology.
+            </p>
+
+            <!-- Phase 1: Song Creation -->
+            <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 mb-10">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                        <i data-lucide="music" class="w-7 h-7 text-purple-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-purple-400">Phase 1</p>
+                        <h3 class="text-3xl font-black uppercase tracking-tighter">Song Creation & Optimization</h3>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">Deep dive into musical analysis, bilingual lyric optimization, and AI music prompt engineering to create "club-proof, playlist-ready mixes."</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-purple-600/10 hover:border-purple-500/30 transition-all">
+                        <div class="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="search" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase mb-2">Analyst</h4>
+                        <p class="text-gray-500 text-sm mb-4">Deep analysis and translation</p>
+                        <p class="text-2xl font-black text-purple-400">$100–$175</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-purple-600/10 hover:border-purple-500/30 transition-all">
+                        <div class="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="sliders" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase mb-2">Producer</h4>
+                        <p class="text-gray-500 text-sm mb-4">Creative production feedback</p>
+                        <p class="text-2xl font-black text-purple-400">$250–$500</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-purple-600/10 hover:border-purple-500/30 transition-all">
+                        <div class="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="cpu" class="w-5 h-5 text-purple-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase mb-2">AI Creator Suite</h4>
+                        <p class="text-gray-500 text-sm mb-4">Full execution with stems</p>
+                        <p class="text-2xl font-black text-purple-400">$500–$900+</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-600/20 to-purple-900/20 border border-purple-500/40 rounded-2xl p-6">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="crown" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase text-purple-300 mb-2">Vor'thalis Premium</h4>
+                        <p class="text-gray-400 text-sm mb-4">Full framework + global chart targeting</p>
+                        <p class="text-2xl font-black text-purple-400">$1,200–$2,000+</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2: Video Production -->
+            <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-10">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-14 h-14 bg-cyan-600/20 rounded-xl flex items-center justify-center">
+                        <i data-lucide="video" class="w-7 h-7 text-cyan-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-400">Phase 2</p>
+                        <h3 class="text-3xl font-black uppercase tracking-tighter">Precision-Engineered Video Production</h3>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">Songs are broken down into 35+ key shots in a mapped story arc. Uses high-end AI engines like Flux Kontext (for artist likeness) and Higgsfield (for camera control) to ensure cinematic flow.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-cyan-600/10 hover:border-cyan-500/30 transition-all">
+                        <div class="w-10 h-10 bg-cyan-600/20 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="map" class="w-5 h-5 text-cyan-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase mb-2">Video Strategy</h4>
+                        <p class="text-gray-500 text-sm mb-4">Concept and campaign plan</p>
+                        <p class="text-2xl font-black text-cyan-400">$800–$1,500</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-cyan-600/10 hover:border-cyan-500/30 transition-all">
+                        <div class="w-10 h-10 bg-cyan-600/20 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="film" class="w-5 h-5 text-cyan-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase mb-2">AI Cinematic Video</h4>
+                        <p class="text-gray-500 text-sm mb-4">Full production with likeness</p>
+                        <p class="text-2xl font-black text-cyan-400">$3,000–$6,500</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-cyan-600/20 to-cyan-900/20 border border-cyan-500/40 rounded-2xl p-6">
+                        <div class="w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="crown" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <h4 class="text-lg font-bold uppercase text-cyan-300 mb-2">Vor'thalis Visual Premium</h4>
+                        <p class="text-gray-400 text-sm mb-4">Multi-engine + full campaign</p>
+                        <p class="text-2xl font-black text-cyan-400">$8,000–$15,000+</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Financial Protections -->
+        <div class="mb-24">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-16 h-16 bg-green-600/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="scale" class="w-8 h-8 text-green-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-green-500/70">Financial Protections</p>
+                    <h2 class="text-4xl font-black tracking-tighter uppercase">The Clean<br/><span class="text-green-500">SPLIT</span></h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                <div class="bg-green-600/10 border border-green-500/30 rounded-[2rem] p-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="cd" class="w-10 h-10 text-green-400"></i>
+                        <h3 class="text-2xl font-black uppercase tracking-tighter">DAW Masters</h3>
+                    </div>
+                    <p class="text-gray-300 text-lg mb-4">Traditional recordings you create in the studio.</p>
+                    <div class="bg-green-600/20 border border-green-500/40 rounded-xl p-6 text-center">
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-2">Ownership</p>
+                        <p class="text-3xl font-black text-green-400">100% ARTIST</p>
+                    </div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-[2rem] p-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <i data-lucide="cpu" class="w-10 h-10 text-gray-400"></i>
+                        <h3 class="text-2xl font-black uppercase tracking-tighter">AI Masters</h3>
+                    </div>
+                    <p class="text-gray-300 text-lg mb-4">Content generated using AI technology.</p>
+                    <div class="bg-white/10 border border-white/20 rounded-xl p-6 text-center">
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-2">Ownership</p>
+                        <p class="text-3xl font-black text-white">100% LABEL</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Cross-Collateralization -->
+            <div class="bg-gradient-to-br from-red-900/20 to-black border border-red-500/20 rounded-[2.5rem] p-10">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center">
+                        <i data-lucide="ban" class="w-7 h-7 text-red-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter">No Cross-Collateralization</h3>
+                </div>
+                <p class="text-gray-400 text-xl font-light leading-relaxed mb-8">This is a critical protection—earnings from one stream can never be used to pay back debts from another. <span class="text-white font-bold">Every revenue stream stands independently.</span></p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-4 right-4">
+                            <i data-lucide="arrow-right-left" class="w-5 h-5 text-red-400 opacity-50"></i>
+                        </div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <i data-lucide="shopping-bag" class="w-6 h-6 text-green-400"></i>
+                            <h4 class="text-lg font-bold uppercase">Merch Sale</h4>
+                        </div>
+                        <p class="text-gray-400 text-sm">Revenue stays in your merch bucket. <span class="text-green-400 font-bold">Never offsets album debt.</span></p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-4 right-4">
+                            <i data-lucide="arrow-right-left" class="w-5 h-5 text-red-400 opacity-50"></i>
+                        </div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <i data-lucide="disc" class="w-6 h-6 text-purple-400"></i>
+                            <h4 class="text-lg font-bold uppercase">Album Advance</h4>
+                        </div>
+                        <p class="text-gray-400 text-sm">Tracked separately. <span class="text-white font-bold">Never touches your merch income.</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Release Process -->
+        <div class="mb-10">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-16 h-16 bg-orange-600/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="check-circle" class="w-8 h-8 text-orange-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-orange-500/70">Release Protocol</p>
+                    <h2 class="text-4xl font-black tracking-tighter uppercase">Single Source<br/><span class="text-orange-500">OF TRUTH</span></h2>
+                </div>
+            </div>
+            <p class="text-gray-400 text-xl font-light leading-relaxed mb-10 max-w-4xl">
+                Every song must pass a strict sequential checklist before release to ensure no ownership confusion. This eliminates the financial surprises and confusing royalty statements that have historically plagued the industry.
+            </p>
+
+            <div class="bg-gradient-to-br from-orange-900/20 to-black border border-orange-500/20 rounded-[2.5rem] p-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 bg-orange-600/20 rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-2xl font-black text-orange-400">1</span>
+                            </div>
+                            <h4 class="text-lg font-bold uppercase mb-3">Songwriting Splits</h4>
+                            <p class="text-gray-500 text-sm">Finalized and documented before any other step.</p>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 bg-orange-600/20 rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-2xl font-black text-orange-400">2</span>
+                            </div>
+                            <h4 class="text-lg font-bold uppercase mb-3">NIL Clearance</h4>
+                            <p class="text-gray-500 text-sm">Confirmed via digital link for all visual assets.</p>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 bg-orange-600/20 rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-2xl font-black text-orange-400">3</span>
+                            </div>
+                            <h4 class="text-lg font-bold uppercase mb-3">ISRC/UPC Codes</h4>
+                            <p class="text-gray-500 text-sm">Official industry codes assigned to every release.</p>
+                        </div>
+                    </div>
+                    <div class="tilt-card-wrapper" data-intensity="10">
+                        <div class="bg-orange-600/20 border border-orange-500/40 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="upload" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <h4 class="text-lg font-bold uppercase text-orange-300 mb-3">Final Assets</h4>
+                            <p class="text-gray-400 text-sm">All masters and stems uploaded to system.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 p-6 bg-gradient-to-r from-orange-600/10 to-green-600/10 border border-orange-500/30 rounded-2xl text-center">
+                    <p class="text-gray-300 text-lg mb-2">Only when <span class="text-white font-bold">ALL boxes are checked</span> is the track marked</p>
+                    <p class="text-3xl font-black uppercase tracking-widest text-green-400">CLEARED FOR RELEASE</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="clothing" class="tab-content pt-32 pb-20 px-6 max-w-7xl mx-auto relative z-10">
         <button onclick="switchTab('home')" class="flex items-center gap-2 text-gray-500 hover:text-white transition-all hover:gap-4 mb-12 text-xs font-mono uppercase tracking-[0.3em]">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Return to Hub
@@ -286,18 +692,18 @@
 
         <div class="space-y-16">
             <h2 class="text-3xl font-black tracking-tighter border-l-8 border-orange-500 pl-6 uppercase">The Lookbook</h2>
-            <div id="carousel" class="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl group">
-                <img id="carousel-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-12 inset-x-12 flex justify-between items-end">
-                    <div>
-                        <p class="text-xs font-mono text-orange-400 uppercase tracking-[0.4em] mb-2">Visual Artifact</p>
-                        <h4 class="text-5xl font-black uppercase tracking-tighter text-white">The Archetype Flow</h4>
-                    </div>
-                    <div class="flex gap-4">
-                        <button onclick="changeSlide(0)" class="carousel-dot h-1 w-16 bg-orange-500 rounded-full"></button>
-                        <button onclick="changeSlide(1)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
-                        <button onclick="changeSlide(2)" class="carousel-dot h-1 w-6 bg-white/10 rounded-full hover:bg-white/30"></button>
+            <div id="carousel" class="relative rounded-[3rem] overflow-hidden shadow-2xl group" style="min-height: 80vh;">
+                <img id="carousel-img" src="Generated Image September 06, 2025 - 9_13AM.jpeg" class="clothing-image w-full h-auto object-contain transition-all duration-1000 group-hover:scale-105" style="max-height: 70vh;">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60"></div>
+                <div class="absolute bottom-8 inset-x-8 flex flex-col items-center">
+                    <p class="text-xs font-mono text-orange-400 uppercase tracking-[0.4em] mb-2">Visual Artifact</p>
+                    <h4 class="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white text-center" id="carousel-caption">DOPAMINE Hoodie Collection</h4>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="changeSlide(0)" class="carousel-dot h-1 w-12 bg-orange-500 rounded-full transition-all"></button>
+                        <button onclick="changeSlide(1)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(2)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(3)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
+                        <button onclick="changeSlide(4)" class="carousel-dot h-1 w-4 bg-white/20 rounded-full hover:bg-white/50 transition-all"></button>
                     </div>
                 </div>
             </div>
@@ -324,7 +730,16 @@
                 <h4 class="text-[10px] font-mono uppercase tracking-[0.5em] text-white">Connectivity</h4>
                 <div class="flex gap-6">
                     <a href="https://github.com/hypnoticproductions" target="_blank" class="text-gray-400 hover:text-white transition-transform hover:-translate-y-2"><i data-lucide="github" class="w-6 h-6"></i></a>
-                    <a href="mailto:richard@hypnoticproductions.tech" class="text-gray-400 hover:text-white transition-transform hover:-translate-y-2"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                    <a href="mailto:richard.fproductions@gmail.com" class="text-gray-400 hover:text-white transition-transform hover:-translate-y-2"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                    <a href="https://richarddannibarrifortune.substack.com" target="_blank" class="text-gray-400 hover:text-white transition-transform hover:-translate-y-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                            <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path>
+                            <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path>
+                            <circle cx="12" cy="12" r="2"></circle>
+                            <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path>
+                            <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path>
+                        </svg>
+                    </a>
                 </div>
                 <div class="p-4 bg-white/5 border border-white/10 rounded-2xl">
                    <p class="text-[10px] font-mono text-gray-400 uppercase tracking-widest leading-loose">
@@ -410,19 +825,37 @@
 
         // Carousel Management
         const slides = [
-            "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1200",
-            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=1200",
-            "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=1200"
+            "Generated Image September 06, 2025 - 9_13AM.jpeg",
+            "Generated Image September 06, 2025 - 9_15AM.jpeg",
+            "Generated Image September 06, 2025 - 8_46AM.jpeg",
+            "Generated Image September 06, 2025 - 9_29AM.jpeg",
+            "ChatGPT Image Jun 9, 2025, 06_54_26 PM.png"
         ];
+        
+        // Carousel Captions
+        const captions = [
+            "DOPAMINE Hoodie Collection",
+            "DOPAMINE Activewear",
+            "Dopamine Energy Tee",
+            "DOPAMINE White Collection",
+            "DOPAMINE Paint Splatter"
+        ];
+        
         function changeSlide(index) {
             document.getElementById('carousel-img').src = slides[index];
+            
+            // Update caption
+            if (document.getElementById('carousel-caption')) {
+                document.getElementById('carousel-caption').textContent = captions[index];
+            }
+            
             document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
                 if (i === index) {
-                    dot.classList.add('w-16', 'bg-orange-500');
-                    dot.classList.remove('w-6', 'bg-white/10');
+                    dot.classList.add('w-12', 'bg-orange-500');
+                    dot.classList.remove('w-4', 'bg-white/20');
                 } else {
-                    dot.classList.remove('w-16', 'bg-orange-500');
-                    dot.classList.add('w-6', 'bg-white/10');
+                    dot.classList.remove('w-12', 'bg-orange-500');
+                    dot.classList.add('w-4', 'bg-white/20');
                 }
             });
         }
@@ -436,7 +869,20 @@
                 nav.classList.remove('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/5');
             }
         });
+
+        // Scroll to Advanced Services
+        function scrollToAdvanced() {
+            // First switch to music tab if not already active
+            switchTab('music');
+            
+            // Then scroll to advanced services section
+            setTimeout(() => {
+                const advancedSection = document.getElementById('advanced-services');
+                if (advancedSection) {
+                    advancedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
     </script>
-    <script src="xai-voice-agent.js"></script>
 </body>
 </html>
