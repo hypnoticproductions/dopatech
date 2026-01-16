@@ -169,26 +169,32 @@ class XAIVoiceAgent {
         if (this.isConnected) return;
         
         this.updateStatus('Connecting...', 'connecting');
+        console.log('Attempting to connect to worker:', this.workerUrl);
         
         try {
             this.ws = new WebSocket(this.workerUrl);
+            console.log('WebSocket created, waiting for connection...');
             
             this.ws.onopen = () => {
+                console.log('Connected to voice agent worker');
                 this.isConnected = true;
                 this.updateStatus('Ready', 'ready');
                 this.startVisualization();
             };
             
             this.ws.onmessage = async (event) => {
+                console.log('Received message type:', JSON.parse(event.data)?.type || 'unknown');
                 await this.handleMessage(event.data);
             };
             
-            this.ws.onclose = () => {
+            this.ws.onclose = (event) => {
+                console.log('WebSocket closed:', event.code, event.reason);
                 this.isConnected = false;
-                this.updateStatus('Disconnected', 'error');
+                this.updateStatus('Disconnected', 'disconnected');
                 // Auto-reconnect after 3 seconds
                 setTimeout(() => {
                     if (this.panel.classList.contains('visible')) {
+                        console.log('Attempting to reconnect...');
                         this.connect();
                     }
                 }, 3000);
@@ -197,6 +203,13 @@ class XAIVoiceAgent {
             this.ws.onerror = (error) => {
                 console.error('WebSocket error:', error);
                 this.updateStatus('Connection Error', 'error');
+            };
+            
+        } catch (error) {
+            console.error('Failed to connect:', error);
+            this.updateStatus('Connection Failed', 'error');
+        }
+    }
             };
             
         } catch (error) {
