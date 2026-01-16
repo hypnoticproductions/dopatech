@@ -1,0 +1,415 @@
+I'll walk you through the complete implementation of the Trav Talkr voice agent with xAI Grok. Let me gather all the technical details from the codebase.
+
+Let me search for these files - they may be in different locations:
+
+Now let me read the complete files:
+
+Now let me get the React component and hook that tie it all together:
+
+Now I have all the pieces. Let me also check the secrets configuration:
+
+Excellent! Now I have everything needed. Here's the complete step-by-step technical breakdown:
+
+---
+
+# How Trav Talkr (xAI Grok Voice Agent) Works - Step-by-Step
+
+## Architecture Overview
+
+sequenceDiagram
+    participant User
+    participant Browser
+    participant GrokVoiceClient
+    participant AudioRecorder
+    participant EdgeFunction as grok-voice-relay
+    participant xAI as xAI Realtime API
+    participant AudioQueue as AudioPlaybackQueue
+
+    User->>Browser: Click Mic Button
+    Browser->>GrokVoiceClient: connect()
+    GrokVoiceClient->>EdgeFunction: WebSocket Connection
+    EdgeFunction->>xAI: WebSocket with Subprotocol Auth
+    xAI-->>EdgeFunction: session.created
+    EdgeFunction-->>GrokVoiceClient: session.created
+
+    User->>Browser: Hold Mic (Push-to-Talk)
+    Browser->>AudioRecorder: start()
+    AudioRecorder->>AudioRecorder: Capture 24kHz PCM16
+    AudioRecorder->>GrokVoiceClient: Base64 audio chunks
+    GrokVoiceClient->>EdgeFunction: input_audio_buffer.append
+    EdgeFunction->>xAI: Forward audio
+
+    User->>Browser: Release Mic
+    Browser->>GrokVoiceClient: input_audio_buffer.commit
+    GrokVoiceClient->>EdgeFunction: Commit buffer
+    EdgeFunction->>xAI: Commit buffer
+
+    xAI-->>EdgeFunction: response.output_audio.delta (chunks)
+    EdgeFunction-->>GrokVoiceClient: Audio deltas
+    GrokVoiceClient->>AudioQueue: PCM to WAV conversion
+    AudioQueue->>Browser: Play audio sequentially
+
+    xAI-->>EdgeFunction: response.output_audio_transcript.delta
+    EdgeFunction-->>GrokVoiceClient: Transcript deltas
+    GrokVoiceClient->>Browser: Update streaming UI
+
+---
+
+## Step 1: API Key Configuration
+
+**File: Supabase Secrets**
+
+Two secrets are required:
+- `grok_api_key` - Your xAI API key for Grok Realtime
+- `XAI_COLLECTION_ID` (optional) - For RAG/knowledge base integration
+
+```bash
+# These are stored in Supabase Edge Function environment
+grok_api_key=xai-xxxxxxxxxxxx
+XAI_COLLECTION_ID=collection_xxxxx  # Optional for RAG
+```
+
+---
+
+## Step 2: WebSocket Relay Edge Function
+
+**File: `supabase/functions/grok-voice-relay/index.ts`**
+
+This is the **heart of the system** - a Deno edge function that acts as a WebSocket relay between the browser and xAI's Realtime API.
+
+### Why a Relay?
+
+1. **Security**: API keys stay on the server, never exposed to the browser
+2. **CORS**: Direct browser-to-xAI connections aren't allowed
+3. **Context Injection**: The relay can inject destination/tab-specific prompts
+
+### Key Components:
+
+```typescript
+// Tab-specific system prompts for 4 intelligence levels
+const TAB_CONTEXTS = {
+  surface: { focus: 'general travel safety', systemPrompt: '...' },
+  shadow: { focus: 'deeper local insights', systemPrompt: '...' },
+  operational: { focus: 'tactical security intelligence', systemPrompt: '...' },
+  elite: { focus: 'executive protection level', systemPrompt: '...' }
+};
+```
+
+### Connection Flow:
+
+```typescript
+// 1. Client connects via WebSocket
+const { socket, response } = Deno.upgradeWebSocket(req);
+
+// 2. When client connects, establish xAI connection
+socket.onopen = async () => {
+  // Use subprotocol authentication (key trick!)
+  grokSocket = new WebSocket('wss://api.x.ai/v1/realtime?model=grok-2-public', [
+    'realtime',
+    `openai-insecure-api-key.${XAI_API_KEY}`  // API key in subprotocol
+  ]);
+};
+
+// 3. When xAI session is created, configure it
+if (data.type === 'session.created') {
+  grokSocket.send(JSON.stringify({
+    type: 'session.update',
+    session: {
+      modalities: ['text', 'audio'],
+      voice: 'alloy',
+      instructions: buildSystemPrompt(tab, destination, city, archetype, context),
+      input_audio_format: 'pcm16',
+      output_audio_format: 'pcm16',
+      input_audio_transcription: { model: 'whisper-1' },
+      turn_detection: {
+        type: 'server_vad',
+        threshold: 0.5,
+        silence_duration_ms: 1000
+      }
+    }
+  }));
+}
+
+// 4. Forward all messages bidirectionally
+grokSocket.onmessage = (event) => {
+  socket.send(event.data);  // xAI → Client
+};
+
+socket.onmessage = (event) => {
+  grokSocket.send(event.data);  // Client → xAI
+};
+```
+
+### Optional RAG Integration:
+
+```typescript
+// If collection ID is configured, add collections_search tool
+if (XAI_COLLECTION_ID) {
+  sessionConfig.session.tools = [{
+    type: 'collections_search',
+    collection_ids: [XAI_COLLECTION_ID]
+  }];
+  sessionConfig.session.tool_choice = 'auto';
+}
+```
+
+---
+
+## Step 3: Audio Recording (Browser → Server)
+
+**File: `src/lib/audio/audioRecorder.ts`**
+
+Captures microphone audio, converts to 24kHz PCM16, and sends as base64:
+
+```typescript
+export class AudioRecorder {
+  async start() {
+    // Request microphone with specific settings
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        sampleRate: 24000,    // Required by xAI
+        channelCount: 1,       // Mono
+        echoCancellation: true,
+        noiseSuppression: true
+      }
+    });
+
+    // Create audio processing pipeline
+    this.audioContext = new AudioContext({ sampleRate: 24000 });
+    this.processor = this.audioContext.createScriptProcessor(4096, 1, 1);
+
+    // Process audio chunks
+    this.processor.onaudioprocess = (e) => {
+      const inputData = e.inputBuffer.getChannelData(0);
+      const encoded = this.encodeAudioData(new Float32Array(inputData));
+      this.onAudioData(encoded);  // Send to WebSocket
+    };
+  }
+
+  // Convert Float32 (-1 to 1) → Int16 PCM → Base64
+  private encodeAudioData(float32Array: Float32Array): string {
+    const int16Array = new Int16Array(float32Array.length);
+    for (let i = 0; i < float32Array.length; i++) {
+      const s = Math.max(-1, Math.min(1, float32Array[i]));
+      int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+    }
+    return btoa(String.fromCharCode(...new Uint8Array(int16Array.buffer)));
+  }
+}
+```
+
+---
+
+## Step 4: Audio Playback (Server → Browser)
+
+**File: `src/lib/audio/audioPlaybackQueue.ts`**
+
+Receives PCM16 chunks from xAI, converts to WAV, and plays sequentially:
+
+```typescript
+export class AudioPlaybackQueue {
+  private queue: Uint8Array[] = [];
+
+  async addToQueue(audioData: Uint8Array) {
+    this.queue.push(audioData);
+    if (!this.isPlaying) {
+      await this.playNext();
+    }
+  }
+
+  private async playNext() {
+    const audioData = this.queue.shift();
+
+    // Convert raw PCM16 to WAV (browser needs WAV header)
+    const wavData = this.createWavFromPCM(audioData);
+
+    // Decode and play
+    const audioBuffer = await this.audioContext.decodeAudioData(wavData.buffer);
+    const source = this.audioContext.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(this.audioContext.destination);
+    source.onended = () => this.playNext();  // Chain playback
+    source.start(0);
+  }
+
+  // Create proper WAV header for PCM data
+  private createWavFromPCM(pcmData: Uint8Array): Uint8Array {
+    // 44-byte WAV header + PCM data
+    const sampleRate = 24000;
+    const wavHeader = new ArrayBuffer(44);
+    // ... RIFF, fmt, data chunks
+    return wavArray;
+  }
+}
+```
+
+---
+
+## Step 5: GrokVoiceClient (WebSocket Manager)
+
+**File: `src/lib/grokVoiceClient.ts`**
+
+Orchestrates the entire client-side flow:
+
+```typescript
+export class GrokVoiceClient {
+  async connect() {
+    // Initialize audio context at 24kHz
+    this.audioContext = new AudioContext({ sampleRate: 24000 });
+    this.audioQueue = new AudioPlaybackQueue(this.audioContext);
+
+    // Connect to edge function relay
+    const wsUrl = `wss://{project}.functions.supabase.co/grok-voice-relay?destination=${destination}&tab=${tab}`;
+    this.ws = new WebSocket(wsUrl);
+
+    // Initialize recorder with audio callback
+    this.recorder = new AudioRecorder((audioData) => {
+      this.ws.send(JSON.stringify({
+        type: 'input_audio_buffer.append',
+        audio: audioData
+      }));
+    });
+  }
+
+  async startRecording() {
+    await this.recorder.start();
+  }
+
+  stopRecording() {
+    this.recorder.stop();
+    this.ws.send(JSON.stringify({ type: 'input_audio_buffer.commit' }));
+  }
+
+  // Handle xAI events
+  private handleMessage(data: string) {
+    const event = JSON.parse(data);
+
+    switch (event.type) {
+      case 'response.output_audio.delta':
+        // Decode base64 audio and queue for playback
+        const bytes = new Uint8Array(atob(event.delta).split('').map(c => c.charCodeAt(0)));
+        this.audioQueue.addToQueue(bytes);
+        break;
+
+      case 'response.output_audio_transcript.delta':
+        // Stream transcript to UI
+        this.options.onTranscriptDelta(event.delta, 'assistant');
+        break;
+    }
+  }
+}
+```
+
+---
+
+## Step 6: React Hook
+
+**File: `src/hooks/useGrokVoice.ts`**
+
+Exposes the client as React state:
+
+```typescript
+export function useGrokVoice(options) {
+  const [connectionState, setConnectionState] = useState('disconnected');
+  const [messages, setMessages] = useState([]);
+  const [streamingTranscript, setStreamingTranscript] = useState('');
+  const clientRef = useRef(null);
+
+  const connect = useCallback(async () => {
+    const client = new GrokVoiceClient({
+      destination: options.destination,
+      tab: currentTab,
+      onMessage: (msg) => setMessages(prev => [...prev, msg]),
+      onTranscriptDelta: (delta) => setStreamingTranscript(prev => prev + delta),
+      onAudioStart: () => setIsSpeaking(true),
+      onAudioEnd: () => setIsSpeaking(false)
+    });
+    await client.connect();
+    clientRef.current = client;
+  }, [options]);
+
+  return {
+    connectionState, messages, streamingTranscript,
+    connect, disconnect, startRecording, stopRecording,
+    sendTextMessage, changeTab
+  };
+}
+```
+
+---
+
+## Step 7: React UI Component
+
+**File: `src/components/GrokVoiceConversation.tsx`**
+
+The dialog with push-to-talk button and message display:
+
+```tsx
+export function GrokVoiceConversation({ destination, countryName }) {
+  const { isConnected, messages, startRecording, stopRecording, sendTextMessage } = useGrokVoice({
+    destination,
+    initialTab: 'surface'
+  });
+
+  return (
+
+      {/* Tab selector for Surface/Shadow/Operational/Elite */}
+
+        {Object.entries(TAB_CONFIG).map(([key, config]) => (
+           changeTab(key)}
+            disabled={isTabLocked(key)}  // Tier-gated
+          >
+            {config.label}
+
+        ))}
+
+      {/* Messages display */}
+
+        {messages.map(msg => (
+
+            {msg.content}
+
+        ))}
+        {streamingTranscript && {streamingTranscript}}
+
+      {/* Push-to-talk button */}
+
+  );
+}
+```
+
+---
+
+## Summary: The Complete Data Flow
+
+| Step | Component | What Happens |
+|------|-----------|--------------|
+| 1 | User clicks mic | Dialog opens, WebSocket connects to edge function |
+| 2 | Edge function | Connects to xAI with subprotocol auth, configures session |
+| 3 | User holds mic | `AudioRecorder` captures 24kHz audio, encodes to base64 PCM16 |
+| 4 | Audio streaming | Chunks sent via `input_audio_buffer.append` through relay |
+| 5 | User releases mic | `input_audio_buffer.commit` signals end of speech |
+| 6 | xAI processes | Server VAD detects speech end, Whisper transcribes, Grok responds |
+| 7 | Response audio | xAI sends `response.output_audio.delta` PCM chunks |
+| 8 | Audio playback | `AudioPlaybackQueue` converts PCM→WAV, plays sequentially |
+| 9 | Transcripts | `response.output_audio_transcript.delta` streams text to UI |
+| 10 | Tab change | User switches tabs, relay updates xAI `instructions` dynamically |
+
+---
+
+## Key Technical Insights
+
+1. **Subprotocol Authentication**: The trick `openai-insecure-api-key.{KEY}` in WebSocket subprotocol bypasses header issues in Deno
+
+2. **24kHz Sample Rate**: xAI requires 24kHz PCM16 - both recording and playback use this exact rate
+
+3. **PCM to WAV Conversion**: Browsers can't play raw PCM, so we add a 44-byte WAV header on playback
+
+4. **Server VAD**: xAI's Voice Activity Detection handles turn-taking automatically
+
+5. **Relay Pattern**: Edge function acts as authenticated proxy, keeping keys secure
+
+6. **Sequential Playback Queue**: Audio chunks must play in order - the queue handles this
+
+Add Voice Visualization
+Save Conversation History
