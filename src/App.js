@@ -4,17 +4,13 @@ import {
   Music, 
   Shirt, 
   ExternalLink, 
-  ChevronRight, 
   Play, 
   ShoppingBag, 
-  Globe, 
   Github, 
-  Mail, 
-  Instagram,
+  Mail,
   ArrowLeft,
   Volume2,
   Sparkles,
-  Layers,
   Zap,
   Activity
 } from 'lucide-react';
@@ -79,11 +75,10 @@ const TiltCard = ({ children, className = "", intensity = 15 }) => {
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
-  const [isLoaded, setIsLoaded] = useState(false);
   const mouse = useMousePosition();
 
   useEffect(() => {
-    setIsLoaded(true);
+    // Initialize app
   }, []);
 
   const navigateTo = (tab) => {
