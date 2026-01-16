@@ -87,6 +87,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+        
+        /* Voice Agent Panel Animation */
+        #voice-agent-panel.visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
     </style>
 </head>
 <body class="selection-white bg-black">
@@ -878,5 +884,6 @@
             }, 100);
         }
     </script>
+    <script src="xai-voice-agent.js"></script>
 </body>
 </html>
