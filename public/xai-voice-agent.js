@@ -506,5 +506,5 @@ class XAIVoiceAgent {
 
 // Initialize voice agent when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    window.voiceAgent = new XAIVoiceAgent('wss://sitetalkr.richard-fproductions.workers.dev/');
+    window.voiceAgent = new XAIVoiceAgent('wss://dopatech-voice-server-production.up.railway.app/');
 });
