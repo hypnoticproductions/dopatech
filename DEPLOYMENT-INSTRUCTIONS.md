@@ -14,7 +14,8 @@ Based on the **working SafeTravel Trav Talkr** implementation, we identified and
 
 ### 3. ❌ Wrong Event Names
 **Problem:** Listening for `response.audio.delta` (OpenAI format)
-**Fix:** Changed to `response.output_audio.delta` (xAI format with "output_" prefix)
+**Fix:** Changed to `output_audio.delta` (xAI format with "output_" prefix)
+- Also added: `output_audio.done` and `input_audio_buffer.speech_stopped`
 
 ---
 
@@ -84,7 +85,7 @@ Based on the **working SafeTravel Trav Talkr** implementation, we identified and
 5. **Expected result:**
    - Status: Ready → Listening → Processing → Speaking
    - **You HEAR audio response** with specific info about Dopa-Tech
-   - Console shows: `Received message type: response.output_audio.delta`
+   - Console shows: `Received message type: output_audio.delta`
 
 ---
 

@@ -214,35 +214,46 @@ class XAIVoiceAgent {
     async handleMessage(data) {
         try {
             const event = JSON.parse(data);
-            
+
+            // ✅ FIX 3: Updated to xAI event names (with "output_" prefix)
             switch (event.type) {
                 case 'session.created':
                     console.log('Session created');
                     break;
-                    
-                case 'response.audio.delta':
+
+                case 'output_audio.delta':  // xAI uses "output_audio" not "response.audio"
                     // Received audio from the assistant
                     if (event.delta) {
                         await this.playAudio(event.delta);
                     }
                     break;
-                    
-                case 'response.done':
+
+                case 'output_audio.done':  // xAI uses "output_audio.done"
+                    console.log('Audio output complete');
+                    this.updateStatus('Ready', 'ready');
+                    break;
+
+                case 'response.done':  // Also handle response.done
                     console.log('Response complete');
                     this.updateStatus('Ready', 'ready');
                     break;
-                    
+
                 case 'input_audio_buffer.speech_started':
                     this.updateStatus('Listening...', 'listening');
                     break;
-                    
+
+                case 'input_audio_buffer.speech_stopped':
+                    this.updateStatus('Processing...', 'processing');
+                    break;
+
                 case 'error':
                     console.error('Server error:', event.error);
                     this.updateStatus('Error: ' + event.error, 'error');
                     break;
-                    
+
                 default:
-                    // Handle other events
+                    // Log unhandled events for debugging
+                    console.log('Unhandled event type:', event.type);
                     break;
             }
         } catch (error) {
