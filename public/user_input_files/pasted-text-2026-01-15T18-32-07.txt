@@ -1,0 +1,225 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Beaker, 
+  Music, 
+  Shirt, 
+  Github, 
+  Twitter, 
+  Mail, 
+  ChevronRight,
+  ShieldCheck,
+  Zap,
+  Cpu,
+  Layers
+} from 'lucide-react';
+
+/**
+ * Dopa-Tech Parent Website
+ * Finalized Branding & Hierarchy:
+ * 1. Dopa-Tech (Parent Organization)
+ * 2. DEV NE-Thing (Research, Tech & Computational Systems)
+ * 3. Dopamine Clothing (Independent Apparel by Rashad)
+ */
+
+const DIVISIONS = [
+  {
+    id: 'research',
+    entity: 'DEV NE-Thing',
+    title: 'Research & Tech',
+    subtitle: 'Computational Systems',
+    description: 'The technological backbone of the Dopa-Tech ecosystem. Responsible for music analysis frameworks, platform architecture, and backend cultural research.',
+    link: 'https://website-kappa-three-68.vercel.app',
+    status: 'online',
+    color: '#00f0ff', // Cyan
+    icon: Cpu,
+    bgGradient: 'from-cyan-900/20 to-black',
+    accentClass: 'group-hover:text-[#00f0ff]',
+    roles: ['Platform Architecture', 'Music Analysis', 'Research Ops']
+  },
+  {
+    id: 'parent',
+    entity: 'Dopa-Tech',
+    title: 'The Parent Org',
+    subtitle: 'Strategy & Ecosystem',
+    description: 'The central entity overseeing global brands, intellectual property, and the high-level intersection of music, culture, and business development.',
+    link: '#',
+    status: 'online',
+    color: '#bf00ff', // Electric Purple
+    icon: Layers,
+    bgGradient: 'from-purple-900/20 to-black',
+    accentClass: 'group-hover:text-[#bf00ff]',
+    roles: ['IP Management', 'Brand Strategy', 'Ecosystem Growth']
+  },
+  {
+    id: 'clothing',
+    entity: 'Dopamine Clothing',
+    title: 'Apparel & Design',
+    subtitle: 'Visual Language by Rashad',
+    description: 'A dedicated fashion line where all graphics and visual identities are created directly by Rashad, maintaining complete creative independence.',
+    link: '#',
+    status: 'coming-soon',
+    color: '#ff3300', // Vermilion
+    icon: Shirt,
+    bgGradient: 'from-orange-900/20 to-black',
+    accentClass: 'group-hover:text-[#ff3300]',
+    roles: ['Independent Design', 'Textile Arts', 'Brand Identity']
+  }
+];
+
+const StatusBadge = ({ status }) => {
+  if (status === 'online') {
+    return (
+      <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/30 rounded-full">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span className="text-[10px] font-mono uppercase tracking-widest text-green-400">Active</span>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
+      <span className="h-2 w-2 rounded-full bg-yellow-500/50"></span>
+      <span className="text-[10px] font-mono uppercase tracking-widest text-yellow-500/80">Deploying</span>
+    </div>
+  );
+};
+
+const DivisionColumn = ({ division }) => {
+  const Icon = division.icon;
+  const isOnline = division.status === 'online';
+
+  return (
+    <a
+      href={division.link}
+      target={isOnline && division.link !== '#' ? "_blank" : "_self"}
+      rel="noopener noreferrer"
+      className={`relative flex-1 group min-h-[60vh] lg:min-h-screen overflow-hidden border-b lg:border-b-0 lg:border-r border-white/5 transition-all duration-700 ease-in-out hover:flex-[1.5] flex flex-col justify-end p-8 lg:p-12 cursor-pointer ${division.link === '#' ? 'cursor-default' : ''}`}
+      onClick={(e) => division.link === '#' && e.preventDefault()}
+    >
+      {/* Background Layer */}
+      <div className={`absolute inset-0 bg-gradient-to-t ${division.bgGradient} transition-opacity duration-500 opacity-40 group-hover:opacity-100`} />
+      
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-500 pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(${division.color} 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+
+      {/* Content */}
+      <div className="relative z-10 transform transition-transform duration-500 group-hover:translate-y-[-10px]">
+        <div className="mb-4">
+          <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gray-500 block mb-2">{division.entity}</span>
+          <div className={`inline-block p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm transition-colors duration-500 ${division.accentClass}`}>
+            <Icon size={32} strokeWidth={1.5} />
+          </div>
+        </div>
+        
+        <StatusBadge status={division.status} />
+        
+        <h2 className="text-4xl lg:text-5xl font-bold mt-6 tracking-tight text-[#ededed]">
+          {division.title}
+        </h2>
+        
+        <p className={`text-xl font-medium mt-2 transition-colors duration-500 ${division.accentClass}`}>
+          {division.subtitle}
+        </p>
+        
+        <p className="text-gray-400 mt-4 max-w-md leading-relaxed">
+          {division.description}
+        </p>
+
+        {/* Roles list */}
+        <div className="mt-6 flex flex-wrap gap-2 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+          {division.roles.map((role, i) => (
+            <span key={i} className="text-[9px] font-mono border border-white/10 px-2 py-0.5 rounded">
+              {role}
+            </span>
+          ))}
+        </div>
+
+        {isOnline && division.link !== '#' && (
+          <div className="mt-8 flex items-center gap-2 text-sm font-mono uppercase tracking-widest text-white/40 group-hover:text-white transition-all duration-500">
+            <span>Access Portal</span>
+            <ChevronRight size={16} />
+          </div>
+        )}
+      </div>
+
+      <div className="absolute bottom-0 left-0 w-0 h-1 transition-all duration-700 group-hover:w-full"
+           style={{ backgroundColor: division.color }} />
+    </a>
+  );
+};
+
+export default function App() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-[#ededed] font-sans selection:bg-cyan-500/30">
+      
+      {/* Navigation */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 lg:px-12 py-6 flex justify-between items-center ${scrolled ? 'bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5' : ''}`}>
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-white flex items-center justify-center rounded-lg">
+             <span className="text-black font-black text-xl tracking-tighter">DT</span>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold tracking-tighter uppercase leading-none">Dopa-Tech</h1>
+            <p className="text-[10px] text-gray-500 font-mono tracking-widest uppercase mt-1">Operational Infrastructure</p>
+          </div>
+        </div>
+        
+        <div className="hidden md:flex items-center gap-8">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-gray-500">
+            <ShieldCheck size={14} className="text-green-500" />
+            <span>Secure Ecosystem</span>
+          </div>
+          <div className="h-4 w-px bg-white/10" />
+          <a href="mailto:richard@hypnoticproductions.tech" className="text-xs font-mono uppercase tracking-widest px-4 py-2 border border-white/10 rounded-full hover:bg-white hover:text-black transition-all">
+            Inquiry
+          </a>
+        </div>
+      </nav>
+
+      {/* Main Triptych Layout */}
+      <main className="flex flex-col lg:flex-row pt-24 lg:pt-0">
+        {DIVISIONS.map((division) => (
+          <DivisionColumn key={division.id} division={division} />
+        ))}
+      </main>
+
+      {/* Footer */}
+      <footer className="relative lg:fixed bottom-0 left-0 right-0 z-40 p-6 lg:p-12 pointer-events-none">
+        <div className="flex flex-col lg:flex-row justify-between items-end gap-6">
+          <div className="flex gap-6 pointer-events-auto">
+            <a href="https://github.com/hypnoticproductions" target="_blank" className="text-gray-500 hover:text-white transition-colors">
+              <Github size={20} />
+            </a>
+            <a href="mailto:richard@hypnoticproductions.tech" className="text-gray-500 hover:text-white transition-colors">
+              <Mail size={20} />
+            </a>
+          </div>
+          
+          <div className="text-right pointer-events-auto">
+            <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">
+              © 2025 DOPA-TECH. ALL SYSTEMS OPERATIONAL.
+            </p>
+            <div className="flex justify-end gap-3 mt-2">
+              <span className="w-1 h-1 rounded-full bg-cyan-500"></span>
+              <span className="w-1 h-1 rounded-full bg-purple-500"></span>
+              <span className="w-1 h-1 rounded-full bg-orange-500"></span>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+    </div>
+  );
+}
