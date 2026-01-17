@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+    <style>
+        body { font-family: monospace; background: #000; color: #0f0; padding: 20px; }
+        .log { margin: 5px 0; padding: 5px; background: #111; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+        .info { color: #0ff; }
+        button { background: #0f0; color: #000; padding: 10px 20px; margin: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🔍 WebSocket Diagnostic</h1>
+    <button onclick="testConnection()">Test Connection</button>
+    <button onclick="sendTestAudio()">Send Test Audio</button>
+    <button onclick="clearLogs()">Clear</button>
+    <div id="logs"></div>
+
+    <script>
+        const workerUrl = 'wss://sitetalkr.richard-fproductions.workers.dev/';
+        let ws = null;
+        let messageCount = 0;
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            document.getElementById('logs').appendChild(div);
+            console.log(message);
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+            messageCount = 0;
+        }
+
+        function testConnection() {
+            log('🔌 Connecting to: ' + workerUrl, 'info');
+
+            ws = new WebSocket(workerUrl);
+
+            ws.onopen = () => {
+                log('✅ WebSocket CONNECTED!', 'success');
+            };
+
+            ws.onmessage = (event) => {
+                messageCount++;
+                try {
+                    const data = JSON.parse(event.data);
+                    log(`📨 [${messageCount}] Received: ${data.type || 'unknown'}`, 'success');
+
+                    if (data.type === 'session.created') {
+                        log('🎯 Session created successfully!', 'success');
+                    }
+                    if (data.type === 'session.update') {
+                        log('🔧 Session updated', 'success');
+                    }
+                    if (data.type === 'error') {
+                        log(`❌ ERROR: ${JSON.stringify(data.error)}`, 'error');
+                    }
+                    if (data.type === 'response.audio.delta') {
+                        log('🔊 Audio chunk received!', 'success');
+                    }
+                    if (data.type === 'response.done') {
+                        log('✅ Response complete!', 'success');
+                    }
+
+                    // Log full data for debugging
+                    console.log('Full message:', data);
+
+                } catch (err) {
+                    log(`📦 Non-JSON: ${event.data.substring(0, 100)}`, 'info');
+                }
+            };
+
+            ws.onerror = (error) => {
+                log('❌ WebSocket ERROR', 'error');
+                console.error('WebSocket error:', error);
+            };
+
+            ws.onclose = (event) => {
+                log(`🔌 WebSocket CLOSED - Code: ${event.code}, Reason: ${event.reason || 'none'}`, 'error');
+            };
+        }
+
+        function sendTestAudio() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                log('❌ WebSocket not connected! Click "Test Connection" first.', 'error');
+                return;
+            }
+
+            log('📤 Sending test audio buffer...', 'info');
+
+            // Send a small test audio buffer
+            ws.send(JSON.stringify({
+                type: 'input_audio_buffer.append',
+                audio: 'AAAA' // Dummy base64 audio
+            }));
+
+            log('📤 Committing audio buffer...', 'info');
+            ws.send(JSON.stringify({
+                type: 'input_audio_buffer.commit'
+            }));
+
+            log('⏳ Waiting for response... (should see messages above)', 'info');
+        }
+
+        // Auto-test on load
+        setTimeout(testConnection, 500);
+    </script>
+</body>
+</html>
