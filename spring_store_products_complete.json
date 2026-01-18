@@ -1,0 +1,442 @@
+[
+  {
+    "name": "DOPAMINE- ODE",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/eSqpF3NZ_ySeAD2cy_otM66R5DU/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-ode?product=369",
+    "id": 1,
+    "description": "Official DOPAMINE- ODE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- NYC",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Classic Crew Neck T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/UE9n9CCF46hp1_cc8at3pMBVX-w/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-nyc?product=2",
+    "id": 2,
+    "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE 1881",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Classic Crew Neck T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/xiSFNWth2m80kXShiKb_mHF5xKQ/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-1881?product=2",
+    "id": 3,
+    "description": "Official DOPAMINE 1881 from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- ELITES",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/O_78paJSuS-5ldZq1uwxMcgyntM/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=117",
+    "id": 4,
+    "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- ELITES",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Classic Crew Neck T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/O9dbC4Ycrmjd-UficywbVvhiYXo/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=2",
+    "id": 5,
+    "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- ELITES",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/W1_WoUgKvzSdbcWPeOcnY2tKpWg/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=369",
+    "id": 6,
+    "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- LEGENDS",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/NVgadRJfaZD8iHByWxk1bQAylos/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=369",
+    "id": 7,
+    "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PUZZLE",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/Qzljm3ObxgTVc0jLFVNwW4UkRlM/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=117",
+    "id": 8,
+    "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PUZZLE",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/CrLshKD6hbMCIYTKVXCrctG_64k/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=369",
+    "id": 9,
+    "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PUZZLE",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Women's Racerback Tank",
+    "image": "https://mockup-api.teespring.com/v3/image/vsS8m60tOn-nsLxTpxKPRcxUycA/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=1912",
+    "id": 10,
+    "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- LEGENDS",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/gLI0U3A2bhQKkhUMiAnfmBT_grc/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=117",
+    "id": 11,
+    "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- LEGENDS",
+    "price": "$45.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/hZAei5Lds6RBcKe6qW_bVY5JQ_4/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=1608",
+    "id": 12,
+    "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- LEGENDS",
+    "price": "$50.00",
+    "category": "Merch",
+    "product_type": "White Slides",
+    "image": "https://mockup-api.teespring.com/v3/image/IkbGSGrWsk0pz-jy24dz63ezqCg/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=1895",
+    "id": 13,
+    "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/HJXeknbQ4Buv8E9UsbSrZ1lTGzs/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-august-2023?product=117",
+    "id": 14,
+    "description": "Official DOPAMINE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Classic Crew Neck T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/wxQ90T6fKorL-_AX-QcEGi0l8B8/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-august-2023?product=2",
+    "id": 15,
+    "description": "Official DOPAMINE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- THE LIVING EXPERIENCE",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Next Level 3600 | Premium Ring-Spun Cotton T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/4yYroQZcZcui-ZpkQ3R80fxdUqA/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-the-living-experienc?product=46",
+    "id": 16,
+    "description": "Official DOPAMINE- THE LIVING EXPERIENCE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- THE LIVING EXPERIENCE",
+    "price": "$26.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/H9mWrlgTuxUSkSOvReVx2b4qoCk/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-the-living-experienc?product=117",
+    "id": 17,
+    "description": "Official DOPAMINE- THE LIVING EXPERIENCE from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PAINT",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/NTXHuQNK6myUMclDr-bFqX9ebZ8/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-paint?product=1608",
+    "id": 18,
+    "description": "Official DOPAMINE- PAINT from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- FIESTA",
+    "price": "$40.00",
+    "category": "Merch",
+    "product_type": "White Slides",
+    "image": "https://mockup-api.teespring.com/v3/image/0zlBnbYBhFzooQrpf-l6sDm02K4/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=1895",
+    "id": 19,
+    "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- FIESTA",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Next Level 3600 | Premium Ring-Spun Cotton T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/hbpMf0qLKRULG9TxgnpMvGaGeWs/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=46",
+    "id": 20,
+    "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- FIESTA",
+    "price": "$40.00",
+    "category": "Merch",
+    "product_type": "Black Slides",
+    "image": "https://mockup-api.teespring.com/v3/image/eF1gjpkD3jZB1Xx_q55ulr0gRCc/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=1896",
+    "id": 21,
+    "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- DRIP",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Next Level 3600 | Premium Ring-Spun Cotton T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/NgzB6FbeNcHwpXlO7bicS0NAEdE/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=46",
+    "id": 22,
+    "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- DRIP",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/zR-bPf-xtZcg62J9HIopc2iqbaQ/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=117",
+    "id": 23,
+    "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- DRIP",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/1tdx9omDh9F2gsshGLJSu2ByOj8/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=1608",
+    "id": 24,
+    "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE STARS",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Classic Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/ips6_53EOMjTvhibSfW7Kp77-zg/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=212",
+    "id": 25,
+    "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE STARS",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/X-XwvPY5P_AX7UTpP12H649BN9o/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=345",
+    "id": 26,
+    "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE STARS",
+    "price": "$45.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Full Zip Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/pVvm3pHlsGR0d3XdE78fTyRfe-U/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=1027",
+    "id": 27,
+    "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- NYC",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Classic Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/vRKhAMTMKbVEHY1r8ElbNW0oE-U/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=212",
+    "id": 28,
+    "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- NYC",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/Xi1HkIW5kHTchWEGqWSoJMuANTs/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=345",
+    "id": 29,
+    "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PRIDE EDITION",
+    "price": "$20.00",
+    "category": "Tank Tops",
+    "product_type": "Classic Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/keJLHaEM3VxybW_-_fmNKC6VGSY/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-pride-edition?product=14",
+    "id": 30,
+    "description": "Official DOPAMINE- PRIDE EDITION from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE STARS",
+    "price": "$32.00",
+    "category": "T-Shirts",
+    "product_type": "Men's Base Long Sleeve Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/CIQlBWF9cKOZgdWyeg2m3gJNhdY/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=1302",
+    "id": 31,
+    "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- NYC",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Classic Long Sleeve Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/nBchFmKCJ4OcL-sLhloK60z-4ZM/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=11",
+    "id": 32,
+    "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE HIGH",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Men's Base Long Sleeve Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/1Dr9efHDsE0znVu7UXeEqsbmjdk/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-high?product=1302",
+    "id": 33,
+    "description": "Official DOPAMINE HIGH from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- YARD EDITION",
+    "price": "$40.00",
+    "category": "Merch",
+    "product_type": "Leggings",
+    "image": "https://mockup-api.teespring.com/v3/image/i2uu0VBgfbu6Kdq4BHiFoMRK-Nk/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-yard-edition?product=641",
+    "id": 34,
+    "description": "Official DOPAMINE- YARD EDITION from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- NYC",
+    "price": "$50.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "AS Colour Stencil Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/PlisDES0RQoS4zLvLeuygI_gthY/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=1301",
+    "id": 35,
+    "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE HIGH",
+    "price": "$45.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/hUZXSzo0v0HfAXhoAEdv0VnlJ1w/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-high?product=227",
+    "id": 36,
+    "description": "Official DOPAMINE HIGH from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE HIGH",
+    "price": "$40.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/wLfoZiXw_8olZtBEFGvzviYRRHc/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-high?product=345",
+    "id": 37,
+    "description": "Official DOPAMINE HIGH from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PATRIOT EDITION (R.W.B)",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Classic Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/PapUVbiapMEyZMkfD4HBRK0Gdcs/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-patriot-edition-r-w?product=212",
+    "id": 38,
+    "description": "Official DOPAMINE- PATRIOT EDITION (R.W.B) from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PATRIOT EDITION (R.W.B)",
+    "price": "$41.99",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/DtdqbdDNwSN6D_vYJYLncXYE68U/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-patriot-edition-r-w?product=227",
+    "id": 39,
+    "description": "Official DOPAMINE- PATRIOT EDITION (R.W.B) from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE (ICE, GOLD, GREEN)",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Classic Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/da6BruPzoZfgo_zvHozUWEVvbu0/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-ice-gold-green?product=212",
+    "id": 40,
+    "description": "Official DOPAMINE (ICE, GOLD, GREEN) from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE (ICE, GOLD, GREEN)",
+    "price": "$41.99",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/sKieIeSQQ8T8mK0HH2MKmY_jr4o/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-ice-gold-green?product=227",
+    "id": 41,
+    "description": "Official DOPAMINE (ICE, GOLD, GREEN) from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE (ICE, GOLD, GREEN)",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/wYOV98jgBcGA0ajcvycrmKWXCQQ/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-ice-gold-green?product=227",
+    "id": 42,
+    "description": "Official DOPAMINE (ICE, GOLD, GREEN) from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- YARD EDITION",
+    "price": "$20.00",
+    "category": "Tank Tops",
+    "product_type": "Classic Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/PRMtt0bq6DOwTQ1qlGeWcvy9ufU/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-yard-edition?product=14",
+    "id": 43,
+    "description": "Official DOPAMINE- YARD EDITION from the Dopamine Flow Energy collection."
+  },
+  {
+    "name": "DOPAMINE- PATRIOT EDITION (R.W.B)",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/GqNtOqpPAQDMlIvphTrofGXm-0Y/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-patriot-edition-r-w?product=117",
+    "id": 44,
+    "description": "Official DOPAMINE- PATRIOT EDITION (R.W.B) from the Dopamine Flow Energy collection."
+  }
+]
