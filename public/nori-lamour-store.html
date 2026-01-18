@@ -14,95 +14,186 @@
             background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
+            cursor: none;
         }
 
         ::selection {
-            background: white;
-            color: black;
+            background: #4f46e5;
+            color: white;
         }
 
-        /* Grain Overlay */
-        .noise-bg {
+        /* CUSTOM CURSOR: THE BRUTALIST RETICLE */
+        #cursor {
             position: fixed;
-            inset: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
             pointer-events: none;
-            opacity: 0.03;
-            mix-blend-mode: overlay;
+            z-index: 1000;
+            mix-blend-mode: difference;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.075s ease-out;
+        }
+
+        @media (min-width: 1024px) {
+            #cursor {
+                display: flex;
+            }
+        }
+
+        #cursor::before {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        #cursor::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* NOISE & SCAN OVERLAYS */
+        .noise-bg {
             background-image: url('https://grainy-gradients.vercel.app/noise.svg');
             background-repeat: repeat;
-            background-size: 100px 100px;
-            z-index: 100;
+            background-size: 150px 150px;
         }
 
-        /* Animations */
+        .bg-scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.08) 51%, transparent 51%);
+            background-size: 100% 6px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes blast {
+            0% { transform: translate(-50%, -50%) scale(0.1); opacity: 1; filter: blur(80px); }
+            20% { opacity: 1; filter: blur(2px); }
+            100% { transform: translate(-50%, -50%) scale(15); opacity: 0; filter: blur(40px); }
+        }
+
+        .animate-blast {
+            animation: blast 1.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
         @keyframes reveal-up {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(150px) rotate(-2deg); }
+            to { opacity: 1; transform: translateY(0) rotate(0deg); }
         }
 
         .animate-reveal-up {
-            animation: reveal-up 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            animation: reveal-up 2.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.2; transform: scale(1.3) skewX(0deg); }
+            50% { opacity: 0.4; transform: scale(1.35) skewX(2deg); }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 12s ease-in-out infinite;
+        }
+
+        @keyframes mystique-dramatic {
+            0% { opacity: 0; filter: blur(10px) contrast(100%); transform: scale(1.3) translate(0,0); }
+            1% { opacity: 0.8; filter: blur(0px) contrast(300%); transform: scale(1.4) translate(-10px, 10px); }
+            2% { opacity: 0.1; filter: blur(5px); transform: scale(1.3) translate(10px, -10px); }
+            3% { opacity: 0.6; filter: hue-rotate(90deg); transform: scale(1.38); }
+            4% { opacity: 0; }
+            48% { opacity: 0; }
+            49% { opacity: 0.9; filter: blur(0px) contrast(400%); transform: scale(1.45) skewX(10deg); }
+            50% { opacity: 0.2; }
+            51% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .animate-mystique-dramatic {
+            animation: mystique-dramatic 6s linear infinite;
+        }
+
+        @keyframes scan-move {
+            from { transform: translateY(0); }
+            to { transform: translateY(100%); }
+        }
+
+        .animate-scan-move {
+            animation: scan-move 20s linear infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(-10%, 5%); }
+            30% { transform: translate(5%, -10%); }
+            40% { transform: translate(-5%, 15%); }
+            50% { transform: translate(-10%, 5%); }
+            60% { transform: translate(15%, 0); }
+            70% { transform: translate(0, 10%); }
+            80% { transform: translate(-15%, 0); }
+            90% { transform: translate(10%, 5%); }
+        }
+
+        .animate-grain {
+            animation: grain 8s steps(10) infinite;
+        }
+
+        @keyframes text-glitch {
+            0% { transform: translate(0); clip-path: inset(0 0 0 0); }
+            10% { transform: translate(-10px, 5px); clip-path: inset(10% 0 40% 0); }
+            20% { transform: translate(10px, -5px); clip-path: inset(60% 0 10% 0); }
+            30% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+
+        .animate-text-glitch {
+            animation: text-glitch 0.4s steps(2) infinite;
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-spin-slow {
+            animation: spin-slow 12s linear infinite;
+        }
+
+        @keyframes glitch-text {
+            0%, 100% { transform: translateX(0); }
+            33% { transform: translateX(2px); }
+            66% { transform: translateX(-2px); }
+        }
+
+        .animate-glitch-text {
+            animation: glitch-text 0.3s infinite;
         }
 
         @keyframes bounce-slow {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(10px); }
+            50% { transform: translateY(40px); }
         }
 
         .animate-bounce-slow {
             animation: bounce-slow 3s ease-in-out infinite;
         }
 
-        /* Burger Menu Lines */
-        .burger-line {
-            height: 1px;
-            width: 100%;
-            background: white;
-            transition: all 0.3s;
+        .stroke-text {
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
         }
 
-        .burger-group:hover .burger-line:nth-child(1) {
-            width: 50%;
+        .perspective-1000 {
+            perspective: 1000px;
         }
 
-        .burger-group:hover .burger-line:nth-child(2) {
-            width: 75%;
-        }
-
-        /* Product Grid Hover Effects */
-        .product-card img {
-            filter: grayscale(100%);
-            opacity: 0.5;
-            transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .product-card:hover img {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.1) rotate(1deg);
-        }
-
-        /* Stock Pulse */
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .stock-pulse {
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Smooth Scrollbar */
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -118,207 +209,201 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-black text-white overflow-x-hidden">
+<body class="min-h-screen bg-black text-white overflow-x-hidden relative">
 
-    <!-- GRAIN OVERLAY -->
-    <div class="noise-bg"></div>
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor"></div>
 
-    <!-- MINIMALIST NAVIGATION -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-700 py-10">
-        <div class="max-w-[1800px] mx-auto px-6 md:px-10 flex justify-between items-center">
-            <button id="menuBtn" class="burger-group flex items-center gap-4 focus:outline-none">
-                <div class="flex flex-col gap-1.5 w-8">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
+    <!-- NOIR INTERFERENCE OVERLAY -->
+    <div class="fixed inset-0 pointer-events-none z-[900] opacity-[0.12] mix-blend-overlay noise-bg animate-grain"></div>
+    <div class="fixed inset-0 pointer-events-none z-[901] opacity-[0.03] bg-scanline animate-scan-move"></div>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed top-0 w-full z-[800] transition-all duration-1000 py-14">
+        <div class="max-w-[2200px] mx-auto px-6 md:px-12 flex justify-between items-center">
+            <button id="menuBtn" class="group flex items-center gap-6 md:gap-10 focus:outline-none">
+                <div class="flex flex-col gap-3 w-10 md:w-14">
+                    <span class="burger-line h-[1.5px] w-full bg-white transition-all duration-300"></span>
+                    <span class="burger-line h-[1.5px] w-3/4 bg-white/40 transition-all duration-300"></span>
+                    <span class="burger-line h-[1.5px] w-full bg-white transition-all duration-300"></span>
                 </div>
-                <span class="text-[10px] font-bold tracking-[0.4em] uppercase hidden md:block">Index</span>
+                <span class="text-[11px] font-black tracking-[1em] uppercase hidden md:block italic text-white/20 group-hover:text-white transition-all duration-500">System_Vault</span>
             </button>
 
-            <div class="flex flex-col items-center">
-                <h1 class="text-xl font-black tracking-tighter uppercase italic leading-none">Noir L'Amour</h1>
-                <p class="text-[8px] tracking-[0.8em] uppercase text-white/40 mt-1 pl-1">by R A S H A D</p>
+            <div class="flex flex-col items-center group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <h1 class="text-2xl md:text-4xl font-black tracking-[-0.08em] uppercase italic leading-none group-hover:tracking-normal transition-all duration-1000">Noir L'Amour</h1>
+                <div class="h-[1px] w-0 group-hover:w-full bg-indigo-500 transition-all duration-1000 mt-2"></div>
             </div>
 
-            <button class="relative group">
-                <i data-lucide="shopping-bag" class="w-5 h-5" style="stroke-width: 1;"></i>
-                <span class="absolute -top-1 -right-1 text-[8px] font-mono bg-white text-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            <button class="relative group p-2">
+                <i data-lucide="shopping-bag" class="w-6 h-6 md:w-8 md:h-8 group-hover:rotate-12 transition-transform duration-500" style="stroke-width: 1;"></i>
+                <span class="absolute -top-1 -right-1 text-[10px] font-black bg-white text-black w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center animate-glitch-text">52</span>
             </button>
         </div>
     </nav>
 
-    <!-- FULLSCREEN MANIFESTO LANDING -->
+    <!-- LANDING: THE GHOST IN THE VOID -->
     <section class="relative h-screen w-full flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-neutral-900/20 to-black z-0"></div>
 
-        <div class="z-10 animate-reveal-up">
-            <span class="text-[10px] font-bold tracking-[1em] uppercase text-white/30 mb-8 block italic">Manifesto // 001</span>
-            <h2 class="text-[12vw] md:text-[14vw] font-black leading-[0.8] tracking-tighter uppercase italic mb-8">
-                NOIR<br/>
-                L'AMOUR
-            </h2>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-12 mt-12">
-                <p class="max-w-xs text-[10px] font-mono text-white/40 leading-relaxed text-left border-l border-white/10 pl-6 uppercase tracking-widest">
-                    A DIGITAL BRUTALIST SHRINE TO COMFORT AND LOVE. AN INDUSTRIAL STATEMENT ON THE HUMAN CONDITION.
-                </p>
-                <div class="group cursor-pointer">
-                    <div class="flex items-center gap-4 animate-bounce-slow">
-                        <span class="text-[10px] font-bold tracking-[0.5em] uppercase italic">Scroll to enter</span>
-                        <div class="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center group-hover:border-white transition-all">
-                            <i data-lucide="arrow-right" class="w-5 h-5 rotate-90"></i>
+        <!-- RASHAD'S PORTRAIT -->
+        <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+            <div class="relative w-full h-full max-w-[1400px] max-h-[95vh] overflow-hidden">
+                <img
+                    src="https://res.cloudinary.com/dd6z9fx5m/image/upload/v1768741546/Generated_Image_January_16_2026_-_7_14AM_jsbnok.jpg"
+                    class="absolute inset-0 w-full h-full object-cover grayscale scale-[1.3] opacity-25 filter blur-[2px] animate-pulse-slow"
+                    alt="Rashad Silhouette"
+                />
+                <img
+                    src="https://res.cloudinary.com/dd6z9fx5m/image/upload/v1768741546/Generated_Image_January_16_2026_-_7_14AM_jsbnok.jpg"
+                    class="absolute inset-0 w-full h-full object-cover grayscale scale-[1.35] contrast-[250%] brightness-150 animate-mystique-dramatic mix-blend-screen opacity-0"
+                    alt="Rashad Mystique"
+                />
+                <div class="absolute inset-0 opacity-[0.05] bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,white_3px)] animate-scan-move"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,#000000_85%)]"></div>
+            </div>
+        </div>
+
+        <!-- Interaction Energy Core -->
+        <div id="blastCore" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white blur-[200px] rounded-full opacity-0 pointer-events-none z-10"></div>
+
+        <div class="z-20 flex flex-col items-center select-none" id="heroClick">
+            <div class="flex items-center gap-4 md:gap-6 mb-12 md:mb-24 animate-reveal-up opacity-40">
+                <div class="w-8 md:w-12 h-px bg-white/20"></div>
+                <span class="text-[10px] md:text-[13px] font-black tracking-[1.5em] md:tracking-[2.5em] uppercase text-indigo-500 italic">Phase_01 // Premiere</span>
+                <div class="w-8 md:w-12 h-px bg-white/20"></div>
+            </div>
+
+            <div class="relative group cursor-pointer perspective-1000">
+                <h2 id="heroTitle" class="text-[19vw] md:text-[21vw] font-black leading-[0.6] tracking-tighter uppercase italic text-white mix-blend-difference transition-all duration-[1.5s] ease-in-out">
+                    NOIR<br/>
+                    L'AMOUR
+                </h2>
+                <div id="heroGlitch" class="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 text-[19vw] md:text-[21vw] font-black leading-[0.6] tracking-tighter uppercase italic pointer-events-none blur-[4px] text-indigo-400">
+                    NOIR<br/>L'AMOUR
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-40 mt-20 md:mt-40 max-w-7xl animate-reveal-up" style="animation-delay: 0.6s;">
+                <div class="flex flex-col gap-4 md:gap-6 text-left border-l-[6px] border-indigo-600 pl-8 md:pl-16 max-w-md">
+                    <span class="text-[11px] font-mono text-indigo-500 uppercase tracking-widest font-black">Core_Manifesto.txt</span>
+                    <p class="text-[12px] md:text-[15px] font-mono text-white/50 leading-relaxed uppercase tracking-[0.15em] md:tracking-[0.25em] italic">
+                        ARCHITECTING COMFORT FOR TRANSCENDENCE. AN INDUSTRIAL STATEMENT ON THE HUMAN VOID BY RASHAD.
+                    </p>
+                </div>
+
+                <div class="group cursor-pointer" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
+                    <div class="flex items-center gap-8 md:gap-16">
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="text-[11px] md:text-[13px] font-black tracking-[0.8em] md:tracking-[1em] uppercase italic group-hover:text-indigo-400 transition-all duration-700">Enter_Shrine</span>
+                            <span class="text-[9px] font-mono text-white/10 uppercase tracking-widest">Signal Locked: 1.0.4.X</span>
+                        </div>
+                        <div class="w-24 h-24 md:w-32 md:h-32 border border-white/5 rounded-full flex items-center justify-center group-hover:border-white transition-all duration-1000 animate-bounce-slow relative overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)]">
+                            <i data-lucide="arrow-right" class="w-8 h-8 md:w-10 md:h-10 rotate-90 relative z-10 transition-transform group-hover:scale-125"></i>
+                            <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-[0.8s] ease-in-out"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Ambient background -->
-        <div class="absolute bottom-[-10%] left-[-10%] w-full h-[60%] bg-orange-900/5 blur-[150px] rounded-full"></div>
+        <!-- Static Background Artifacts -->
+        <div class="absolute top-[30%] right-[10%] w-[1px] h-[50vh] bg-gradient-to-b from-transparent via-white/10 to-transparent opacity-20"></div>
+        <div class="absolute bottom-[10%] left-[10%] w-[1px] h-[50vh] bg-gradient-to-b from-transparent via-white/10 to-transparent opacity-20"></div>
     </section>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-[1800px] mx-auto px-6 md:px-10 pt-48 pb-64 space-y-48">
+    <main class="max-w-[2400px] mx-auto px-6 md:px-12 pt-32 md:pt-48 pb-[50vh] space-y-[40vh] md:space-y-[60vh] relative z-10">
 
-        <!-- Campaign Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-            <div class="lg:col-span-7 relative group overflow-hidden bg-neutral-900 aspect-[16/10]">
+        <!-- Campaign Block: THE PAIX SYSTEM -->
+        <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
+            <div class="lg:col-span-11 lg:col-start-1 relative group overflow-hidden bg-[#020202] aspect-[21/12] md:aspect-[21/9] border border-white/5 shadow-[0_0_200px_rgba(0,0,0,1)]">
                 <img
-                    src="https://images.unsplash.com/photo-1558769132-cb1aea1c8f80?auto=format&fit=crop&q=80&w=2000"
-                    class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-                    alt="Campaign"
+                    src="https://res.cloudinary.com/dd6z9fx5m/image/upload/v1768741512/Generated_Image_January_18_2026_-_8_48AM_1_bn1vxr.jpg"
+                    class="w-full h-full object-cover opacity-80 group-hover:scale-[1.15] grayscale transition-all duration-[5s] ease-in-out"
+                    alt="Paix Campaign"
                 />
-                <div class="absolute inset-0 bg-black/40"></div>
-                <div class="absolute bottom-8 md:bottom-12 left-8 md:left-12">
-                    <span class="text-[10px] font-mono tracking-widest text-white/50 mb-4 block">Archive Series 01.A</span>
-                    <h3 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter">THE PAIX SYSTEM</h3>
+                <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent opacity-80 group-hover:opacity-20 transition-all duration-[2s]"></div>
+
+                <div class="absolute bottom-12 md:bottom-24 left-12 md:left-24 flex items-center gap-6 md:gap-10 group-hover:translate-x-8 transition-transform duration-1000">
+                    <div class="w-20 md:w-40 h-[1px] bg-white/20"></div>
+                    <span class="text-[10px] md:text-[12px] font-black tracking-[0.8em] md:tracking-[1em] text-white/30 italic uppercase">Module_01.PAIX.System</span>
                 </div>
-            </div>
-            <div class="lg:col-span-4 lg:col-start-9 space-y-12">
-                <p class="text-xl md:text-2xl font-medium leading-snug italic text-white/60 uppercase tracking-tighter">
-                    "We don't sell clothes. We sell the silence of a luxury lounge at 2 AM."
-                </p>
-                <div class="h-px w-24 bg-white/20"></div>
             </div>
         </div>
 
-        <!-- PRODUCT GRID -->
-        <section class="space-y-20 md:space-y-32">
-            <div class="flex flex-col md:flex-row justify-between items-end gap-10">
-                <h2 class="text-5xl md:text-7xl lg:text-9xl font-black uppercase italic tracking-tighter leading-none">THE<br/>COLLECTION</h2>
-                <div class="flex gap-8 text-[10px] font-bold uppercase tracking-[0.4em] text-white/30 italic">
-                    <span>Total Units: 52</span>
-                    <span>/</span>
-                    <span>Drop: Authorized</span>
-                </div>
+        <!-- THE PRODUCT SHRINE -->
+        <section class="space-y-[30vh] md:space-y-[40vh]">
+            <div class="flex flex-col items-center gap-12 md:gap-20 text-center">
+                <div class="w-px h-48 md:h-96 bg-gradient-to-b from-indigo-500/40 via-white/5 to-transparent"></div>
+                <h2 class="text-[8rem] md:text-[15rem] lg:text-[25rem] font-black uppercase italic tracking-tighter leading-[0.5] opacity-[0.03] stroke-text select-none animate-pulse-slow">SHRINE</h2>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-1 gap-y-20 md:gap-y-32" id="productsGrid">
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[30vh] md:gap-y-[50vh] gap-x-12 md:gap-x-20 px-4 md:px-8 lg:px-40">
                 <!-- Products will be injected here -->
             </div>
         </section>
 
-        <!-- MANIFESTO BLOCK -->
-        <section class="py-32 md:py-48 border-t border-white/5 flex flex-col items-center">
-            <div class="max-w-4xl space-y-12">
-                <span class="text-[10px] font-bold tracking-[1em] uppercase text-orange-500 italic block text-center">THE SYSTEM</span>
-                <p class="text-2xl md:text-3xl lg:text-5xl font-black italic uppercase tracking-tighter leading-tight text-center">
-                    "WE DO NOT BUILD CLOTHING FOR CONSUMPTION. WE ARCHITECT COMFORT FOR THE PURPOSE OF LOVE AND TRANSCENDENCE."
+        <!-- BRUTALIST MANIFESTO FINAL -->
+        <section class="py-[30vh] md:py-[40vh] border-t border-white/5 flex flex-col items-center relative">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#1e1b4b1a_0%,transparent_70%)]"></div>
+
+            <div class="max-w-[90vw] space-y-20 md:space-y-40 text-center relative z-10">
+                <div class="relative inline-block group">
+                    <div class="absolute inset-0 bg-indigo-500 blur-[80px] opacity-0 group-hover:opacity-40 transition-opacity animate-pulse"></div>
+                    <div class="w-32 h-32 md:w-48 md:h-48 bg-white text-black rounded-full flex items-center justify-center mx-auto shadow-2xl relative z-10 group-hover:scale-110 transition-all duration-700 animate-mystique-dramatic">
+                        <i data-lucide="zap" class="w-16 h-16 md:w-20 md:h-20" fill="currentColor"></i>
+                    </div>
+                </div>
+
+                <p class="text-5xl md:text-8xl lg:text-[16vw] font-black italic uppercase tracking-tighter leading-[0.75] text-white mix-blend-difference group cursor-pointer hover:tracking-widest transition-all duration-[3s]">
+                    "COMFORT FOR<br/>THE VOID."
                 </p>
-                <div class="flex justify-center pt-12">
-                    <p class="text-[11px] font-mono text-white/30 uppercase tracking-[0.8em]">Designed in the Void // R A S H A D</p>
+
+                <div class="flex flex-col items-center gap-6 md:gap-10">
+                    <div class="h-24 md:h-40 w-[1.5px] bg-gradient-to-b from-indigo-500 to-transparent"></div>
+                    <p class="text-[12px] md:text-[16px] font-mono text-white/30 uppercase tracking-[2em] md:tracking-[3em] italic font-black pl-[2em] md:pl-[3em]">Noir L'Amour is the ticket.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- BURGER MENU OVERLAY -->
-    <div id="menuOverlay" class="fixed inset-0 z-[100] bg-black hidden">
-        <div class="flex flex-col p-8 md:p-20 h-full">
-            <button id="closeMenu" class="absolute top-8 md:top-12 left-8 md:left-12 text-[10px] font-bold uppercase tracking-[1em] italic text-white/40 hover:text-white transition-colors">Close</button>
-            <div class="flex-1 flex flex-col justify-center gap-6 md:gap-8">
-                <a href="#" onclick="scrollToCollection(event)" class="text-5xl md:text-7xl lg:text-[8vw] font-black uppercase italic tracking-tighter hover:text-orange-500 transition-colors">
-                    <span class="text-xs font-mono mr-4 md:mr-8 text-white/10 italic">01.</span>
-                    The Collection
-                </a>
-                <a href="index.html" class="text-5xl md:text-7xl lg:text-[8vw] font-black uppercase italic tracking-tighter hover:text-orange-500 transition-colors">
-                    <span class="text-xs font-mono mr-4 md:mr-8 text-white/10 italic">02.</span>
-                    Return Home
-                </a>
-                <a href="#" class="text-5xl md:text-7xl lg:text-[8vw] font-black uppercase italic tracking-tighter hover:text-orange-500 transition-colors">
-                    <span class="text-xs font-mono mr-4 md:mr-8 text-white/10 italic">03.</span>
-                    Mission
-                </a>
-                <a href="mailto:richard.fproductions@gmail.com" class="text-5xl md:text-7xl lg:text-[8vw] font-black uppercase italic tracking-tighter hover:text-orange-500 transition-colors">
-                    <span class="text-xs font-mono mr-4 md:mr-8 text-white/10 italic">04.</span>
-                    Contact
-                </a>
-            </div>
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-white/5 pt-8 md:pt-12 gap-6">
-                <p class="text-[10px] font-mono text-white/20 uppercase tracking-widest">Global Logistics: Authorized</p>
-                <div class="flex flex-col items-start md:items-end">
-                    <h1 class="text-2xl font-black tracking-tighter uppercase italic leading-none">Noir L'Amour</h1>
-                    <p class="text-[8px] tracking-[0.8em] uppercase text-white/40 mt-1 pl-1">by R A S H A D</p>
-                </div>
-            </div>
+    <!-- OVERLAY SYSTEM MENU -->
+    <div id="menuOverlay" class="fixed inset-0 z-[2000] bg-black hidden flex-col p-8 md:p-16 lg:p-48 overflow-hidden">
+        <div class="absolute inset-0 noise-bg opacity-[0.15] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-scanline opacity-[0.05]"></div>
+
+        <button id="closeMenu" class="absolute top-12 md:top-20 left-12 md:left-20 text-[14px] md:text-[16px] font-black uppercase tracking-[1.5em] md:tracking-[2em] italic text-indigo-500 hover:text-white transition-all flex items-center gap-6 md:gap-10 z-10">
+            <i data-lucide="x" class="w-8 h-8 md:w-10 md:h-10" style="stroke-width: 1;"></i> Disconnect
+        </button>
+
+        <div class="flex-1 flex flex-col justify-center gap-16 md:gap-32 relative z-10">
+            <a href="#" onclick="scrollToCollection(event)" class="text-[12vw] md:text-[14vw] font-black uppercase italic tracking-tighter hover:text-white text-white/10 transition-all duration-1000 flex items-baseline group skew-x-[-5deg] hover:skew-x-0">
+                <span class="text-xl md:text-2xl font-mono mr-12 md:mr-32 text-indigo-500 group-hover:text-white transition-colors italic tracking-widest">01.X</span>
+                The Shrine
+            </a>
+            <a href="index.html" class="text-[12vw] md:text-[14vw] font-black uppercase italic tracking-tighter hover:text-white text-white/10 transition-all duration-1000 flex items-baseline group skew-x-[-5deg] hover:skew-x-0">
+                <span class="text-xl md:text-2xl font-mono mr-12 md:mr-32 text-indigo-500 group-hover:text-white transition-colors italic tracking-widest">02.X</span>
+                Archives
+            </a>
+            <a href="#" class="text-[12vw] md:text-[14vw] font-black uppercase italic tracking-tighter hover:text-white text-white/10 transition-all duration-1000 flex items-baseline group skew-x-[-5deg] hover:skew-x-0">
+                <span class="text-xl md:text-2xl font-mono mr-12 md:mr-32 text-indigo-500 group-hover:text-white transition-colors italic tracking-widest">03.X</span>
+                Manifesto
+            </a>
+            <a href="mailto:richard.fproductions@gmail.com" class="text-[12vw] md:text-[14vw] font-black uppercase italic tracking-tighter hover:text-white text-white/10 transition-all duration-1000 flex items-baseline group skew-x-[-5deg] hover:skew-x-0">
+                <span class="text-xl md:text-2xl font-mono mr-12 md:mr-32 text-indigo-500 group-hover:text-white transition-colors italic tracking-widest">04.X</span>
+                Contact
+            </a>
         </div>
     </div>
 
-    <!-- DETAIL MODAL -->
-    <div id="productModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-0 md:p-12">
-        <div class="absolute inset-0 bg-black/98 backdrop-blur-2xl" onclick="closeModal()"></div>
-        <div class="bg-black border border-white/10 w-full h-full md:h-[90vh] max-w-7xl overflow-hidden relative z-10 animate-reveal-up flex flex-col lg:flex-row">
-            <button onclick="closeModal()" class="absolute top-8 md:top-12 right-8 md:right-12 z-20 hover:rotate-90 transition-transform">
-                <i data-lucide="x" class="w-8 h-8"></i>
-            </button>
-
-            <div class="flex-1 bg-[#050505] p-12 md:p-20 flex items-center justify-center relative overflow-hidden">
-                <div class="absolute top-8 md:top-12 left-8 md:left-12 flex flex-col gap-1">
-                    <span class="text-[10px] font-black text-orange-500 uppercase tracking-widest italic">Reference ID</span>
-                    <span class="text-2xl font-mono text-white/20" id="modalId">NL-001X</span>
-                </div>
-                <img id="modalImage" src="" alt="" class="w-full h-auto max-w-md object-contain drop-shadow-[0_0_80px_rgba(255,255,255,0.05)]" />
+    <!-- SYSTEM META FOOTER -->
+    <footer class="fixed bottom-8 md:bottom-16 left-8 md:left-16 z-[800] mix-blend-difference">
+        <div class="flex flex-col gap-3 md:gap-4 text-[9px] md:text-[10px] font-mono font-black uppercase tracking-[0.6em] md:tracking-[0.8em] text-white/10 italic">
+            <div class="flex items-center gap-4 md:gap-6">
+                <div class="w-2 h-2 md:w-3 md:h-3 bg-indigo-600 rounded-full animate-pulse shadow-[0_0_15px_rgba(79,70,229,1)]"></div>
+                <span>Encryption: Active_256</span>
             </div>
-
-            <div class="lg:w-[450px] bg-black border-t lg:border-t-0 lg:border-l border-white/5 p-8 md:p-12 lg:p-20 flex flex-col justify-between">
-                <div>
-                    <span class="text-[10px] font-black uppercase tracking-[0.5em] text-white/30 italic mb-8 block">Project Noir</span>
-                    <h2 id="modalName" class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-[0.85] mb-4">Product Name</h2>
-                    <p id="modalPrice" class="text-2xl font-light text-neutral-600 mb-12 tracking-[0.1em]">$00.00</p>
-                    <div class="space-y-8">
-                        <div class="p-6 bg-white/2 border border-white/5">
-                            <h5 class="text-[10px] font-bold uppercase tracking-widest mb-3 text-orange-500 italic">Composition</h5>
-                            <p id="modalType" class="text-xs font-mono text-neutral-400 leading-relaxed uppercase">
-                                Premium quality apparel engineered for supreme comfort and durability.
-                            </p>
-                        </div>
-                        <div class="p-6 bg-white/2 border border-white/5">
-                            <h5 class="text-[10px] font-bold uppercase tracking-widest mb-3 text-orange-500 italic">Category</h5>
-                            <p id="modalCategory" class="text-xs font-mono text-neutral-400 leading-relaxed uppercase">
-                                Collection
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <a id="modalLink" href="#" target="_blank" class="w-full py-6 md:py-8 bg-white text-black font-black text-xl md:text-2xl uppercase italic tracking-tighter text-center hover:bg-orange-600 hover:text-white transition-all mt-8">
-                    Authorize Acquisition
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="py-16 md:py-24 border-t border-white/5 bg-black">
-        <div class="max-w-[1800px] mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-12">
-            <div class="flex flex-col items-center md:items-start">
-                <h1 class="text-3xl md:text-4xl font-black tracking-tighter uppercase italic leading-none">Noir L'Amour</h1>
-                <p class="text-[10px] tracking-[1.2em] uppercase text-white/40 mt-2 pl-1 italic">by R A S H A D</p>
-            </div>
-            <div class="flex gap-8 md:gap-12 text-[10px] font-bold uppercase tracking-widest text-white/20 italic">
-                <a href="index.html" class="hover:text-white transition-colors">Home</a>
-                <a href="flow-energy-store.html" class="hover:text-white transition-colors">Flow Energy</a>
-                <a href="mailto:richard.fproductions@gmail.com" class="hover:text-white transition-colors">Contact</a>
-            </div>
+            <span>System Build v11.0.0 // RASHAD INTEGRATED</span>
         </div>
     </footer>
 
@@ -326,160 +411,207 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Product Data with Stock Status
+        // Product Data
         const products = [
-  {"id": 1, "name": "NOIR L'AMOUR", "price": "$30.00", "category": "T-Shirts", "product_type": "Essential Tee", "image": "https://mockup-api.teespring.com/v3/image/D2zTv8-_ZfyPLDisXSLZpB3RWDo/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-9753?product=1303", "stock": "Low"},
-  {"id": 2, "name": "NOIR L'AMOUR FASHION", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/A0iYS0NcKuI_sEicBnd6EODx-iU/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-fashion?product=369", "stock": "Archives"},
-  {"id": 3, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/T31DSxB6bHooj_DLNl6XSnrNMtQ/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-2021?product=369", "stock": "12 Units"},
-  {"id": 4, "name": "NOIR L'AMOUR- HEART", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/ybplvzvmMUQU_tSUbPsItuCMfkc/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-heart?product=369", "stock": "Limited"},
-  {"id": 5, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/3tfje3Q9LveSVyeoCQql34eCb3g/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-august-2021?product=369", "stock": "Archives"},
-  {"id": 6, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/W9w94X5vWRrACYswz6z54L6riHs/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-3201?product=369", "stock": "Low"},
-  {"id": 7, "name": "NOIR L'AMOUR- TROPICS", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/XdEvRJcvMIZlff3TX6miyZax6D4/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=369", "stock": "15 Units"},
-  {"id": 8, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/QEbSEo6zgil-uPguQn1038-fw1o/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/buy-noir-l-amour?product=369", "stock": "Archives"},
-  {"id": 9, "name": "NOIR L'AMOUR (2)", "price": "$25.00", "category": "T-Shirts", "product_type": "Classic Crew Neck T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/a7ryYtQTak6l6oR0UuRKFwkbp3Y/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=2", "stock": "Low"},
-  {"id": 10, "name": "NOIR L'AMOUR- FOREVER MINE", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/s4GAPnjBLD5IRv8t0Tpm2CC71ts/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-forever-mine?product=1608", "stock": "Limited"},
-  {"id": 11, "name": "NOIR L'AMOUR- FOREVER MINE", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/1BUMxcN-9KddHhFu_-xe5C9dHJA/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-forever-mine?product=1608", "stock": "8 Units"},
-  {"id": 12, "name": "NOIR L'AMOUR- XO EDITION", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/jx462Wh1QR6RiDft-kEdmpN3kpk/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-xo-edition?product=1608", "stock": "Limited"},
-  {"id": 13, "name": "NOIR L'AMOUR- XO EDITION (BLUE)", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/TQVlH6BDE6kBZJ8GyoRWxoq2iWM/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-xo-edition-blue?product=1608", "stock": "6 Units"},
-  {"id": 14, "name": "NOIR L'AMOUR- CUPID", "price": "$30.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/unW9EcrrAK-XsyLtbyRYk-3I3kA/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-cupid?product=1608", "stock": "Low"},
-  {"id": 15, "name": "NOIR L'AMOUR", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/M6NhK9B1AG6bGjvuxX1eeHdopQk/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-november-2021?product=1608", "stock": "Archives"},
-  {"id": 16, "name": "NOIR L'AMOUR", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/vrHTW3Qeedehy4vFXxwAafO_-mo/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-9753?product=1608", "stock": "10 Units"},
-  {"id": 17, "name": "NOIR L'AMOUR- NL", "price": "$45.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/rd3OKTj-ixDSpmcwsJ6SQCDndVk/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=227", "stock": "Limited"},
-  {"id": 18, "name": "NOIR L'AMOUR- NL", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/Rp-a3Kf7q6b86yP9WnzxGPS2Xbc/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=345", "stock": "14 Units"},
-  {"id": 19, "name": "NOIR L'AMOUR- NL", "price": "$50.00", "category": "Hoodies & Sweatshirts", "product_type": "AS Colour Stencil Hoodie", "image": "https://mockup-api.teespring.com/v3/image/xsGTjsC73LQHiU-vXw9MZ7o9XV4/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=1301", "stock": "Limited"},
-  {"id": 20, "name": "NOIR L'AMOUR- NL", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/6XbB25jFB8EqkjQcep8cKUMrfeM/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=1608", "stock": "8 Units"},
-  {"id": 21, "name": "NOIR L'AMOUR", "price": "$45.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/kmy9aJ9tMLBGDoXo1ZpUiPVPjR8/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=227", "stock": "Limited"},
-  {"id": 22, "name": "NOIR L'AMOUR", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/K4XgUc4Rc_WdBRDg6SD4jJu6bsM/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=345", "stock": "Archives"},
-  {"id": 23, "name": "NOIR L'AMOUR", "price": "$50.00", "category": "Hoodies & Sweatshirts", "product_type": "AS Colour Stencil Hoodie", "image": "https://mockup-api.teespring.com/v3/image/IksJp6kFyBkRGpO0S42a3e6iF2U/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=1301", "stock": "Low"},
-  {"id": 24, "name": "NOIR L'AMOUR", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/HpLkzmZGFIwaPzsjMMAFY1iHYS0/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=1608", "stock": "10 Units"},
-  {"id": 25, "name": "NOIR L'AMOUR- JE T'AIME EDITION", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/lDxoVlGpsHDuQkcnXqSGs_FYoU8/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-je-t-aime-editio?product=227", "stock": "Limited"},
-  {"id": 26, "name": "NOIR L'AMOUR- JE T'AIME EDITION", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/qmReL5hzSzJXzpJAjsFGqIOsu6k/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-je-t-aime-editio?product=345", "stock": "12 Units"},
-  {"id": 27, "name": "NOIR L'AMOUR- JE T'AIME EDITION", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/WQVESwW34VkA--w9q8uHZdJr5IE/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-je-t-aime-editio?product=1608", "stock": "Low"},
-  {"id": 28, "name": "NOIR L'AMOUR- VALENTINE EDITION", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Classic Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/PlLINZsBTs2d8caZ6EHfvnA3t38/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-valentine-editio?product=212", "stock": "Limited"},
-  {"id": 29, "name": "NOIR L'AMOUR- VALENTINE EDITION", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/V25sgoKjJeGLOQzS6vfia0JhxJ8/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-valentine-editio?product=227", "stock": "6 Units"},
-  {"id": 30, "name": "NOIR L'AMOUR- VALENTINE EDITION", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/CFWW9sgeqQsIMIyg_gT0dhk6qpQ/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-valentine-editio?product=345", "stock": "Archives"},
-  {"id": 31, "name": "NOIR L'AMOUR- PAIX EDITION", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Classic Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/LNtGdDDzbn7_D289qW3zHFDhwlA/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-paix-edition?product=212", "stock": "Low"},
-  {"id": 32, "name": "NOIR L'AMOUR- PAIX EDITION", "price": "$41.99", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/_Rt0kx8SZl2wLGdxJ0pEkbZp7X0/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-paix-edition?product=227", "stock": "Limited"},
-  {"id": 33, "name": "NOIR L'AMOUR- PAIX EDITION", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/oBFpSt9q15WsKwWzQw-5tIF3ZTc/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-paix-edition?product=345", "stock": "18 Units"},
-  {"id": 34, "name": "NOIR L'AMOUR", "price": "$25.99", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/JWKSHGQaFuH69j7kVUoCOG3CAsI/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-2021?product=117", "stock": "Archives"},
-  {"id": 35, "name": "NOIR L'AMOUR- HEART", "price": "$22.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/xvmH-JNhFe2JVzNCE4Cl8VxAfMw/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-heart?product=117", "stock": "Low"},
-  {"id": 36, "name": "NOIR L'AMOUR- TROPICS", "price": "$22.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/oRL7UAFaBruwn_4jed1aKTKGICI/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=117", "stock": "16 Units"},
-  {"id": 37, "name": "NOIR L'AMOUR- TROPICS", "price": "$25.00", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/Og1hBn34Tlqjie7A9g57AeNYja8/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=95", "stock": "Limited"},
-  {"id": 38, "name": "NOIR L'AMOUR", "price": "$22.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/_FXGPgBc3EO2rQusW8KUwdJS1Ag/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/buy-noir-l-amour?product=117", "stock": "Archives"},
-  {"id": 39, "name": "NOIR L'AMOUR (FLOW)", "price": "$22.00", "category": "Tank Tops", "product_type": "Classic Tank Top", "image": "https://mockup-api.teespring.com/v3/image/ojU1z1691obdqT25PhUNy7hx6Ps/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-nori-l-amour-flow?product=14", "stock": "Low"},
-  {"id": 40, "name": "NOIR L'AMOUR (FLOW)", "price": "$22.00", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/zjEyfpG_xfpXewwVtrZHU6y-Y_8/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-nori-l-amour-flow?product=95", "stock": "11 Units"},
-  {"id": 41, "name": "NOIR L'AMOUR (FLOW)", "price": "$22.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/ALgrfTD-ZTaLmujvdde_fDXmnVE/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-nori-l-amour-flow?product=117", "stock": "Limited"},
-  {"id": 42, "name": "NOIR L'AMOUR", "price": "$22.00", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/cKKoHaHdhbpwVpfRaEej-ji-V3E/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour?product=95", "stock": "Archives"},
-  {"id": 43, "name": "NOIR L'AMOUR (2)", "price": "$22.00", "category": "Tank Tops", "product_type": "Classic Tank Top", "image": "https://mockup-api.teespring.com/v3/image/XveaQ3zCGB7ekymN_Qn7cO0B1ZM/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=14", "stock": "9 Units"},
-  {"id": 44, "name": "NOIR L'AMOUR (2)", "price": "$22.00", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/0Fe8fhAPFs2MB1eUayGD4JBb8K0/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=95", "stock": "Low"},
-  {"id": 45, "name": "NOIR L'AMOUR (FLOW)", "price": "$22.00", "category": "Tank Tops", "product_type": "Classic Tank Top", "image": "https://mockup-api.teespring.com/v3/image/AFffWXRSfdLYInN0M6oPnSBdiN0/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-flow?product=14", "stock": "Limited"},
-  {"id": 46, "name": "NOIR L'AMOUR (FLOW)", "price": "$22.00", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/ncOvQ0ZIE6uqWZQwYVXPaHs2EJA/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-flow?product=95", "stock": "13 Units"},
-  {"id": 47, "name": "NOIR L'AMOUR", "price": "$22.99", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/q7Sg6j6k5BETHCYRM62Q69tSif8/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour?product=95", "stock": "Low"},
-  {"id": 48, "name": "NOIR L'AMOUR", "price": "$22.99", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/W2XEVnx_UpeZHoTdEAh3Tm-YO3k/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/get-noir-l-amour?product=95", "stock": "Archives"},
-  {"id": 49, "name": "NOIR L'AMOUR- (S,S,T)", "price": "$22.99", "category": "Tank Tops", "product_type": "Women's Flowy Tank Top", "image": "https://mockup-api.teespring.com/v3/image/GZ-iSdK6TExkVqf-Hs6TxsVYLLo/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-s-s-t?product=95", "stock": "Limited"},
-  {"id": 50, "name": "NOIR L'AMOUR- (S,S,T)", "price": "$22.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/ZTGXx6v6FNOM4_7s8UQOrm748IY/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-s-s-t?product=117", "stock": "8 Units"},
-  {"id": 51, "name": "NOIR L'AMOUR (LADIES)", "price": "$20.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/Om8H6dKFXQuPQbw6UNtrroPA7sc/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-ladies?product=117", "stock": "Low"},
-  {"id": 52, "name": "NOIR L'AMOUR", "price": "$30.00", "category": "T-Shirts", "product_type": "Premium Long Sleeve Tee", "image": "https://mockup-api.teespring.com/v3/image/LFJ_SHmkym1Igfv0_QER4PvJeGc/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=328", "stock": "Limited"}
-];
+            { "id": 1, "name": "NOIR L'AMOUR", "price": "$30.00", "category": "T-Shirts", "product_type": "Essential Tee", "image": "https://mockup-api.teespring.com/v3/image/D2zTv8-_ZfyPLDisXSLZpB3RWDo/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-9753?product=1303", "stock": "VAULT_ACCESS: 01", "align": "start", "skew": "-2deg" },
+            { "id": 2, "name": "NOIR L'AMOUR FASHION", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/A0iYS0NcKuI_sEicBnd6EODx-iU/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-fashion?product=369", "stock": "ARCHIVE_REF", "align": "center", "skew": "1deg" },
+            { "id": 3, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/T31DSxB6bHooj_DLNl6XSnrNMtQ/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-2021?product=369", "stock": "RESTRICTED", "align": "end", "skew": "-1deg" },
+            { "id": 4, "name": "NOIR L'AMOUR- HEART", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/ybplvzvmMUQU_tSUbPsItuCMfkc/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-heart?product=369", "stock": "SCARCITY_HIGH", "align": "start", "skew": "3deg" },
+            { "id": 5, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/3tfje3Q9LveSVyeoCQql34eCb3g/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-august-2021?product=369", "stock": "PREMIERE_UNIT", "align": "center", "skew": "-4deg" },
+            { "id": 6, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/W9w94X5vWRrACYswz6z54L6riHs/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-3201?product=369", "stock": "LOW_INTENSITY", "align": "end", "skew": "2deg" },
+            { "id": 7, "name": "NOIR L'AMOUR- TROPICS", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/XdEvRJcvMIZlff3TX6miyZax6D4/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=369", "stock": "VAULT_ACCESS: 02", "align": "start", "skew": "-3deg" },
+            { "id": 8, "name": "NOIR L'AMOUR", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/QEbSEo6zgil-uPguQn1038-fw1o/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/buy-noir-l-amour?product=369", "stock": "ARCHIVE_REF", "align": "center", "skew": "1.5deg" },
+            { "id": 9, "name": "NOIR L'AMOUR (2)", "price": "$25.00", "category": "T-Shirts", "product_type": "Classic Crew Neck T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/a7ryYtQTak6l6oR0UuRKFwkbp3Y/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=2", "stock": "RESTRICTED", "align": "end", "skew": "-2deg" },
+            { "id": 10, "name": "NOIR L'AMOUR- FOREVER MINE", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/s4GAPnjBLD5IRv8t0Tpm2CC71ts/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-forever-mine?product=1608", "stock": "SCARCITY_HIGH", "align": "start", "skew": "2.5deg" },
+            { "id": 11, "name": "NOIR L'AMOUR- FOREVER MINE", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/1BUMxcN-9KddHhFu_-xe5C9dHJA/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-forever-mine?product=1608", "stock": "PREMIERE_UNIT", "align": "center", "skew": "-1.5deg" },
+            { "id": 12, "name": "NOIR L'AMOUR- XO EDITION", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/jx462Wh1QR6RiDft-kEdmpN3kpk/800/800.jpg", "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-xo-edition?product=1608", "stock": "LOW_INTENSITY", "align": "end", "skew": "3deg" }
+        ];
+
+        let hoveredId = null;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.transform = `translate(${mouseX - 20}px, ${mouseY - 20}px)`;
+        });
+
+        // Hero Blast Effect
+        const heroClick = document.getElementById('heroClick');
+        const blastCore = document.getElementById('blastCore');
+        const heroTitle = document.getElementById('heroTitle');
+        const heroGlitch = document.getElementById('heroGlitch');
+
+        heroClick.addEventListener('click', () => {
+            blastCore.classList.add('animate-blast');
+            heroTitle.style.transform = 'skewX(-10deg) scale(0.95)';
+            heroGlitch.classList.add('opacity-30', 'animate-text-glitch');
+
+            setTimeout(() => {
+                blastCore.classList.remove('animate-blast');
+                heroTitle.style.transform = '';
+                heroGlitch.classList.remove('opacity-30', 'animate-text-glitch');
+            }, 1600);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('bg-black/95', 'backdrop-blur-3xl', 'py-6', 'border-b', 'border-white/5');
+                navbar.classList.remove('py-14');
+
+                // Burger menu animation
+                const lines = navbar.querySelectorAll('.burger-line');
+                lines[0].style.transform = 'translateX(16px)';
+                lines[0].style.background = '#6366f1';
+                lines[1].style.width = '100%';
+                lines[1].style.transform = 'translateX(8px)';
+                lines[2].style.transform = 'translateX(24px)';
+                lines[2].style.background = '#6366f1';
+            } else {
+                navbar.classList.remove('bg-black/95', 'backdrop-blur-3xl', 'py-6', 'border-b', 'border-white/5');
+                navbar.classList.add('py-14');
+
+                const lines = navbar.querySelectorAll('.burger-line');
+                lines[0].style.transform = '';
+                lines[0].style.background = '';
+                lines[1].style.width = '';
+                lines[1].style.transform = '';
+                lines[2].style.transform = '';
+                lines[2].style.background = '';
+            }
+        });
 
         // Render Products
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
-            products.forEach((product) => {
+            products.forEach((product, index) => {
+                const alignClass =
+                    product.align === 'start' ? 'items-start self-start rotate-[-1deg]' :
+                    product.align === 'center' ? 'items-center self-center md:mt-64 rotate-[1deg]' :
+                    'items-end self-end md:mt-[50vh] rotate-[-0.5deg]';
+
                 const card = document.createElement('div');
-                card.className = 'product-card group relative';
+                card.className = `group relative flex flex-col transition-all duration-1000 ${alignClass}`;
+                card.dataset.id = product.id;
                 card.innerHTML = `
-                    <div class="relative aspect-[3/4] overflow-hidden bg-[#121212] mb-8 border border-white/5 transition-all duration-700 hover:border-white/20">
+                    <div class="product-meta absolute -top-12 md:-top-20 left-0 w-full flex justify-between px-6 md:px-10 transition-all duration-700 opacity-0">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[10px] md:text-[11px] font-black text-indigo-500 uppercase tracking-[0.4em] italic">${product.stock}</span>
+                            <span class="text-[8px] font-mono text-white/20 uppercase">Lat_40.7128</span>
+                        </div>
+                        <i data-lucide="compass" class="w-4 h-4 md:w-5 md:h-5 text-indigo-500 animate-spin-slow"></i>
+                    </div>
+
+                    <div class="product-chassis relative w-full max-w-lg aspect-[3.5/4] overflow-hidden bg-[#030303] border border-white/5 transition-all duration-1000">
                         <img
                             src="${product.image}"
                             alt="${product.name}"
-                            class="w-full h-full object-cover"
+                            class="w-full h-full object-cover grayscale opacity-20 transition-all duration-[2s] ease-out"
                             loading="lazy"
                         />
 
-                        <div class="absolute inset-0 bg-orange-600/10 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"></div>
+                        <div class="glitch-overlay absolute inset-0 bg-indigo-900/10 pointer-events-none transition-opacity duration-300 opacity-0"></div>
 
-                        <div class="absolute top-4 md:top-6 right-4 md:right-6 px-3 py-1 bg-white text-black text-[9px] font-black uppercase tracking-widest flex items-center gap-2">
-                            <div class="w-1.5 h-1.5 bg-red-600 rounded-full stock-pulse"></div>
-                            ${product.stock}
-                        </div>
-
-                        <div class="absolute inset-0 flex items-center justify-center gap-4 transition-all duration-500 opacity-0 translate-y-10 group-hover:opacity-100 group-hover:translate-y-0">
-                            <button onclick='openModal(${JSON.stringify(product)})' class="w-12 h-12 md:w-14 md:h-14 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 active:scale-90 transition-all">
-                                <i data-lucide="info" class="w-5 h-5 md:w-6 md:h-6"></i>
+                        <div class="action-menu absolute inset-0 flex items-center justify-center gap-8 md:gap-14 transition-all duration-1000 opacity-0 translate-y-32 scale-50">
+                            <button class="view-btn w-20 h-20 md:w-28 md:h-28 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-2xl border-4 border-indigo-500/0 hover:border-indigo-500/20">
+                                <i data-lucide="eye" class="w-8 h-8 md:w-10 md:h-10" style="stroke-width: 1.5;"></i>
                             </button>
-                            <a href="${product.link}" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-black text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                                <i data-lucide="shopping-bag" class="w-5 h-5 md:w-6 md:h-6"></i>
+                            <a href="${product.link}" target="_blank" class="w-20 h-20 md:w-28 md:h-28 bg-black text-white border-2 border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all shadow-2xl overflow-hidden relative group/btn">
+                                <i data-lucide="shopping-bag" class="w-8 h-8 md:w-10 md:h-10 relative z-10" style="stroke-width: 1.5;"></i>
+                                <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"></div>
                             </a>
                         </div>
                     </div>
 
-                    <div class="space-y-2 px-2">
-                        <div class="flex justify-between items-baseline gap-2">
-                            <h4 class="text-base md:text-xl font-black italic uppercase tracking-tighter flex-1">${product.name}</h4>
-                            <span class="text-[10px] font-mono text-white/40">${product.price}</span>
+                    <div class="product-bio mt-8 md:mt-16 space-y-4 md:space-y-6 transition-all duration-1000">
+                        <h4 class="text-4xl md:text-7xl font-black italic uppercase tracking-tighter leading-[0.8] group-hover:text-white transition-colors border-l border-white/10 pl-4 md:pl-8">${product.name}</h4>
+                        <div class="flex items-center gap-6 md:gap-12 text-[10px] md:text-[12px] font-mono text-white/20 uppercase tracking-[0.4em] md:tracking-[0.6em] pl-4 md:pl-8">
+                            <span class="text-indigo-400 font-black">${product.price}</span>
+                            <div class="w-8 md:w-12 h-px bg-white/5"></div>
+                            <span class="italic opacity-40">System_Unit_${product.id}</span>
                         </div>
-                        <p class="text-[10px] font-mono text-white/20 uppercase tracking-[0.2em]">${product.category} // ID: ${product.id}</p>
                     </div>
                 `;
+
+                // Hover effects
+                card.addEventListener('mouseenter', () => {
+                    hoveredId = product.id;
+                    const meta = card.querySelector('.product-meta');
+                    const chassis = card.querySelector('.product-chassis');
+                    const glitch = card.querySelector('.glitch-overlay');
+                    const actions = card.querySelector('.action-menu');
+                    const bio = card.querySelector('.product-bio');
+                    const img = card.querySelector('img');
+
+                    meta.classList.remove('opacity-0');
+                    meta.classList.add('-translate-y-8');
+                    chassis.style.transform = `skew(${product.skew}) scale(1.05)`;
+                    chassis.classList.add('border-indigo-500/50', 'shadow-[0_0_100px_rgba(79,70,229,0.1)]');
+                    glitch.classList.add('animate-mystique-dramatic', 'opacity-100');
+                    actions.classList.remove('opacity-0', 'translate-y-32', 'scale-50');
+                    actions.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+                    bio.style.transform = 'translateX(32px) skewX(-5deg)';
+                    img.classList.remove('grayscale', 'opacity-20');
+                    img.classList.add('opacity-100', 'scale-110');
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    hoveredId = null;
+                    const meta = card.querySelector('.product-meta');
+                    const chassis = card.querySelector('.product-chassis');
+                    const glitch = card.querySelector('.glitch-overlay');
+                    const actions = card.querySelector('.action-menu');
+                    const bio = card.querySelector('.product-bio');
+                    const img = card.querySelector('img');
+
+                    meta.classList.add('opacity-0');
+                    meta.classList.remove('-translate-y-8');
+                    chassis.style.transform = 'skew(0deg) scale(1)';
+                    chassis.classList.remove('border-indigo-500/50', 'shadow-[0_0_100px_rgba(79,70,229,0.1)]');
+                    glitch.classList.remove('animate-mystique-dramatic', 'opacity-100');
+                    actions.classList.add('opacity-0', 'translate-y-32', 'scale-50');
+                    actions.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+                    bio.style.transform = '';
+                    img.classList.add('grayscale', 'opacity-20');
+                    img.classList.remove('opacity-100', 'scale-110');
+                });
+
                 grid.appendChild(card);
             });
             lucide.createIcons();
         }
 
-        // Modal Functions
-        function openModal(product) {
-            const modal = document.getElementById('productModal');
-            document.getElementById('modalId').textContent = `NL-${product.id}X`;
-            document.getElementById('modalImage').src = product.image;
-            document.getElementById('modalName').textContent = product.name;
-            document.getElementById('modalPrice').textContent = product.price;
-            document.getElementById('modalType').textContent = product.product_type;
-            document.getElementById('modalCategory').textContent = product.category;
-            document.getElementById('modalLink').href = product.link;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        // Menu Functions
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.classList.remove('hidden');
+            menuOverlay.classList.add('flex');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('productModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Menu Functions
-        document.getElementById('menuBtn').addEventListener('click', () => {
-            document.getElementById('menuOverlay').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
         });
 
-        document.getElementById('closeMenu').addEventListener('click', () => {
-            document.getElementById('menuOverlay').classList.add('hidden');
+        closeMenu.addEventListener('click', () => {
+            menuOverlay.classList.add('hidden');
+            menuOverlay.classList.remove('flex');
             document.body.style.overflow = 'auto';
         });
 
         // Scroll to Collection
         function scrollToCollection(e) {
             e.preventDefault();
-            document.getElementById('menuOverlay').classList.add('hidden');
+            menuOverlay.classList.add('hidden');
+            menuOverlay.classList.remove('flex');
             document.body.style.overflow = 'auto';
             document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
         }
-
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                nav.classList.add('bg-black/90', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-6');
-                nav.classList.remove('py-10');
-            } else {
-                nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-6');
-                nav.classList.add('py-10');
-            }
-        });
 
         // Initialize
         renderProducts();
