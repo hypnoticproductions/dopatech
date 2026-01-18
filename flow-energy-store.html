@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Energy Store | Dopamine Clothing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: rgba(99, 102, 241, 0.5);
+            color: white;
+        }
+
+        /* Tech Grid Background */
+        .tech-grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.2;
+        }
+
+        .tech-grid-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 1px 1px, #312e81 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .tech-grid-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(49, 46, 129, 0.2), transparent, black);
+        }
+
+        /* Scanning Beam Animation */
+        @keyframes scan {
+            0% { transform: translateY(-10vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(110vh); opacity: 0; }
+        }
+
+        .scanning-beam {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(99, 102, 241, 0.2);
+            filter: blur(8px);
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-text {
+            animation: marquee 35s linear infinite;
+        }
+
+        /* Stroke Text */
+        .stroke-text {
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.4);
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* Reveal Animations */
+        @keyframes reveal-left {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes reveal-right {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes reveal-up {
+            from { opacity: 0; transform: translateY(60px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .animate-reveal-left {
+            animation: reveal-left 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        .animate-reveal-right {
+            animation: reveal-right 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        /* Blast Effect */
+        @keyframes blast {
+            0% { transform: scale(0.2); opacity: 1; filter: blur(20px); }
+            10% { opacity: 1; }
+            100% { transform: scale(4); opacity: 0; filter: blur(5px); }
+        }
+
+        /* Pulse Slow */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 20s ease-in-out infinite;
+        }
+
+        /* Product Card Reveal */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+
+        .reveal-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal Backdrop */
+        .modal-backdrop {
+            backdrop-filter: blur(24px);
+            background: rgba(0, 0, 0, 0.98);
+        }
+
+        .modal-content {
+            animation: reveal-up 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+
+    <!-- Tech Grid Background -->
+    <div class="tech-grid-bg"></div>
+    <div class="scanning-beam"></div>
+
+    <!-- Fixed Branding Navbar -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-5 group cursor-pointer" onclick="window.location.href='index.html#clothing'">
+                <div class="relative">
+                    <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center relative z-10 transition-transform duration-300 group-hover:scale-110 font-black text-2xl">
+                        ⚡
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-[-0.05em] uppercase leading-none italic">Dopamine Clothing</span>
+                    <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-[0.8em] mt-1.5 whitespace-nowrap pl-0.5">by R A S H A D</span>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">
+                <a href="#" class="hover:text-white transition-all relative group overflow-hidden">
+                    <span class="relative z-10">Collections</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </a>
+                <a href="#" class="hover:text-white transition-all relative group overflow-hidden">
+                    <span class="relative z-10">The Mission</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </a>
+                <a href="#" class="hover:text-white transition-all relative group overflow-hidden">
+                    <span class="relative z-10">Archives</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </a>
+            </div>
+
+            <a href="https://dopamine-flow-energy.creator-spring.com/" target="_blank" class="relative px-8 py-3 bg-white text-black text-xs font-black uppercase tracking-widest rounded-full transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden group">
+                <span class="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">Go To Store 🛍️</span>
+                <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-64 pb-32 px-6 overflow-hidden min-h-[90vh] flex flex-col justify-center">
+        <div class="max-w-7xl mx-auto w-full relative z-10">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 backdrop-blur-md text-[9px] font-black uppercase tracking-[0.4em] mb-12 border-l-4">
+                ✨ Authorized Systems Online
+            </div>
+
+            <h1 class="text-7xl md:text-[13rem] font-black leading-[0.8] tracking-tighter mb-16 italic uppercase relative">
+                <span class="block text-white animate-reveal-left">UPGRADE</span>
+                <span class="block stroke-text animate-reveal-right">THE CORE</span>
+            </h1>
+
+            <div class="grid md:grid-cols-2 gap-20 items-end">
+                <p class="text-neutral-500 text-lg md:text-2xl font-medium max-w-lg leading-relaxed border-l border-white/10 pl-8">
+                    Systematic apparel for high-performance minds.
+                    Built for urban navigation, optimized for the <span class="text-white italic">Rashad Flow.</span>
+                </p>
+                <div class="flex flex-col gap-6 md:items-end">
+                    <div class="flex items-center gap-8">
+                        <div class="flex -space-x-4">
+                            <div class="w-12 h-12 rounded-full border-2 border-black bg-neutral-900 overflow-hidden"><img src="https://i.pravatar.cc/100?u=1" alt="user"/></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-black bg-neutral-900 overflow-hidden"><img src="https://i.pravatar.cc/100?u=2" alt="user"/></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-black bg-neutral-900 overflow-hidden"><img src="https://i.pravatar.cc/100?u=3" alt="user"/></div>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Join 5k+ Collectors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Marquee -->
+        <div class="absolute bottom-10 w-full overflow-hidden whitespace-nowrap opacity-5 select-none rotate-[-2deg]">
+            <div class="text-[15rem] font-black tracking-tighter inline-block marquee-text uppercase italic">
+                DOPAMINE CLOTHING BY RASHAD — SYSTEM INTEGRATED — OPTIMIZE YOUR REALITY —
+            </div>
+            <div class="text-[15rem] font-black tracking-tighter inline-block marquee-text uppercase italic pl-10">
+                DOPAMINE CLOTHING BY RASHAD — SYSTEM INTEGRATED — OPTIMIZE YOUR REALITY —
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Control Bar -->
+    <div class="max-w-7xl mx-auto px-6 mb-24">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/10 pt-16">
+            <div class="flex items-center gap-6">
+                <div class="w-1 h-12 bg-indigo-500"></div>
+                <div class="flex flex-col">
+                    <h2 class="text-lg font-black uppercase tracking-[0.2em] italic">Active Catalog</h2>
+                    <span class="text-[10px] text-neutral-600 font-bold uppercase tracking-[0.3em]">Total Hardware: <span id="product-count">44</span> Units</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3" id="category-filter">
+                <!-- Categories will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <main class="max-w-7xl mx-auto px-6 pb-64 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="product-grid">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 lg:p-12 modal-backdrop" onclick="closeModal(event)">
+        <div class="bg-[#080808] border border-white/10 w-full max-w-7xl rounded-[2rem] overflow-hidden relative z-10 shadow-[0_0_150px_rgba(0,0,0,1)] border-l-8 border-indigo-600 modal-content" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-10 right-10 p-4 bg-white/5 hover:bg-indigo-600 rounded-full text-white transition-all z-20 group">
+                <span class="text-2xl group-hover:rotate-180 transition-transform duration-500 inline-block">✕</span>
+            </button>
+
+            <div class="grid lg:grid-cols-5 h-[85vh]">
+                <div class="lg:col-span-3 h-full relative overflow-hidden bg-neutral-900">
+                    <img id="modal-image" src="" alt="" class="w-full h-full object-cover animate-pulse-slow"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                </div>
+                <div class="lg:col-span-2 p-12 lg:p-24 flex flex-col justify-center bg-black">
+                    <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12 w-fit">
+                        ⚡ Rashad Elite System
+                    </div>
+                    <h2 id="modal-name" class="text-6xl md:text-8xl font-black mb-6 tracking-tighter italic uppercase leading-[0.85]"></h2>
+                    <p id="modal-price" class="text-4xl font-light text-neutral-600 mb-12 tracking-[0.2em]"></p>
+
+                    <div class="space-y-12 mb-16">
+                        <div class="flex flex-col gap-4 pl-6 border-l-2 border-indigo-500/30">
+                            <span class="text-[10px] text-indigo-500 font-black uppercase tracking-[0.5em]">Hardware Definition</span>
+                            <p id="modal-description" class="text-xl text-neutral-400 leading-relaxed font-medium"></p>
+                        </div>
+                    </div>
+
+                    <a id="modal-link" href="#" target="_blank" class="w-full py-7 bg-white hover:bg-indigo-600 text-black hover:text-white font-black rounded-xl flex items-center justify-center gap-5 transition-all text-2xl shadow-[0_20px_60px_rgba(255,255,255,0.1)] uppercase italic tracking-tighter group overflow-hidden relative">
+                        <span class="relative z-10 flex items-center gap-4">Finalize Acquisition →</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-32 bg-black relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
+            <div class="lg:col-span-2">
+                <div class="flex items-center gap-6 mb-10">
+                    <div class="w-16 h-16 bg-white text-black rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden group font-black text-3xl">
+                        ⚡
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">Dopamine Clothing</span>
+                        <span class="text-[10px] font-bold tracking-[0.8em] text-neutral-600 pl-1 uppercase">by R A S H A D</span>
+                    </div>
+                </div>
+                <p class="text-neutral-500 max-w-md mb-12 text-lg font-medium italic leading-relaxed">
+                    The creative manifestation of energy and aesthetic optimization.
+                    An urban system designed for the flow state.
+                </p>
+            </div>
+
+            <div class="flex flex-col gap-8">
+                <span class="text-[11px] text-white font-black uppercase tracking-[0.5em] italic">Navigation</span>
+                <div class="flex flex-col gap-5 text-sm text-neutral-500 font-bold uppercase tracking-widest">
+                    <a href="https://dopamine-flow-energy.creator-spring.com/" target="_blank" class="hover:text-indigo-400 transition-colors w-fit">Store Home</a>
+                    <a href="https://dopamine-flow-energy.creator-spring.com/apparel" target="_blank" class="hover:text-indigo-400 transition-colors w-fit">Legacy Items</a>
+                    <a href="index.html" class="hover:text-indigo-400 transition-colors w-fit">Rashad Collective</a>
+                    <a href="index.html" class="hover:text-indigo-400 transition-colors w-fit">System Support</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-8">
+                <span class="text-[11px] text-white font-black uppercase tracking-[0.5em] italic">Deployment</span>
+                <div class="flex items-center gap-3 text-indigo-500 bg-indigo-500/5 px-4 py-2 rounded-lg border border-indigo-500/10 w-fit">
+                    <div class="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(79,70,229,1)]"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em]">Operational Status: Elite</span>
+                </div>
+                <p class="text-[10px] text-neutral-700 font-bold uppercase leading-loose tracking-[0.2em]">
+                    © 2026 DOPAMINE CLOTHING SYSTEM.<br/>
+                    CORE ARCHITECTURE BY R A S H A D.<br/>
+                    DISTRIBUTED VIA SPRING NETWORKS.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Complete Product Data (44 items from scraped data)
+        const products = [
+            {"id": 1, "name": "DOPAMINE- ODE", "price": "$25.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/eSqpF3NZ_ySeAD2cy_otM66R5DU/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-ode?product=369", "description": "Official DOPAMINE- ODE from the Dopamine Flow Energy collection."},
+            {"id": 2, "name": "DOPAMINE- NYC", "price": "$25.00", "category": "T-Shirts", "product_type": "Classic Crew Neck T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/UE9n9CCF46hp1_cc8at3pMBVX-w/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-nyc?product=2", "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."},
+            {"id": 3, "name": "DOPAMINE 1881", "price": "$30.00", "category": "T-Shirts", "product_type": "Classic Crew Neck T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/xiSFNWth2m80kXShiKb_mHF5xKQ/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-1881?product=2", "description": "Official DOPAMINE 1881 from the Dopamine Flow Energy collection."},
+            {"id": 4, "name": "DOPAMINE- ELITES", "price": "$25.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/O_78paJSuS-5ldZq1uwxMcgyntM/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=117", "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."},
+            {"id": 5, "name": "DOPAMINE- ELITES", "price": "$30.00", "category": "T-Shirts", "product_type": "Classic Crew Neck T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/O9dbC4Ycrmjd-UficywbVvhiYXo/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=2", "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."},
+            {"id": 6, "name": "DOPAMINE- ELITES", "price": "$30.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/W1_WoUgKvzSdbcWPeOcnY2tKpWg/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=369", "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."},
+            {"id": 7, "name": "DOPAMINE- LEGENDS", "price": "$30.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/NVgadRJfaZD8iHByWxk1bQAylos/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=369", "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."},
+            {"id": 8, "name": "DOPAMINE- PUZZLE", "price": "$25.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/Qzljm3ObxgTVc0jLFVNwW4UkRlM/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=117", "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."},
+            {"id": 9, "name": "DOPAMINE- PUZZLE", "price": "$30.00", "category": "T-Shirts", "product_type": "Comfort Tee", "image": "https://mockup-api.teespring.com/v3/image/CrLshKD6hbMCIYTKVXCrctG_64k/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=369", "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."},
+            {"id": 10, "name": "DOPAMINE- PUZZLE", "price": "$25.00", "category": "Tank Tops", "product_type": "Women's Racerback Tank", "image": "https://mockup-api.teespring.com/v3/image/vsS8m60tOn-nsLxTpxKPRcxUycA/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=1912", "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."},
+            {"id": 11, "name": "DOPAMINE- LEGENDS", "price": "$25.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/gLI0U3A2bhQKkhUMiAnfmBT_grc/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=117", "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."},
+            {"id": 12, "name": "DOPAMINE- LEGENDS", "price": "$45.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/hZAei5Lds6RBcKe6qW_bVY5JQ_4/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=1608", "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."},
+            {"id": 13, "name": "DOPAMINE- LEGENDS", "price": "$50.00", "category": "Merch", "product_type": "White Slides", "image": "https://mockup-api.teespring.com/v3/image/IkbGSGrWsk0pz-jy24dz63ezqCg/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=1895", "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."},
+            {"id": 14, "name": "DOPAMINE", "price": "$25.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/HJXeknbQ4Buv8E9UsbSrZ1lTGzs/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-august-2023?product=117", "description": "Official DOPAMINE from the Dopamine Flow Energy collection."},
+            {"id": 15, "name": "DOPAMINE", "price": "$30.00", "category": "T-Shirts", "product_type": "Classic Crew Neck T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/wxQ90T6fKorL-_AX-QcEGi0l8B8/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-august-2023?product=2", "description": "Official DOPAMINE from the Dopamine Flow Energy collection."},
+            {"id": 16, "name": "DOPAMINE- THE LIVING EXPERIENCE", "price": "$30.00", "category": "T-Shirts", "product_type": "Next Level 3600 | Premium Ring-Spun Cotton T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/4yYroQZcZcui-ZpkQ3R80fxdUqA/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-the-living-experienc?product=46", "description": "Official DOPAMINE- THE LIVING EXPERIENCE from the Dopamine Flow Energy collection."},
+            {"id": 17, "name": "DOPAMINE- THE LIVING EXPERIENCE", "price": "$26.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/H9mWrlgTuxUSkSOvReVx2b4qoCk/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-the-living-experienc?product=117", "description": "Official DOPAMINE- THE LIVING EXPERIENCE from the Dopamine Flow Energy collection."},
+            {"id": 18, "name": "DOPAMINE- PAINT", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/NTXHuQNK6myUMclDr-bFqX9ebZ8/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-paint?product=1608", "description": "Official DOPAMINE- PAINT from the Dopamine Flow Energy collection."},
+            {"id": 19, "name": "DOPAMINE- FIESTA", "price": "$40.00", "category": "Merch", "product_type": "White Slides", "image": "https://mockup-api.teespring.com/v3/image/0zlBnbYBhFzooQrpf-l6sDm02K4/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=1895", "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."},
+            {"id": 20, "name": "DOPAMINE- FIESTA", "price": "$30.00", "category": "T-Shirts", "product_type": "Next Level 3600 | Premium Ring-Spun Cotton T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/hbpMf0qLKRULG9TxgnpMvGaGeWs/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=46", "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."},
+            {"id": 21, "name": "DOPAMINE- FIESTA", "price": "$40.00", "category": "Merch", "product_type": "Black Slides", "image": "https://mockup-api.teespring.com/v3/image/eF1gjpkD3jZB1Xx_q55ulr0gRCc/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=1896", "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."},
+            {"id": 22, "name": "DOPAMINE- DRIP", "price": "$30.00", "category": "T-Shirts", "product_type": "Next Level 3600 | Premium Ring-Spun Cotton T-Shirt", "image": "https://mockup-api.teespring.com/v3/image/NgzB6FbeNcHwpXlO7bicS0NAEdE/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=46", "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."},
+            {"id": 23, "name": "DOPAMINE- DRIP", "price": "$25.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/zR-bPf-xtZcg62J9HIopc2iqbaQ/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=117", "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."},
+            {"id": 24, "name": "DOPAMINE- DRIP", "price": "$35.00", "category": "Hoodies & Sweatshirts", "product_type": "Women's Crop Hoodie", "image": "https://mockup-api.teespring.com/v3/image/1tdx9omDh9F2gsshGLJSu2ByOj8/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=1608", "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."},
+            {"id": 25, "name": "DOPAMINE STARS", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Classic Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/ips6_53EOMjTvhibSfW7Kp77-zg/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=212", "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."},
+            {"id": 26, "name": "DOPAMINE STARS", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/X-XwvPY5P_AX7UTpP12H649BN9o/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=345", "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."},
+            {"id": 27, "name": "DOPAMINE STARS", "price": "$45.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Full Zip Hoodie", "image": "https://mockup-api.teespring.com/v3/image/pVvm3pHlsGR0d3XdE78fTyRfe-U/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=1027", "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."},
+            {"id": 28, "name": "DOPAMINE- NYC", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Classic Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/vRKhAMTMKbVEHY1r8ElbNW0oE-U/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=212", "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."},
+            {"id": 29, "name": "DOPAMINE- NYC", "price": "$35.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/Xi1HkIW5kHTchWEGqWSoJMuANTs/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=345", "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."},
+            {"id": 30, "name": "DOPAMINE- PRIDE EDITION", "price": "$20.00", "category": "Tank Tops", "product_type": "Classic Tank Top", "image": "https://mockup-api.teespring.com/v3/image/keJLHaEM3VxybW_-_fmNKC6VGSY/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-pride-edition?product=14", "description": "Official DOPAMINE- PRIDE EDITION from the Dopamine Flow Energy collection."},
+            {"id": 31, "name": "DOPAMINE STARS", "price": "$32.00", "category": "T-Shirts", "product_type": "Men's Base Long Sleeve Tee", "image": "https://mockup-api.teespring.com/v3/image/CIQlBWF9cKOZgdWyeg2m3gJNhdY/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-stars?product=1302", "description": "Official DOPAMINE STARS from the Dopamine Flow Energy collection."},
+            {"id": 32, "name": "DOPAMINE- NYC", "price": "$30.00", "category": "T-Shirts", "product_type": "Classic Long Sleeve Tee", "image": "https://mockup-api.teespring.com/v3/image/nBchFmKCJ4OcL-sLhloK60z-4ZM/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=11", "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."},
+            {"id": 33, "name": "DOPAMINE HIGH", "price": "$30.00", "category": "T-Shirts", "product_type": "Men's Base Long Sleeve Tee", "image": "https://mockup-api.teespring.com/v3/image/1Dr9efHDsE0znVu7UXeEqsbmjdk/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-high?product=1302", "description": "Official DOPAMINE HIGH from the Dopamine Flow Energy collection."},
+            {"id": 34, "name": "DOPAMINE- YARD EDITION", "price": "$40.00", "category": "Merch", "product_type": "Leggings", "image": "https://mockup-api.teespring.com/v3/image/i2uu0VBgfbu6Kdq4BHiFoMRK-Nk/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-yard-edition?product=641", "description": "Official DOPAMINE- YARD EDITION from the Dopamine Flow Energy collection."},
+            {"id": 35, "name": "DOPAMINE- NYC", "price": "$50.00", "category": "Hoodies & Sweatshirts", "product_type": "AS Colour Stencil Hoodie", "image": "https://mockup-api.teespring.com/v3/image/PlisDES0RQoS4zLvLeuygI_gthY/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-nyc?product=1301", "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."},
+            {"id": 36, "name": "DOPAMINE HIGH", "price": "$45.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/hUZXSzo0v0HfAXhoAEdv0VnlJ1w/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-high?product=227", "description": "Official DOPAMINE HIGH from the Dopamine Flow Energy collection."},
+            {"id": 37, "name": "DOPAMINE HIGH", "price": "$40.00", "category": "T-Shirts", "product_type": "Unisex Classic Crewneck Sweatshirt", "image": "https://mockup-api.teespring.com/v3/image/wLfoZiXw_8olZtBEFGvzviYRRHc/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-high?product=345", "description": "Official DOPAMINE HIGH from the Dopamine Flow Energy collection."},
+            {"id": 38, "name": "DOPAMINE- PATRIOT EDITION (R.W.B)", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Classic Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/PapUVbiapMEyZMkfD4HBRK0Gdcs/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-patriot-edition-r-w?product=212", "description": "Official DOPAMINE- PATRIOT EDITION (R.W.B) from the Dopamine Flow Energy collection."},
+            {"id": 39, "name": "DOPAMINE- PATRIOT EDITION (R.W.B)", "price": "$41.99", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/DtdqbdDNwSN6D_vYJYLncXYE68U/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-patriot-edition-r-w?product=227", "description": "Official DOPAMINE- PATRIOT EDITION (R.W.B) from the Dopamine Flow Energy collection."},
+            {"id": 40, "name": "DOPAMINE (ICE, GOLD, GREEN)", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Classic Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/da6BruPzoZfgo_zvHozUWEVvbu0/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-ice-gold-green?product=212", "description": "Official DOPAMINE (ICE, GOLD, GREEN) from the Dopamine Flow Energy collection."},
+            {"id": 41, "name": "DOPAMINE (ICE, GOLD, GREEN)", "price": "$41.99", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/sKieIeSQQ8T8mK0HH2MKmY_jr4o/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-ice-gold-green?product=227", "description": "Official DOPAMINE (ICE, GOLD, GREEN) from the Dopamine Flow Energy collection."},
+            {"id": 42, "name": "DOPAMINE (ICE, GOLD, GREEN)", "price": "$40.00", "category": "Hoodies & Sweatshirts", "product_type": "Unisex Premium Pullover Hoodie", "image": "https://mockup-api.teespring.com/v3/image/wYOV98jgBcGA0ajcvycrmKWXCQQ/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-ice-gold-green?product=227", "description": "Official DOPAMINE (ICE, GOLD, GREEN) from the Dopamine Flow Energy collection."},
+            {"id": 43, "name": "DOPAMINE- YARD EDITION", "price": "$20.00", "category": "Tank Tops", "product_type": "Classic Tank Top", "image": "https://mockup-api.teespring.com/v3/image/PRMtt0bq6DOwTQ1qlGeWcvy9ufU/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-yard-edition?product=14", "description": "Official DOPAMINE- YARD EDITION from the Dopamine Flow Energy collection."},
+            {"id": 44, "name": "DOPAMINE- PATRIOT EDITION (R.W.B)", "price": "$25.00", "category": "Tank Tops", "product_type": "Premium Tank Top", "image": "https://mockup-api.teespring.com/v3/image/GqNtOqpPAQDMlIvphTrofGXm-0Y/800/800.jpg", "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-patriot-edition-r-w?product=117", "description": "Official DOPAMINE- PATRIOT EDITION (R.W.B) from the Dopamine Flow Energy collection."}
+        ];
+
+        const categories = ['All', 'T-Shirts', 'Tank Tops', 'Hoodies & Sweatshirts', 'Merch'];
+        let activeCategory = 'All';
+        let selectedProduct = null;
+        let hoveredId = null;
+
+        // Initialize page
+        function init() {
+            renderCategories();
+            renderProducts();
+            initIntersectionObserver();
+            initNavbarScroll();
+        }
+
+        // Render category filters
+        function renderCategories() {
+            const filterContainer = document.getElementById('category-filter');
+            filterContainer.innerHTML = categories.map(cat => `
+                <button
+                    onclick="filterByCategory('${cat}')"
+                    class="category-btn px-10 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
+                        cat === activeCategory
+                            ? 'bg-indigo-600 text-white shadow-[0_0_40px_rgba(79,70,229,0.3)] scale-105'
+                            : 'text-neutral-600 border border-white/5 hover:border-white/20 hover:text-white bg-white/2'
+                    }"
+                    data-category="${cat}">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        // Filter products by category
+        function filterByCategory(category) {
+            activeCategory = category;
+            renderCategories();
+            renderProducts();
+        }
+
+        // Render products
+        function renderProducts() {
+            const filteredProducts = activeCategory === 'All'
+                ? products
+                : products.filter(p => p.category === activeCategory);
+
+            document.getElementById('product-count').textContent = filteredProducts.length;
+
+            const gridContainer = document.getElementById('product-grid');
+            gridContainer.innerHTML = filteredProducts.map(product => `
+                <div
+                    data-id="${product.id}"
+                    class="reveal-item group relative bg-neutral-900 border border-white/5 overflow-hidden transition-all duration-700 hover:z-20 hover:border-indigo-500/50"
+                    onmouseenter="hoveredId=${product.id}"
+                    onmouseleave="hoveredId=null">
+
+                    <!-- Image -->
+                    <div class="aspect-[1/1.2] overflow-hidden relative bg-[#0a0a0a]">
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                            class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1 opacity-90 group-hover:opacity-100"
+                        />
+
+                        <!-- Product Tags -->
+                        <div class="absolute top-6 left-6 flex flex-col gap-1.5 translate-x-[-10px] group-hover:translate-x-0 transition-transform duration-500">
+                            <span class="text-[9px] font-black bg-indigo-600 text-white px-3 py-1 uppercase tracking-widest w-fit shadow-xl italic">${product.category}</span>
+                            <span class="text-[11px] font-black text-white bg-black/60 backdrop-blur-md px-3 py-1 w-fit border border-white/10 uppercase italic">${product.price}</span>
+                        </div>
+
+                        <!-- Interaction Menu -->
+                        <div class="absolute inset-0 bg-indigo-950/40 backdrop-blur-[6px] transition-all duration-500 flex items-center justify-center gap-6 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100">
+                            <button
+                                onclick="openModal(${product.id})"
+                                class="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-2xl">
+                                ℹ
+                            </button>
+                            <a
+                                href="${product.link}"
+                                target="_blank"
+                                class="w-16 h-16 bg-black text-white border-2 border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all shadow-2xl">
+                                🛍️
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Info Bar -->
+                    <div class="p-8 border-t border-white/5 bg-gradient-to-br from-black to-neutral-950">
+                        <h3 class="text-base font-black uppercase tracking-tight italic group-hover:text-indigo-400 transition-colors line-clamp-1 mb-3">${product.name}</h3>
+                        <div class="flex items-center justify-between opacity-40 group-hover:opacity-100 transition-opacity">
+                            <span class="text-[10px] text-neutral-400 font-bold tracking-[0.3em] uppercase">${product.product_type}</span>
+                            <div class="w-6 h-0.5 bg-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-initialize intersection observer
+            initIntersectionObserver();
+        }
+
+        // Modal functions
+        function openModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('modal-image').src = product.image;
+            document.getElementById('modal-name').textContent = product.name;
+            document.getElementById('modal-price').textContent = product.price;
+            document.getElementById('modal-description').textContent = product.description + " Engineered for the 15-40 urban elite.";
+            document.getElementById('modal-link').href = product.link;
+
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Intersection Observer for reveal animation
+        function initIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-item').forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        // Navbar scroll effect
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-black/90', 'backdrop-blur-2xl', 'border-white/10', 'py-3');
+                    navbar.classList.remove('py-6', 'border-transparent');
+                } else {
+                    navbar.classList.remove('bg-black/90', 'backdrop-blur-2xl', 'border-white/10', 'py-3');
+                    navbar.classList.add('py-6', 'border-transparent');
+                }
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
