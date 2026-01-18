@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nori L'Amour Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Grid Background */
+        .luxury-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                linear-gradient(rgba(255, 160, 100, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 160, 100, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridShift 20s linear infinite;
+        }
+
+        .luxury-grid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%,
+                rgba(255, 120, 0, 0.1) 0%,
+                rgba(255, 160, 100, 0.05) 25%,
+                transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes gridShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 4rem 1rem 2rem;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.7) 100%);
+            border-bottom: 1px solid rgba(255, 160, 100, 0.2);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ff9966 0%, #ffa864 50%, #ffcc99 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 80px rgba(255, 160, 100, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #d4a574;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        /* Category Filter */
+        .filter-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 2rem 1rem;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.75rem;
+            background: rgba(255, 160, 100, 0.08);
+            border: 1.5px solid rgba(255, 160, 100, 0.3);
+            color: #ffa864;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 160, 100, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-btn:hover {
+            border-color: #ffa864;
+            box-shadow: 0 0 20px rgba(255, 160, 100, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff9966, #ffa864);
+            border-color: #ffa864;
+            color: #0a0a0a;
+            box-shadow: 0 4px 20px rgba(255, 160, 100, 0.4);
+        }
+
+        .filter-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Product Grid */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 160, 100, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 160, 100, 0.5);
+            box-shadow:
+                0 20px 40px rgba(255, 160, 100, 0.2),
+                0 0 60px rgba(255, 160, 100, 0.1),
+                inset 0 1px 0 rgba(255, 160, 100, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: #1a1a1a;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: #d4a574;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+
+        .product-type {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9966, #ffa864);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(30, 25, 20, 0.95));
+            border: 1px solid rgba(255, 160, 100, 0.3);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 20px 80px rgba(255, 160, 100, 0.2);
+            animation: modalSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 160, 100, 0.2);
+        }
+
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .modal-category {
+            font-size: 0.85rem;
+            color: #d4a574;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-name {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .modal-type {
+            font-size: 1rem;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-description {
+            font-size: 1rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff9966, #ffa864);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff9966, #ffa864);
+            color: #0a0a0a;
+            box-shadow: 0 4px 20px rgba(255, 160, 100, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 160, 100, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 160, 100, 0.1);
+            color: #ffa864;
+            border: 1.5px solid rgba(255, 160, 100, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 160, 100, 0.2);
+            border-color: #ffa864;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid rgba(255, 160, 100, 0.3);
+            background: rgba(255, 160, 100, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffa864;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 160, 100, 0.2);
+            border-color: #ffa864;
+            transform: rotate(90deg);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 1rem;
+            background: rgba(10, 10, 10, 0.8);
+            border-top: 1px solid rgba(255, 160, 100, 0.2);
+            color: #888;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 160, 100, 0.1);
+            color: #ffa864;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1.5px solid rgba(255, 160, 100, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 160, 100, 0.2);
+            border-color: #ffa864;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="luxury-grid"></div>
+
+    <header>
+        <h1>NORI L'AMOUR</h1>
+        <p class="subtitle">Urban Luxury Collection</p>
+    </header>
+
+    <div class="filter-container">
+        <button class="filter-btn active" data-category="All"><span>All</span></button>
+        <button class="filter-btn" data-category="T-Shirts"><span>T-Shirts</span></button>
+        <button class="filter-btn" data-category="Hoodies & Sweatshirts"><span>Hoodies & Sweatshirts</span></button>
+        <button class="filter-btn" data-category="Tank Tops"><span>Tank Tops</span></button>
+    </div>
+
+    <div class="container">
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="">
+            <div class="modal-details">
+                <div>
+                    <div class="modal-category" id="modalCategory"></div>
+                    <h2 class="modal-name" id="modalName"></h2>
+                    <div class="modal-type" id="modalType"></div>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <div class="modal-price" id="modalPrice"></div>
+                </div>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" id="shopNowBtn">Shop Now</button>
+                    <button class="btn btn-secondary" id="closeBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Nori L'Amour. Urban Luxury Refined.</p>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </footer>
+
+    <script>
+        const products = [
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Essential Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/D2zTv8-_ZfyPLDisXSLZpB3RWDo/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-9753?product=1303",
+    "id": 1,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR FASHION",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/A0iYS0NcKuI_sEicBnd6EODx-iU/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-fashion?product=369",
+    "id": 2,
+    "description": "Refined NOIR L'AMOUR FASHION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/T31DSxB6bHooj_DLNl6XSnrNMtQ/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-2021?product=369",
+    "id": 3,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- HEART",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/ybplvzvmMUQU_tSUbPsItuCMfkc/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-heart?product=369",
+    "id": 4,
+    "description": "Refined NOIR L'AMOUR- HEART from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/3tfje3Q9LveSVyeoCQql34eCb3g/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-august-2021?product=369",
+    "id": 5,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/W9w94X5vWRrACYswz6z54L6riHs/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-3201?product=369",
+    "id": 6,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- TROPICS",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/XdEvRJcvMIZlff3TX6miyZax6D4/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=369",
+    "id": 7,
+    "description": "Refined NOIR L'AMOUR- TROPICS from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Comfort Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/QEbSEo6zgil-uPguQn1038-fw1o/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/buy-noir-l-amour?product=369",
+    "id": 8,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (2)",
+    "price": "$25.00",
+    "category": "T-Shirts",
+    "product_type": "Classic Crew Neck T-Shirt",
+    "image": "https://mockup-api.teespring.com/v3/image/a7ryYtQTak6l6oR0UuRKFwkbp3Y/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=2",
+    "id": 9,
+    "description": "Refined NOIR L'AMOUR (2) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- FOREVER MINE",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/s4GAPnjBLD5IRv8t0Tpm2CC71ts/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-forever-mine?product=1608",
+    "id": 10,
+    "description": "Refined NOIR L'AMOUR- FOREVER MINE from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- FOREVER MINE",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/1BUMxcN-9KddHhFu_-xe5C9dHJA/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-forever-mine?product=1608",
+    "id": 11,
+    "description": "Refined NOIR L'AMOUR- FOREVER MINE from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- XO EDITION",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/jx462Wh1QR6RiDft-kEdmpN3kpk/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-xo-edition?product=1608",
+    "id": 12,
+    "description": "Refined NOIR L'AMOUR- XO EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- XO EDITION (BLUE)",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/TQVlH6BDE6kBZJ8GyoRWxoq2iWM/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-xo-edition-blue?product=1608",
+    "id": 13,
+    "description": "Refined NOIR L'AMOUR- XO EDITION (BLUE) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- CUPID",
+    "price": "$30.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/unW9EcrrAK-XsyLtbyRYk-3I3kA/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-cupid?product=1608",
+    "id": 14,
+    "description": "Refined NOIR L'AMOUR- CUPID from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/M6NhK9B1AG6bGjvuxX1eeHdopQk/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-november-2021?product=1608",
+    "id": 15,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/vrHTW3Qeedehy4vFXxwAafO_-mo/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-9753?product=1608",
+    "id": 16,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- NL",
+    "price": "$45.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/rd3OKTj-ixDSpmcwsJ6SQCDndVk/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=227",
+    "id": 17,
+    "description": "Refined NOIR L'AMOUR- NL from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- NL",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/Rp-a3Kf7q6b86yP9WnzxGPS2Xbc/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=345",
+    "id": 18,
+    "description": "Refined NOIR L'AMOUR- NL from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- NL",
+    "price": "$50.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "AS Colour Stencil Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/xsGTjsC73LQHiU-vXw9MZ7o9XV4/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=1301",
+    "id": 19,
+    "description": "Refined NOIR L'AMOUR- NL from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- NL",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/6XbB25jFB8EqkjQcep8cKUMrfeM/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-nl?product=1608",
+    "id": 20,
+    "description": "Refined NOIR L'AMOUR- NL from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$45.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/kmy9aJ9tMLBGDoXo1ZpUiPVPjR8/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=227",
+    "id": 21,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/K4XgUc4Rc_WdBRDg6SD4jJu6bsM/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=345",
+    "id": 22,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$50.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "AS Colour Stencil Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/IksJp6kFyBkRGpO0S42a3e6iF2U/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=1301",
+    "id": 23,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/HpLkzmZGFIwaPzsjMMAFY1iHYS0/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=1608",
+    "id": 24,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- JE T'AIME EDITION",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/lDxoVlGpsHDuQkcnXqSGs_FYoU8/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-je-t-aime-editio?product=227",
+    "id": 25,
+    "description": "Refined NOIR L'AMOUR- JE T'AIME EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- JE T'AIME EDITION",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/qmReL5hzSzJXzpJAjsFGqIOsu6k/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-je-t-aime-editio?product=345",
+    "id": 26,
+    "description": "Refined NOIR L'AMOUR- JE T'AIME EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- JE T'AIME EDITION",
+    "price": "$35.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Women's Crop Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/WQVESwW34VkA--w9q8uHZdJr5IE/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-je-t-aime-editio?product=1608",
+    "id": 27,
+    "description": "Refined NOIR L'AMOUR- JE T'AIME EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- VALENTINE EDITION",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Classic Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/PlLINZsBTs2d8caZ6EHfvnA3t38/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-valentine-editio?product=212",
+    "id": 28,
+    "description": "Refined NOIR L'AMOUR- VALENTINE EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- VALENTINE EDITION",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/V25sgoKjJeGLOQzS6vfia0JhxJ8/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-valentine-editio?product=227",
+    "id": 29,
+    "description": "Refined NOIR L'AMOUR- VALENTINE EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- VALENTINE EDITION",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/CFWW9sgeqQsIMIyg_gT0dhk6qpQ/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-valentine-editio?product=345",
+    "id": 30,
+    "description": "Refined NOIR L'AMOUR- VALENTINE EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- PAIX EDITION",
+    "price": "$40.00",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Classic Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/LNtGdDDzbn7_D289qW3zHFDhwlA/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-paix-edition?product=212",
+    "id": 31,
+    "description": "Refined NOIR L'AMOUR- PAIX EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- PAIX EDITION",
+    "price": "$41.99",
+    "category": "Hoodies & Sweatshirts",
+    "product_type": "Unisex Premium Pullover Hoodie",
+    "image": "https://mockup-api.teespring.com/v3/image/_Rt0kx8SZl2wLGdxJ0pEkbZp7X0/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-paix-edition?product=227",
+    "id": 32,
+    "description": "Refined NOIR L'AMOUR- PAIX EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- PAIX EDITION",
+    "price": "$35.00",
+    "category": "T-Shirts",
+    "product_type": "Unisex Classic Crewneck Sweatshirt",
+    "image": "https://mockup-api.teespring.com/v3/image/oBFpSt9q15WsKwWzQw-5tIF3ZTc/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour-paix-edition?product=345",
+    "id": 33,
+    "description": "Refined NOIR L'AMOUR- PAIX EDITION from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$25.99",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/JWKSHGQaFuH69j7kVUoCOG3CAsI/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-2021?product=117",
+    "id": 34,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- HEART",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/xvmH-JNhFe2JVzNCE4Cl8VxAfMw/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-heart?product=117",
+    "id": 35,
+    "description": "Refined NOIR L'AMOUR- HEART from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- TROPICS",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/oRL7UAFaBruwn_4jed1aKTKGICI/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=117",
+    "id": 36,
+    "description": "Refined NOIR L'AMOUR- TROPICS from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- TROPICS",
+    "price": "$25.00",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/Og1hBn34Tlqjie7A9g57AeNYja8/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-tropics?product=95",
+    "id": 37,
+    "description": "Refined NOIR L'AMOUR- TROPICS from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/_FXGPgBc3EO2rQusW8KUwdJS1Ag/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/buy-noir-l-amour?product=117",
+    "id": 38,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (FLOW)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Classic Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/ojU1z1691obdqT25PhUNy7hx6Ps/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-nori-l-amour-flow?product=14",
+    "id": 39,
+    "description": "Refined NOIR L'AMOUR (FLOW) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (FLOW)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/zjEyfpG_xfpXewwVtrZHU6y-Y_8/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-nori-l-amour-flow?product=95",
+    "id": 40,
+    "description": "Refined NOIR L'AMOUR (FLOW) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (FLOW)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/ALgrfTD-ZTaLmujvdde_fDXmnVE/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-nori-l-amour-flow?product=117",
+    "id": 41,
+    "description": "Refined NOIR L'AMOUR (FLOW) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/cKKoHaHdhbpwVpfRaEej-ji-V3E/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour?product=95",
+    "id": 42,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (2)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Classic Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/XveaQ3zCGB7ekymN_Qn7cO0B1ZM/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=14",
+    "id": 43,
+    "description": "Refined NOIR L'AMOUR (2) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (2)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/0Fe8fhAPFs2MB1eUayGD4JBb8K0/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-2?product=95",
+    "id": 44,
+    "description": "Refined NOIR L'AMOUR (2) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (FLOW)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Classic Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/AFffWXRSfdLYInN0M6oPnSBdiN0/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-flow?product=14",
+    "id": 45,
+    "description": "Refined NOIR L'AMOUR (FLOW) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (FLOW)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/ncOvQ0ZIE6uqWZQwYVXPaHs2EJA/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-flow?product=95",
+    "id": 46,
+    "description": "Refined NOIR L'AMOUR (FLOW) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$22.99",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/q7Sg6j6k5BETHCYRM62Q69tSif8/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/new-noir-l-amour?product=95",
+    "id": 47,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$22.99",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/W2XEVnx_UpeZHoTdEAh3Tm-YO3k/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/get-noir-l-amour?product=95",
+    "id": 48,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- (S,S,T)",
+    "price": "$22.99",
+    "category": "Tank Tops",
+    "product_type": "Women's Flowy Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/GZ-iSdK6TExkVqf-Hs6TxsVYLLo/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-s-s-t?product=95",
+    "id": 49,
+    "description": "Refined NOIR L'AMOUR- (S,S,T) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR- (S,S,T)",
+    "price": "$22.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/ZTGXx6v6FNOM4_7s8UQOrm748IY/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/nori-l-amour-s-s-t?product=117",
+    "id": 50,
+    "description": "Refined NOIR L'AMOUR- (S,S,T) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR (LADIES)",
+    "price": "$20.00",
+    "category": "Tank Tops",
+    "product_type": "Premium Tank Top",
+    "image": "https://mockup-api.teespring.com/v3/image/Om8H6dKFXQuPQbw6UNtrroPA7sc/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-ladies?product=117",
+    "id": 51,
+    "description": "Refined NOIR L'AMOUR (LADIES) from the Nori L'Amour collection."
+  },
+  {
+    "name": "NOIR L'AMOUR",
+    "price": "$30.00",
+    "category": "T-Shirts",
+    "product_type": "Premium Long Sleeve Tee",
+    "image": "https://mockup-api.teespring.com/v3/image/LFJ_SHmkym1Igfv0_QER4PvJeGc/800/800.jpg",
+    "link": "https://nori-lamour.creator-spring.com/listing/noir-l-amour-4782?product=328",
+    "id": 52,
+    "description": "Refined NOIR L'AMOUR from the Nori L'Amour collection."
+  }
+];
+
+        let currentFilter = 'All';
+        let selectedProduct = null;
+
+        // Render products
+        function renderProducts(filter = 'All') {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'All'
+                ? products
+                : products.filter(p => p.category === filter);
+
+            filtered.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-type">${product.product_type}</div>
+                        <div class="product-price">${product.price}</div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(product));
+                grid.appendChild(card);
+            });
+        }
+
+        // Category filtering
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.category;
+                renderProducts(currentFilter);
+            });
+        });
+
+        // Modal functions
+        function openModal(product) {
+            selectedProduct = product;
+            document.getElementById('modalImage').src = product.image;
+            document.getElementById('modalCategory').textContent = product.category;
+            document.getElementById('modalName').textContent = product.name;
+            document.getElementById('modalType').textContent = product.product_type;
+            document.getElementById('modalDescription').textContent = product.description;
+            document.getElementById('modalPrice').textContent = product.price;
+            document.getElementById('productModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('closeBtn').addEventListener('click', closeModal);
+        document.getElementById('shopNowBtn').addEventListener('click', () => {
+            if (selectedProduct) {
+                window.open(selectedProduct.link, '_blank');
+            }
+        });
+
+        // Close modal on outside click
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target.id === 'productModal') {
+                closeModal();
+            }
+        });
+
+        // Initial render
+        renderProducts();
+    </script>
+</body>
+</html>
