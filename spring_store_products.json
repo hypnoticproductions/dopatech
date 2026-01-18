@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "name": "DOPAMINE- ODE",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/eSqpF3NZ_ySeAD2cy_otM66R5DU/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-ode?product=369",
+    "description": "Official DOPAMINE- ODE from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 2,
+    "name": "DOPAMINE- NYC",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/UE9n9CCF46hp1_cc8at3pMBVX-w/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/new-dopamine-nyc?product=2",
+    "description": "Official DOPAMINE- NYC from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 3,
+    "name": "DOPAMINE 1881",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/xiSFNWth2m80kXShiKb_mHF5xKQ/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-1881?product=2",
+    "description": "Official DOPAMINE 1881 from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 4,
+    "name": "DOPAMINE- ELITES",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/O_78paJSuS-5ldZq1uwxMcgyntM/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-elites?product=117",
+    "description": "Official DOPAMINE- ELITES from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 5,
+    "name": "DOPAMINE- LEGENDS",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/NVgadRJfaZD8iHByWxk1bQAylos/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-legends?product=369",
+    "description": "Official DOPAMINE- LEGENDS from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 6,
+    "name": "DOPAMINE- PUZZLE",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/Qzljm3ObxgTVc0jLFVNwW4UkRlM/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-puzzle?product=117",
+    "description": "Official DOPAMINE- PUZZLE from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 7,
+    "name": "DOPAMINE",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/HJXeknbQ4Buv8E9UsbSrZ1lTGzs/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-august-2023?product=117",
+    "description": "Official DOPAMINE from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 8,
+    "name": "DOPAMINE- THE LIVING EXPERIENCE",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/4yYroQZcZcui-ZpkQ3R80fxdUqA/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-the-living-experienc?product=46",
+    "description": "Official DOPAMINE- THE LIVING EXPERIENCE from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 9,
+    "name": "DOPAMINE- PAINT",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/NTXHuQNK6myUMclDr-bFqX9ebZ8/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-paint?product=1608",
+    "description": "Official DOPAMINE- PAINT from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 10,
+    "name": "DOPAMINE- FIESTA",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/0zlBnbYBhFzooQrpf-l6sDm02K4/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-fiesta?product=1895",
+    "description": "Official DOPAMINE- FIESTA from the Dopamine Flow Energy collection."
+  },
+  {
+    "id": 11,
+    "name": "DOPAMINE- DRIP",
+    "price": "See store for pricing",
+    "category": "Merch",
+    "image": "https://mockup-api.teespring.com/v3/image/NgzB6FbeNcHwpXlO7bicS0NAEdE/800/800.jpg",
+    "link": "https://dopamine-flow-energy.creator-spring.com/listing/dopamine-drip?product=46",
+    "description": "Official DOPAMINE- DRIP from the Dopamine Flow Energy collection."
+  }
+]
