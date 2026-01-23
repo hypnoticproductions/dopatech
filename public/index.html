@@ -883,14 +883,114 @@
     </script>
 
     <!-- Sally Wukr Voice Agent -->
-    <div id="voice-agent-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
+    <style>
+        #voice-agent-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #voice-agent-iframe {
+            border: none;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(249, 115, 22, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #voice-agent-container.minimized #voice-agent-iframe {
+            width: 0;
+            height: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #voice-agent-container.expanded #voice-agent-iframe {
+            width: 420px;
+            height: 800px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #voice-agent-toggle {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(234, 88, 12, 0.95));
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.5);
+            transition: all 0.3s ease;
+            z-index: 10001;
+        }
+
+        #voice-agent-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(249, 115, 22, 0.7);
+        }
+
+        #voice-agent-toggle svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        #voice-agent-container.minimized #voice-agent-toggle {
+            top: 0;
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            #voice-agent-container.expanded #voice-agent-iframe {
+                width: calc(100vw - 40px);
+                max-width: 420px;
+                height: 600px;
+            }
+        }
+    </style>
+
+    <div id="voice-agent-container" class="minimized">
+        <button id="voice-agent-toggle" onclick="toggleVoiceAgent()" aria-label="Toggle Sally Wukr Voice Agent">
+            <svg id="voice-agent-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+            <svg id="voice-agent-icon-close" style="display: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
         <iframe
+            id="voice-agent-iframe"
             src="https://hypnoticproductions-7t64.bolt.host"
-            width="420"
-            height="800"
             allow="microphone"
-            style="border: none; border-radius: 24px; box-shadow: 0 10px 40px rgba(249, 115, 22, 0.3);"
         ></iframe>
     </div>
+
+    <script>
+        function toggleVoiceAgent() {
+            const container = document.getElementById('voice-agent-container');
+            const iconOpen = document.getElementById('voice-agent-icon-open');
+            const iconClose = document.getElementById('voice-agent-icon-close');
+
+            if (container.classList.contains('minimized')) {
+                container.classList.remove('minimized');
+                container.classList.add('expanded');
+                iconOpen.style.display = 'none';
+                iconClose.style.display = 'block';
+            } else {
+                container.classList.remove('expanded');
+                container.classList.add('minimized');
+                iconOpen.style.display = 'block';
+                iconClose.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
