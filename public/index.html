@@ -65,6 +65,43 @@
             transition: opacity 0.5s ease-in-out;
         }
 
+        /* Blog Section Animations */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        @keyframes float-delayed {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(20px) translateX(-10px); }
+        }
+
+        @keyframes grid-flow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        .animate-spin-slow {
+            animation: spin-slow 8s linear infinite;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-delayed {
+            animation: float-delayed 6s ease-in-out infinite 3s;
+        }
+
+        .animate-grid-flow {
+            animation: grid-flow 2s linear infinite;
+        }
+
         .glow-cursor {
             position: fixed;
             pointer-events: none;
@@ -180,6 +217,73 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- WUKR WIRE BLOG SECTION -->
+        <div class="mt-32 relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-purple-500/20 to-cyan-500/20 blur-[100px] animate-pulse"></div>
+
+            <a href="https://blog.dopa.buzz" target="_blank" class="block relative group">
+                <div class="relative overflow-hidden rounded-[3rem] border-2 border-white/20 bg-black/60 backdrop-blur-xl p-12 md:p-16 transition-all duration-500 hover:border-orange-500/50 hover:scale-[1.02]">
+                    <!-- Animated Background Grid -->
+                    <div class="absolute inset-0 opacity-20">
+                        <div class="absolute inset-0 bg-[linear-gradient(rgba(249,115,22,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(249,115,22,0.1)_1px,transparent_1px)] bg-[size:50px_50px] animate-grid-flow"></div>
+                    </div>
+
+                    <!-- Glowing Orbs -->
+                    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-orange-500/30 rounded-full blur-[80px] animate-float"></div>
+                    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/30 rounded-full blur-[80px] animate-float-delayed"></div>
+
+                    <div class="relative z-10 flex flex-col lg:flex-row items-center gap-12">
+                        <!-- Icon Section -->
+                        <div class="flex-shrink-0">
+                            <div class="relative w-32 h-32 md:w-40 md:h-40">
+                                <div class="absolute inset-0 bg-gradient-to-br from-orange-500 to-purple-600 rounded-3xl animate-spin-slow"></div>
+                                <div class="absolute inset-2 bg-black rounded-3xl flex items-center justify-center">
+                                    <i data-lucide="zap" class="w-16 h-16 md:w-20 md:h-20 text-orange-500 animate-pulse"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Content -->
+                        <div class="flex-1 text-center lg:text-left space-y-4">
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-500/20 border border-orange-500/30 rounded-full text-orange-400 text-[10px] font-mono uppercase tracking-widest mb-4">
+                                <span class="w-2 h-2 bg-orange-500 rounded-full animate-ping absolute"></span>
+                                <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
+                                Live Feed
+                            </div>
+                            <h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-none uppercase">
+                                <span class="bg-gradient-to-r from-orange-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">WUKR</span>
+                                <br/>
+                                <span class="text-white">WIRE</span>
+                            </h2>
+                            <p class="text-gray-400 text-lg md:text-xl font-light max-w-2xl">
+                                Real-time insights, research drops, and consciousness expansion. The pulse of our neural network.
+                            </p>
+                            <div class="flex items-center gap-3 text-sm font-mono uppercase tracking-widest text-orange-400 group-hover:text-orange-300 transition-colors pt-4">
+                                <span>Read The Wire</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-2"></i>
+                            </div>
+                        </div>
+
+                        <!-- Stats Display -->
+                        <div class="flex lg:flex-col gap-8 lg:gap-6">
+                            <div class="text-center">
+                                <div class="text-3xl md:text-4xl font-black text-orange-500 mb-1">∞</div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Articles</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl md:text-4xl font-black text-purple-500 mb-1">24/7</div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Active</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Corner Accent -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-orange-500/20 to-transparent rounded-bl-[10rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-500/20 to-transparent rounded-tr-[10rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+            </a>
         </div>
     </div>
 
