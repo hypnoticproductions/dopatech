@@ -61,6 +61,10 @@
             transform-style: preserve-3d;
         }
 
+        #carousel-img {
+            transition: opacity 0.5s ease-in-out;
+        }
+
         .glow-cursor {
             position: fixed;
             pointer-events: none;
@@ -674,7 +678,7 @@
             <div class="flex-1">
                 <div class="tilt-card-wrapper" data-intensity="15">
                     <div class="relative rounded-[3rem] overflow-hidden aspect-[9/16] max-w-[360px] mx-auto border-4 border-white/5 bg-black shadow-[0_50px_100px_rgba(255,51,0,0.2)]">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/7h1fsghp_F0?modestbranding=1&autoplay=1&mute=1&loop=1&playlist=7h1fsghp_F0" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Rr0Rv2UdWNU?modestbranding=1&autoplay=1&mute=1&loop=1&playlist=Rr0Rv2UdWNU" frameborder="0" allowfullscreen></iframe>
                         <div class="absolute inset-x-0 bottom-0 p-10 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none">
                             <p class="text-xl font-black tracking-tight uppercase text-white">Campaign 2025</p>
                             <p class="text-[10px] text-orange-400 font-mono tracking-widest uppercase mt-1">Art Directed by Rashad</p>
@@ -686,8 +690,8 @@
 
         <div class="space-y-16">
             <h2 class="text-3xl font-black tracking-tighter border-l-8 border-orange-500 pl-6 uppercase">The Lookbook</h2>
-            <div id="carousel" class="relative rounded-[3rem] overflow-hidden shadow-2xl group" style="min-height: 80vh;">
-                <img id="carousel-img" src="https://res.cloudinary.com/dd6z9fx5m/image/upload/v1768841861/Generated_Image_January_19_2026_-_11_22AM_y0unva.jpg" class="clothing-image w-full h-auto object-contain transition-all duration-1000 group-hover:scale-105" style="max-height: 70vh;">
+            <div id="carousel" class="relative rounded-[3rem] overflow-hidden shadow-2xl group" style="min-height: 95vh;">
+                <img id="carousel-img" src="https://res.cloudinary.com/dd6z9fx5m/image/upload/v1768841861/Generated_Image_January_19_2026_-_11_22AM_y0unva.jpg" class="clothing-image w-full h-full object-cover transition-all duration-1000" style="max-height: 95vh;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60"></div>
                 <div class="absolute bottom-8 inset-x-8 flex flex-col items-center">
                     <p class="text-xs font-mono text-orange-400 uppercase tracking-[0.4em] mb-2">Visual Artifact</p>
@@ -838,14 +842,28 @@
             "Bodycon T-Shirt's"
         ];
         
+        let currentSlide = 0;
+        let autoplayInterval;
+
         function changeSlide(index) {
-            document.getElementById('carousel-img').src = slides[index];
-            
-            // Update caption
-            if (document.getElementById('carousel-caption')) {
-                document.getElementById('carousel-caption').textContent = captions[index];
-            }
-            
+            currentSlide = index;
+            const carouselImg = document.getElementById('carousel-img');
+
+            // Add fade out effect
+            carouselImg.style.opacity = '0';
+
+            setTimeout(() => {
+                carouselImg.src = slides[index];
+
+                // Update caption
+                if (document.getElementById('carousel-caption')) {
+                    document.getElementById('carousel-caption').textContent = captions[index];
+                }
+
+                // Fade back in
+                carouselImg.style.opacity = '1';
+            }, 500);
+
             document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
                 if (i === index) {
                     dot.classList.add('w-12', 'bg-orange-500');
@@ -856,6 +874,29 @@
                 }
             });
         }
+
+        // Auto-advance carousel
+        function startAutoplay() {
+            autoplayInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                changeSlide(currentSlide);
+            }, 4000); // Change slide every 4 seconds
+        }
+
+        // Start autoplay when page loads
+        window.addEventListener('load', () => {
+            startAutoplay();
+        });
+
+        // Pause on hover
+        document.getElementById('carousel')?.addEventListener('mouseenter', () => {
+            clearInterval(autoplayInterval);
+        });
+
+        // Resume on mouse leave
+        document.getElementById('carousel')?.addEventListener('mouseleave', () => {
+            startAutoplay();
+        });
 
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
