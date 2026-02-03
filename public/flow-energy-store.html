@@ -1,97 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOPA // VIRTUAL TRY-ON</title>
-<style>
-  /* --- THE WORLD (Background) --- */
-  body {
-    margin: 0;
-    padding: 0;
-    /* The Wide Luxury Room (Landscape) */
-    background-image: url('https://res.cloudinary.com/dd6z9fx5m/image/upload/v1770144267/luxury-bg-wide.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    height: 100vh;
-    overflow: hidden;
-    font-family: 'Helvetica Neue', sans-serif;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Energy Store | Dopamine Clothing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-  /* Darken the room so the mirror pops */
-  body::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    z-index: -1;
-  }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  /* --- THE STAGE (The Mirror Container) --- */
-  .changing-room-stage {
-    position: relative;
-    width: 100%;
-    max-width: 450px; /* Limits width to resemble a tall mirror/phone */
-    height: 100vh;
-    margin: 0 auto;
+        /* Store View Styles */
+        #store-view {
+            display: block;
+        }
 
-    /* The Tall Mirror Reflection (Portrait) */
-    background-image: url('https://res.cloudinary.com/dd6z9fx5m/image/upload/v1770144267/luxury-bg-tall.jpg');
-    background-size: cover;
-    background-position: center;
+        #store-view.hidden {
+            display: none;
+        }
 
-    /* Luxury styling */
-    border-left: 1px solid rgba(255,255,255,0.2);
-    border-right: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 0 100px rgba(0,0,0,1); /* Deep shadow to separate from bg */
-  }
+        /* Virtual Try-On View Styles */
+        #virtual-tryon-view {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+        }
 
-  /* --- THE ATMOSPHERE (Strobe Lights) --- */
-  .strobe-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    mix-blend-mode: overlay;
-    animation: luxuryPulse 6s infinite;
-    z-index: 5;
-  }
+        #virtual-tryon-view.active {
+            display: block;
+        }
 
-  @keyframes luxuryPulse {
-    0% { background-color: rgba(138, 43, 226, 0.0); }
-    48% { background-color: rgba(0, 255, 255, 0.05); }
-    50% { background-color: rgba(255, 255, 255, 0.2); box-shadow: inset 0 0 50px rgba(255,255,255,0.5); } /* FLASH */
-    52% { background-color: rgba(0, 255, 255, 0.05); }
-    100% { background-color: rgba(255, 0, 150, 0.0); }
-  }
+        /* Virtual Try-On Specific Styles */
+        .virtual-body {
+            margin: 0;
+            padding: 0;
+            background-image: url('https://res.cloudinary.com/dd6z9fx5m/image/upload/v1770144267/luxury-bg-wide.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
 
-  /* --- THE LOGIC (The App Embed) --- */
-  .app-embed {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    border: none;
-    background: transparent;
-    z-index: 10;
-  }
-</style>
+        .virtual-body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+
+        .changing-room-stage {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            margin: 0 auto;
+            background-image: url('https://res.cloudinary.com/dd6z9fx5m/image/upload/v1770144267/luxury-bg-tall.jpg');
+            background-size: cover;
+            background-position: center;
+            border-left: 1px solid rgba(255,255,255,0.2);
+            border-right: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+        }
+
+        .strobe-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            animation: luxuryPulse 6s infinite;
+            z-index: 5;
+        }
+
+        @keyframes luxuryPulse {
+            0% { background-color: rgba(138, 43, 226, 0.0); }
+            48% { background-color: rgba(0, 255, 255, 0.05); }
+            50% { background-color: rgba(255, 255, 255, 0.2); box-shadow: inset 0 0 50px rgba(255,255,255,0.5); }
+            52% { background-color: rgba(0, 255, 255, 0.05); }
+            100% { background-color: rgba(255, 0, 150, 0.0); }
+        }
+
+        .app-embed {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: none;
+            background: transparent;
+            z-index: 10;
+        }
+
+        .exit-tryon-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 20;
+            padding: 12px 24px;
+            background: rgba(249, 115, 22, 0.9);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .exit-tryon-btn:hover {
+            background: rgba(249, 115, 22, 1);
+            box-shadow: 0 0 50px rgba(249, 115, 22, 0.8);
+            transform: scale(1.05);
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: rgba(99, 102, 241, 0.5);
+            color: white;
+        }
+
+        /* Tech Grid Background */
+        .tech-grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.2;
+        }
+
+        .tech-grid-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 1px 1px, #312e81 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .tech-grid-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(49, 46, 129, 0.2), transparent, black);
+        }
+
+        /* Scanning Beam Animation */
+        @keyframes scan {
+            0% { transform: translateY(-10vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(110vh); opacity: 0; }
+        }
+
+        .scanning-beam {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(99, 102, 241, 0.2);
+            filter: blur(8px);
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-text {
+            animation: marquee 35s linear infinite;
+        }
+
+        /* Stroke Text */
+        .stroke-text {
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.4);
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* Reveal Animations */
+        @keyframes reveal-left {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes reveal-right {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes reveal-up {
+            from { opacity: 0; transform: translateY(60px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .animate-reveal-left {
+            animation: reveal-left 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        .animate-reveal-right {
+            animation: reveal-right 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        /* Blast Effect */
+        @keyframes blast {
+            0% { transform: scale(0.2); opacity: 1; filter: blur(20px); }
+            10% { opacity: 1; }
+            100% { transform: scale(4); opacity: 0; filter: blur(5px); }
+        }
+
+        /* Pulse Slow */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 20s ease-in-out infinite;
+        }
+
+        /* Product Card Reveal */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+
+        .reveal-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal Backdrop */
+        .modal-backdrop {
+            backdrop-filter: blur(24px);
+            background: rgba(0, 0, 0, 0.98);
+        }
+
+        .modal-content {
+            animation: reveal-up 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-black text-white min-h-screen">
 
-  <div class="changing-room-stage">
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen">
 
-      <!-- 1. The Strobe Lights -->
-      <div class="strobe-overlay"></div>
+    <!-- STORE VIEW -->
+    <div id="store-view">
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-5 group cursor-pointer" onclick="window.location.href='index.html#clothing'">
+                <div class="relative">
+                    <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center relative z-10 transition-transform duration-300 group-hover:scale-110 font-black text-2xl">
+                        ⚡
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-[-0.05em] uppercase leading-none italic">Dopamine Clothing</span>
+                    <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-[0.8em] mt-1.5 whitespace-nowrap pl-0.5">by R A S H A D</span>
+                </div>
+            </div>
 
-      <!-- 2. The App Logic -->
-      <!-- IMPORTANT: After you deploy the App from Bolt/AI Studio, paste the URL below -->
-      <iframe class="app-embed"
-              src="https://dopamirror-virtual-t-1tmc.bolt.host"
-              allow="camera; microphone; clipboard-read; clipboard-write;">
-      </iframe>
+            <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">
+                <a href="#" class="hover:text-white transition-all relative group overflow-hidden">
+                    <span class="relative z-10">Collections</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </a>
+                <a href="#" class="hover:text-white transition-all relative group overflow-hidden">
+                    <span class="relative z-10">The Mission</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </a>
+                <a href="#" class="hover:text-white transition-all relative group overflow-hidden">
+                    <span class="relative z-10">Archives</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                </a>
+            </div>
 
-  </div>
+            <div class="flex items-center gap-4">
+                <button onclick="window.history.back()" class="px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-widest rounded-full transition-all shadow-[0_0_30px_rgba(249,115,22,0.3)] flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    <span>Back</span>
+                </button>
+                <button onclick="enterVirtualTryOn()" class="relative px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-black uppercase tracking-widest rounded-full transition-all shadow-[0_0_30px_rgba(147,51,234,0.4)] overflow-hidden group hover:shadow-[0_0_50px_rgba(147,51,234,0.6)]">
+                    <span class="relative z-10 flex items-center gap-2">✨ Virtual Try-On</span>
+                </button>
+                <a href="https://susq10-wy.myshopify.com" target="_blank" class="relative px-8 py-3 bg-white text-black text-xs font-black uppercase tracking-widest rounded-full transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden group">
+                    <span class="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">Go To Store 🛍️</span>
+                    <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-64 pb-32 px-6 overflow-hidden min-h-[90vh] flex flex-col justify-center">
+        <div class="max-w-7xl mx-auto w-full relative z-10">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 backdrop-blur-md text-[9px] font-black uppercase tracking-[0.4em] mb-12 border-l-4">
+                ✨ Authorized Systems Online
+            </div>
+
+            <h1 class="text-7xl md:text-[13rem] font-black leading-[0.8] tracking-tighter mb-16 italic uppercase relative">
+                <span class="block text-white animate-reveal-left">UPGRADE</span>
+                <span class="block stroke-text animate-reveal-right">THE CORE</span>
+            </h1>
+
+            <div class="grid md:grid-cols-2 gap-20 items-end">
+                <p class="text-neutral-500 text-lg md:text-2xl font-medium max-w-lg leading-relaxed border-l border-white/10 pl-8">
+                    Systematic apparel for high-performance minds.
+                    Built for urban navigation, optimized for the <span class="text-white italic">Rashad Flow.</span>
+                </p>
+                <div class="flex flex-col gap-6 md:items-end">
+                    <div class="flex items-center gap-8">
+                        <div class="flex -space-x-4">
+                            <div class="w-12 h-12 rounded-full border-2 border-black bg-neutral-900 overflow-hidden"><img src="https://i.pravatar.cc/100?u=1" alt="user"/></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-black bg-neutral-900 overflow-hidden"><img src="https://i.pravatar.cc/100?u=2" alt="user"/></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-black bg-neutral-900 overflow-hidden"><img src="https://i.pravatar.cc/100?u=3" alt="user"/></div>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Join 5k+ Collectors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Marquee -->
+        <div class="absolute bottom-10 w-full overflow-hidden whitespace-nowrap opacity-5 select-none rotate-[-2deg]">
+            <div class="text-[15rem] font-black tracking-tighter inline-block marquee-text uppercase italic">
+                DOPAMINE CLOTHING BY RASHAD — SYSTEM INTEGRATED — OPTIMIZE YOUR REALITY —
+            </div>
+            <div class="text-[15rem] font-black tracking-tighter inline-block marquee-text uppercase italic pl-10">
+                DOPAMINE CLOTHING BY RASHAD — SYSTEM INTEGRATED — OPTIMIZE YOUR REALITY —
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Control Bar -->
+    <div class="max-w-7xl mx-auto px-6 mb-24">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/10 pt-16">
+            <div class="flex items-center gap-6">
+                <div class="w-1 h-12 bg-indigo-500"></div>
+                <div class="flex flex-col">
+                    <h2 class="text-lg font-black uppercase tracking-[0.2em] italic">Active Catalog</h2>
+                    <span class="text-[10px] text-neutral-600 font-bold uppercase tracking-[0.3em]">Total Hardware: <span id="product-count">44</span> Units</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3" id="category-filter">
+                <!-- Categories will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <main class="max-w-7xl mx-auto px-6 pb-64 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="product-grid">
+            <!-- Products will be generated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 lg:p-12 modal-backdrop" onclick="closeModal(event)">
+        <div class="bg-[#080808] border border-white/10 w-full max-w-7xl rounded-[2rem] overflow-hidden relative z-10 shadow-[0_0_150px_rgba(0,0,0,1)] border-l-8 border-indigo-600 modal-content" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-10 right-10 p-4 bg-white/5 hover:bg-indigo-600 rounded-full text-white transition-all z-20 group">
+                <span class="text-2xl group-hover:rotate-180 transition-transform duration-500 inline-block">✕</span>
+            </button>
+
+            <div class="grid lg:grid-cols-5 h-[85vh]">
+                <div class="lg:col-span-3 h-full relative overflow-hidden bg-neutral-900">
+                    <img id="modal-image" src="" alt="" class="w-full h-full object-cover animate-pulse-slow"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                </div>
+                <div class="lg:col-span-2 p-12 lg:p-24 flex flex-col justify-center bg-black">
+                    <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12 w-fit">
+                        ⚡ Rashad Elite System
+                    </div>
+                    <h2 id="modal-name" class="text-6xl md:text-8xl font-black mb-6 tracking-tighter italic uppercase leading-[0.85]"></h2>
+                    <p id="modal-price" class="text-4xl font-light text-neutral-600 mb-12 tracking-[0.2em]"></p>
+
+                    <div class="space-y-12 mb-16">
+                        <div class="flex flex-col gap-4 pl-6 border-l-2 border-indigo-500/30">
+                            <span class="text-[10px] text-indigo-500 font-black uppercase tracking-[0.5em]">Hardware Definition</span>
+                            <p id="modal-description" class="text-xl text-neutral-400 leading-relaxed font-medium"></p>
+                        </div>
+                    </div>
+
+                    <a id="modal-link" href="#" target="_blank" class="w-full py-7 bg-white hover:bg-indigo-600 text-black hover:text-white font-black rounded-xl flex items-center justify-center gap-5 transition-all text-2xl shadow-[0_20px_60px_rgba(255,255,255,0.1)] uppercase italic tracking-tighter group overflow-hidden relative">
+                        <span class="relative z-10 flex items-center gap-4">Finalize Acquisition →</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-32 bg-black relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
+            <div class="lg:col-span-2">
+                <div class="flex items-center gap-6 mb-10">
+                    <div class="w-16 h-16 bg-white text-black rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden group font-black text-3xl">
+                        ⚡
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">Dopamine Clothing</span>
+                        <span class="text-[10px] font-bold tracking-[0.8em] text-neutral-600 pl-1 uppercase">by R A S H A D</span>
+                    </div>
+                </div>
+                <p class="text-neutral-500 max-w-md mb-12 text-lg font-medium italic leading-relaxed">
+                    The creative manifestation of energy and aesthetic optimization.
+                    An urban system designed for the flow state.
+                </p>
+            </div>
+
+            <div class="flex flex-col gap-8">
+                <span class="text-[11px] text-white font-black uppercase tracking-[0.5em] italic">Navigation</span>
+                <div class="flex flex-col gap-5 text-sm text-neutral-500 font-bold uppercase tracking-widest">
+                    <a href="https://dopamine-flow-energy.creator-spring.com/" target="_blank" class="hover:text-indigo-400 transition-colors w-fit">Store Home</a>
+                    <a href="https://dopamine-flow-energy.creator-spring.com/apparel" target="_blank" class="hover:text-indigo-400 transition-colors w-fit">Legacy Items</a>
+                    <a href="index.html" class="hover:text-indigo-400 transition-colors w-fit">Rashad Collective</a>
+                    <a href="index.html" class="hover:text-indigo-400 transition-colors w-fit">System Support</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-8">
+                <span class="text-[11px] text-white font-black uppercase tracking-[0.5em] italic">Deployment</span>
+                <div class="flex items-center gap-3 text-indigo-500 bg-indigo-500/5 px-4 py-2 rounded-lg border border-indigo-500/10 w-fit">
+                    <div class="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(79,70,229,1)]"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em]">Operational Status: Elite</span>
+                </div>
+                <p class="text-[10px] text-neutral-700 font-bold uppercase leading-loose tracking-[0.2em]">
+                    © 2026 DOPAMINE CLOTHING SYSTEM.<br/>
+                    CORE ARCHITECTURE BY R A S H A D.<br/>
+                    DISTRIBUTED VIA SPRING NETWORKS.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Shopify Product Data (13 items from Shopify store)
+        const products = [
+            {"id": 1, "name": "Women's Fitted Crop Tee | Bodycon T-Shirt", "price": "$30.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/b983a889bd8945959d1688590e03fe8e.png?v=1768665320", "link": "https://susq10-wy.myshopify.com/products/women-s-fitted-crop-tee-bodycon-t-shirt", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate"},
+            {"id": 2, "name": "Fitted Crop Cotton T-Shirt", "price": "$30.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/3c74ac00921f446c96cadcc40c95b06a.png?v=1768667997", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-8", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate Fabric Strench:High Stretch Care Instructions:Machine wash"},
+            {"id": 3, "name": "Fitted Crop Cotton T-Shirt", "price": "$30.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/94ea49612f5f4a359f30bca3a1642043.png?v=1768668252", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-7", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate Fabric Strench:High Stretch Care Instructions:Machine wash"},
+            {"id": 4, "name": "Fitted Crop Cotton T-Shirt", "price": "$27.14", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/6318f5e15fc34f44bce863dde0976fec.png?v=1768665609", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-6", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate"},
+            {"id": 5, "name": "Fitted Crop Cotton T-Shirt", "price": "$21.15", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/3850bee0c0d24b22a21750cab9c0b3e3.png?v=1768665593", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-5", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate"},
+            {"id": 6, "name": "Fitted Crop Cotton T-Shirt", "price": "$21.15", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/3129c6f1c5d3483ab1cb3bebf260efc6.png?v=1768665577", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-4", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate"},
+            {"id": 7, "name": "Fitted Crop Cotton T-Shirt", "price": "$21.15", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/70cae234ce1b4c0691734043351f23bb.png?v=1768665562", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-3", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate"},
+            {"id": 8, "name": "Fitted Crop Cotton T-Shirt", "price": "$30.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/a4ca2f18f12e47538560b6f5f6aac0c6.png?v=1768668042", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-2", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate Fabric Strench:High Stretch Care Instructions:Machine wash"},
+            {"id": 9, "name": "Fitted Crop Cotton T-Shirt", "price": "$21.16", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/f3d746bcbef340f3b0df7661871cc424.png?v=1768668357", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-1", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate Fabric Strench:High Stretch Care Instructions:Machine wash"},
+            {"id": 10, "name": "Fitted Crop Cotton T-Shirt", "price": "$30.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/bd6260cc78324a8b866e5b4c15469cbf.png?v=1768668312", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate Fabric Strench:High Stretch Care Instructions:Machine wash"},
+            {"id": 11, "name": "Baby Tee Seamless T-Shirt - 200 GSM", "price": "$13.95", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/66666b8811e0409c81adb0ed64211a9a.png?v=1768665633", "link": "https://susq10-wy.myshopify.com/products/baby-tee-seamless-t-shirt-200-gsm", "description": "Item Number:RU0007 Gender:Women Model:Loose Fabric:100% cotton Fabric Weight:5.9 oz/yd² (200 g/m²) Fabric Thickness:Thin Fabric Strench"},
+            {"id": 12, "name": "Baby Tee Seamless T-Shirt - 200 GSM", "price": "$25.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/cd8d9be8e3914c25b48073e590fefec7.png?v=1768667907", "link": "https://susq10-wy.myshopify.com/products/baby-tee-seamless-t-shirt-200-gsm-1", "description": "Item Number:RU0007 Gender:Women Model:Loose Fabric:100% cotton Fabric Weight:5.9 oz/yd² (200 g/m²) Fabric Thickness:Thin Fabric Strench:Slight Stretch Care Instructions:Machine wash at 30°C (gentle cy"},
+            {"id": 13, "name": "Fitted Crop Cotton T-Shirt", "price": "$30.00", "category": "T-Shirts", "product_type": "", "image": "https://cdn.shopify.com/s/files/1/0709/9206/8698/files/6318f5e15fc34f44bce863dde0976fec_d1533b6e-1d98-4f0b-a7ff-a3db91510ef2.png?v=1768667967", "link": "https://susq10-wy.myshopify.com/products/fitted-crop-cotton-t-shirt-9", "description": "Item Number:WT0033-4S Gender:Women Model:Bodycon Fabric:95% cotton, 5% elastane Fabric Weight:5.3 oz/yd² (180 g/m²) Fabric Thickness:Moderate Fabric Strench:High Stretch Care Instructions:Machine wash"}
+        ];
+
+        const categories = ['All', 'T-Shirts', 'Tank Tops', 'Hoodies & Sweatshirts', 'Merch'];
+        let activeCategory = 'All';
+        let selectedProduct = null;
+        let hoveredId = null;
+
+        // Initialize page
+        function init() {
+            renderCategories();
+            renderProducts();
+            initIntersectionObserver();
+            initNavbarScroll();
+        }
+
+        // Render category filters
+        function renderCategories() {
+            const filterContainer = document.getElementById('category-filter');
+            filterContainer.innerHTML = categories.map(cat => `
+                <button
+                    onclick="filterByCategory('${cat}')"
+                    class="category-btn px-10 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
+                        cat === activeCategory
+                            ? 'bg-indigo-600 text-white shadow-[0_0_40px_rgba(79,70,229,0.3)] scale-105'
+                            : 'text-neutral-600 border border-white/5 hover:border-white/20 hover:text-white bg-white/2'
+                    }"
+                    data-category="${cat}">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        // Filter products by category
+        function filterByCategory(category) {
+            activeCategory = category;
+            renderCategories();
+            renderProducts();
+        }
+
+        // Render products
+        function renderProducts() {
+            const filteredProducts = activeCategory === 'All'
+                ? products
+                : products.filter(p => p.category === activeCategory);
+
+            document.getElementById('product-count').textContent = filteredProducts.length;
+
+            const gridContainer = document.getElementById('product-grid');
+            gridContainer.innerHTML = filteredProducts.map(product => `
+                <div
+                    data-id="${product.id}"
+                    class="reveal-item group relative bg-neutral-900 border border-white/5 overflow-hidden transition-all duration-700 hover:z-20 hover:border-indigo-500/50"
+                    onmouseenter="hoveredId=${product.id}"
+                    onmouseleave="hoveredId=null">
+
+                    <!-- Image -->
+                    <div class="aspect-[1/1.2] overflow-hidden relative bg-[#0a0a0a]">
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                            class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1 opacity-90 group-hover:opacity-100"
+                        />
+
+                        <!-- Product Tags -->
+                        <div class="absolute top-6 left-6 flex flex-col gap-1.5 translate-x-[-10px] group-hover:translate-x-0 transition-transform duration-500">
+                            <span class="text-[9px] font-black bg-indigo-600 text-white px-3 py-1 uppercase tracking-widest w-fit shadow-xl italic">${product.category}</span>
+                            <span class="text-[11px] font-black text-white bg-black/60 backdrop-blur-md px-3 py-1 w-fit border border-white/10 uppercase italic">${product.price}</span>
+                        </div>
+
+                        <!-- Interaction Menu -->
+                        <div class="absolute inset-0 bg-indigo-950/40 backdrop-blur-[6px] transition-all duration-500 flex items-center justify-center gap-6 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100">
+                            <button
+                                onclick="openModal(${product.id})"
+                                class="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-2xl">
+                                ℹ
+                            </button>
+                            <a
+                                href="${product.link}"
+                                target="_blank"
+                                class="w-16 h-16 bg-black text-white border-2 border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all shadow-2xl">
+                                🛍️
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Info Bar -->
+                    <div class="p-8 border-t border-white/5 bg-gradient-to-br from-black to-neutral-950">
+                        <h3 class="text-base font-black uppercase tracking-tight italic group-hover:text-indigo-400 transition-colors line-clamp-1 mb-3">${product.name}</h3>
+                        <div class="flex items-center justify-between opacity-40 group-hover:opacity-100 transition-opacity">
+                            <span class="text-[10px] text-neutral-400 font-bold tracking-[0.3em] uppercase">${product.product_type}</span>
+                            <div class="w-6 h-0.5 bg-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-initialize intersection observer
+            initIntersectionObserver();
+        }
+
+        // Modal functions
+        function openModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('modal-image').src = product.image;
+            document.getElementById('modal-name').textContent = product.name;
+            document.getElementById('modal-price').textContent = product.price;
+            document.getElementById('modal-description').textContent = product.description + " Engineered for the 15-40 urban elite.";
+            document.getElementById('modal-link').href = product.link;
+
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Intersection Observer for reveal animation
+        function initIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-item').forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        // Navbar scroll effect
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-black/90', 'backdrop-blur-2xl', 'border-white/10', 'py-3');
+                    navbar.classList.remove('py-6', 'border-transparent');
+                } else {
+                    navbar.classList.remove('bg-black/90', 'backdrop-blur-2xl', 'border-white/10', 'py-3');
+                    navbar.classList.add('py-6', 'border-transparent');
+                }
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    </div>
+
+    <!-- VIRTUAL TRY-ON VIEW -->
+    <div id="virtual-tryon-view" class="virtual-body">
+        <button onclick="exitVirtualTryOn()" class="exit-tryon-btn">
+            ← Back to Store
+        </button>
+
+        <div class="changing-room-stage">
+            <div class="strobe-overlay"></div>
+
+            <iframe class="app-embed"
+                    src="https://dopamirror-virtual-t-1tmc.bolt.host"
+                    allow="camera; microphone; clipboard-read; clipboard-write;">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Toggle Scripts -->
+    <script>
+        function enterVirtualTryOn() {
+            document.getElementById('store-view').classList.add('hidden');
+            document.getElementById('virtual-tryon-view').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function exitVirtualTryOn() {
+            document.getElementById('virtual-tryon-view').classList.remove('active');
+            document.getElementById('store-view').classList.remove('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 
 </body>
 </html>
